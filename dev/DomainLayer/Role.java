@@ -9,6 +9,7 @@ public class Role {
     public static int SHIFT_MANAGER_ID = 1;
 
     public Role(String roleName, String description, int roleID) {}
+
     public Role(int roleID, String roleName) {
         if (roleID == 0) {
             throw new IllegalArgumentException("roleId must not be 0");
