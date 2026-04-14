@@ -86,4 +86,24 @@ public class Shift {
 
     /** @return MORNING or EVENING */
     public ShiftType getShiftType() { return shiftType; }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Shift other)) return false;
+        return shiftId == other.shiftId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(shiftId);
+    }
+
+    @Override
+    public String toString() {
+        return "Shift{id=" + shiftId + ", branch=" + branchId
+                + ", date=" + date + ", type=" + shiftType
+                + ", assigned=" + employeeRoleAssignments.size()
+                + ", requirements=" + requirements.size() + "}";
+    }
 }
