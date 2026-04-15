@@ -90,6 +90,17 @@ public class EmployeeController {
         return true;
     }
 
+    public boolean employeeHasRole(String userName, int roleID) {
+        Employee employee = getEmployee(userName);
+        Role role = getRole(roleID);
+
+        if (employee == null || role == null) {
+            return false;
+        }
+
+        return employee.getRoles().contains(role);
+    }
+
     public boolean removeEmployee(String userName) {
         Employee employee = getEmployee(userName);
         if (employee == null) {
@@ -99,6 +110,47 @@ public class EmployeeController {
         employees.remove(employee);
         firedEmployees.add(employee);
         return true;
+    }
+
+    public boolean changeEmployeeSalary(String userName, int newSalary) {
+        Employee employee = getEmployee(userName);
+        if (employee == null || newSalary <= 0) {
+            return false;
+        }
+
+        employee.setHourlySalary(newSalary);
+        return true;
+    }
+
+    public String employeesAndRolesToString() {
+        if (employees.isEmpty()) {
+            return "No employees in the system";
+        }
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("===== Employees And Roles =====\n");
+
+        for (Employee employee : employees) {
+            builder.append("Employee: ").append(employee.getUserName()).append("\n");
+            builder.append("Roles:\n");
+
+            ArrayList<Role> employeeRoles = employee.getRoles();
+            if (employeeRoles.isEmpty()) {
+                builder.append("None\n");
+            } else {
+                for (Role role : employeeRoles) {
+                    builder.append("ID: ")
+                            .append(role.getRoleID())
+                            .append(", Name: ")
+                            .append(role.getRoleName())
+                            .append("\n");
+                }
+            }
+
+            builder.append("-------------------------------\n");
+        }
+
+        return builder.toString();
     }
 
     public boolean addBranch(int branchID) {

@@ -4,10 +4,10 @@ public class DemoData {
 
     public static void load() {
         EmployeeController controller = EmployeeController.getInstance();
+        ShiftController shiftController = ShiftController.getInstance();
 
         // branches
         controller.addBranch(1);
-        controller.addBranch(2);
 
         // roles
         Role hrManager = new Role(Role.HR_MANAGER_ID, "HR Manager", "Responsible for HR management");
@@ -70,7 +70,7 @@ public class DemoData {
 
         // Storekeeper 2
         Employee storekeeper2 = new Employee(
-                2,
+                1,
                 "store2",
                 new Employee.BankAccount(10, 101, 444444),
                 47,
@@ -86,7 +86,7 @@ public class DemoData {
 
         // Employee with 3 roles: cashier + storekeeper + shift manager
         Employee multiRoleEmployee = new Employee(
-                2,
+                1,
                 "multi1",
                 new Employee.BankAccount(10, 101, 555555),
                 60,
@@ -103,5 +103,10 @@ public class DemoData {
         multiRoleEmployee.addAvailability(7);
         multiRoleEmployee.addAvailability(12);
         controller.addEmployee(multiRoleEmployee);
+
+        // default requirements for all shifts in the current and next week
+        shiftController.setDefaultRequirementForAllShifts(1, cashier, 1);
+        shiftController.setDefaultRequirementForAllShifts(1, storekeeper, 1);
+        shiftController.setDefaultRequirementForAllShifts(1, shiftManager, 1);
     }
 }

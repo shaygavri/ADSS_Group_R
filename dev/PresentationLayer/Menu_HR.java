@@ -48,21 +48,21 @@ public class Menu_HR {
 
         switch (input) {
             case 1 -> {
-                service.showBranches();
+//                service.showBranches();
                 printMenu();
             }
 
             case 2 -> {
                 System.out.println("Enter new branch ID:");
                 String branchId = scanner.nextLine();
-                service.addBranch(branchId);
+//                service.addBranch(branchId);
                 printMenu();
             }
 
             case 3 -> {
                 System.out.println("Enter branch ID to remove:");
                 String branchId = scanner.nextLine();
-                service.removeBranch(branchId);
+//                service.removeBranch(branchId);
                 printMenu();
             }
 

@@ -191,6 +191,10 @@ public class UserService {
         return true;
     }
 
+    public boolean isHRManager(String userName) {
+        return employeeController.employeeHasRole(userName, Role.HR_MANAGER_ID);
+    }
+
     public boolean createRole(String roleIdStr, String roleName, String description) {
         int roleId;
 
@@ -377,5 +381,33 @@ public class UserService {
 
         System.out.println("employee fired successfully");
         return true;
+    }
+
+    public boolean changeEmployeeSalary(String employeeUserName, String newSalaryStr) {
+        int newSalary;
+
+        try {
+            newSalary = Integer.parseInt(newSalaryStr.trim());
+        } catch (NumberFormatException e) {
+            System.out.println("salary must be a number");
+            return false;
+        }
+
+        if (newSalary <= 0) {
+            System.out.println("salary must be positive");
+            return false;
+        }
+
+        if (!employeeController.changeEmployeeSalary(employeeUserName, newSalary)) {
+            System.out.println("employee not found");
+            return false;
+        }
+
+        System.out.println("employee salary changed successfully");
+        return true;
+    }
+
+    public void showAllEmployeesAndRoles() {
+        System.out.println(employeeController.employeesAndRolesToString());
     }
 }

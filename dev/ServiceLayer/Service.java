@@ -2,9 +2,11 @@ package ServiceLayer;
 
 public class Service {
     private final UserService userService;
+    private final ShiftService shiftService;
 
     public Service() {
         this.userService = new UserService();
+        this.shiftService = new ShiftService();
     }
 
     // ======================== REGULAR USER ========================
@@ -41,6 +43,10 @@ public class Service {
         return userService.logout(userName);
     }
 
+    public boolean isHRManager(String userName) {
+        return userService.isHRManager(userName);
+    }
+
 
     // ======================== HR ========================
 
@@ -71,5 +77,52 @@ public class Service {
 
     public boolean fireEmployee(String employeeUserName) {
         return userService.fireEmployee(employeeUserName);
+    }
+
+    public boolean changeEmployeeSalary(String employeeUserName, String newSalary) {
+        return userService.changeEmployeeSalary(employeeUserName, newSalary);
+    }
+
+    public void showAllEmployeesAndRoles() {
+        userService.showAllEmployeesAndRoles();
+    }
+
+    public boolean publishNextWeek() {
+        return shiftService.publishNextWeek();
+    }
+
+    public boolean setAsCurrentWeek() {
+        return shiftService.setAsCurrentWeek();
+    }
+
+    public boolean changeShiftRequirement(String branchId, String date, String shiftType,
+                                          String roleId, String amount) {
+        return shiftService.changeShiftRequirement(branchId, date, shiftType, roleId, amount);
+    }
+
+    public void showAvailableEmployeesForShiftByRole(String branchId, String date,
+                                                     String shiftType, String roleId) {
+        shiftService.showAvailableEmployeesForShiftByRole(branchId, date, shiftType, roleId);
+    }
+
+    public boolean assignEmployee(String employeeUserName, String branchId, String date,
+                                  String shiftType, String roleId) {
+        return shiftService.assignEmployee(employeeUserName, branchId, date, shiftType, roleId);
+    }
+
+    public void showCurrentWeekShift() {
+        shiftService.showCurrentWeekShift();
+    }
+
+    public void showNextWeekShift() {
+        shiftService.showNextWeekShift();
+    }
+
+    public void showAllShiftsHistory() {
+        shiftService.showAllShiftsHistory();
+    }
+
+    public void showShiftsHistoryByBranch(String branchId) {
+        shiftService.showShiftsHistoryByBranch(branchId);
     }
 }

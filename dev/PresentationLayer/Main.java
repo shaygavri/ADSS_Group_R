@@ -55,6 +55,25 @@ public class Main {
     }
 
     public static void handleHRLogin(Scanner scanner) {
-        System.out.println("HR menu is not implemented yet");
+        String user_name, password;
+        Menu_HR system_hr = new Menu_HR();
+        system_hr.service = service;
+
+        System.out.print("Enter username: ");
+        user_name = scanner.nextLine();
+
+        System.out.print("Enter password: ");
+        password = scanner.nextLine();
+
+        if (service.login(user_name, password)) {
+            if (!service.isHRManager(user_name)) {
+                System.out.println("this employee is not an HR manager");
+                service.logout(user_name);
+                return;
+            }
+
+            system_hr.userName = user_name;
+            system_hr.printMenu();
+        }
     }
 }
