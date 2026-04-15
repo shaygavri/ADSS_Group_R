@@ -8,27 +8,20 @@ public class Role {
     // Permanent known ID's
     public static int SHIFT_MANAGER_ID = 1;
 
-    public Role(String roleName, String description, int roleID) {}
-
-    public Role(int roleID, String roleName) {
+    public Role(int roleID, String roleName, String description) {
         if (roleID == 0) {
             throw new IllegalArgumentException("roleId must not be 0");
         }
         if (roleName == null || roleName.isBlank()) {
             throw new IllegalArgumentException("roleName must not be null or blank");
         }
+        if (description == null || description.isBlank()) {
+            throw new IllegalArgumentException("description must not be null or blank");
+        }
 
         this.roleID = roleID;
         this.roleName = roleName;
-        this.description = "";
-    }
-
-    public Role(int roleID, String roleName, String description) {
-        this(roleID, roleName);
-
-        if (description != null) {
-            this.description = description;
-        }
+        this.description = description;
     }
 
     public int getRoleID() {
@@ -51,6 +44,10 @@ public class Role {
 
     @Override
     public String toString() {
-        return "Role: " + roleName + " (ID: " + roleID + ")";
+        return "======= Role =======\n" +
+                "ID          : " + roleID + "\n" +
+                "Name        : " + roleName + "\n" +
+                "Description : " + description + "\n" +
+                "====================";
     }
 }

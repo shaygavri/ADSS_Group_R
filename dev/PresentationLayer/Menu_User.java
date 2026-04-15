@@ -47,9 +47,13 @@ public class Menu_User {
             }
 
             case 4 -> {
-                System.out.println("please enter the shift you want to change (0-13)");
-                in = scanner.nextLine();
-                service.changeAvailability(userName, in);
+                System.out.println("please enter the current shift you want to replace (0-13)");
+                String oldShift = scanner.nextLine();
+
+                System.out.println("please enter the new shift (0-13)");
+                String newShift = scanner.nextLine();
+
+                service.changeAvailability(userName, oldShift, newShift);
                 printMenu();
             }
 
