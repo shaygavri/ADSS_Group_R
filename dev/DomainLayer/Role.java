@@ -43,6 +43,18 @@ public class Role {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Role other)) return false;
+        return  roleID == other.roleID;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(roleID);
+    }
+
+    @Override
     public String toString() {
         return "======= Role =======\n" +
                 "ID          : " + roleID + "\n" +
