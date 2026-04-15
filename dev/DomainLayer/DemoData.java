@@ -21,7 +21,9 @@ public class DemoData {
                 "hr1",
                 new Employee.BankAccount(10, 100, 111111),
                 80,
-                "1234"
+                "1234",
+                Employee.EmploymentType.FULL_TIME,
+                "123456789"
         );
         hr.addRole(hrManager);
         hr.addAvailability(0);
@@ -36,7 +38,9 @@ public class DemoData {
                 "cashier1",
                 new Employee.BankAccount(10, 100, 222222),
                 40,
-                "1234"
+                "1234",
+                Employee.EmploymentType.PART_TIME,
+                "234567891"
         );
         cashierEmp.addRole(cashier);
         cashierEmp.addAvailability(0);
@@ -50,7 +54,9 @@ public class DemoData {
                 "store1",
                 new Employee.BankAccount(10, 100, 333333),
                 45,
-                "1234"
+                "1234",
+                Employee.EmploymentType.PART_TIME,
+                "345678912"
         );
         storekeeper1.addRole(storekeeper);
         storekeeper1.addAvailability(1);
@@ -64,7 +70,9 @@ public class DemoData {
                 "store2",
                 new Employee.BankAccount(10, 101, 444444),
                 47,
-                "1234"
+                "1234",
+                Employee.EmploymentType.PART_TIME,
+                "456789123"
         );
         storekeeper2.addRole(storekeeper);
         storekeeper2.addAvailability(6);
@@ -78,7 +86,9 @@ public class DemoData {
                 "multi1",
                 new Employee.BankAccount(10, 101, 555555),
                 60,
-                "1234"
+                "1234",
+                Employee.EmploymentType.FULL_TIME,
+                "567891234"
         );
         multiRoleEmployee.addRole(cashier);
         multiRoleEmployee.addRole(storekeeper);

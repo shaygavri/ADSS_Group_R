@@ -6,21 +6,37 @@ import java.util.ArrayList;
 public class Employee {
     private String userName;
     private String password;
+    private String id;
     private boolean isLoggedIn;
     private BankAccount bankAccount;
     private int branchID;
+    private int vacationDays;
     private ArrayList<Role> roles;
     private int hourlySalary;
     private LocalDate startContract;
     private LocalDate endContract;
     private ArrayList<Integer> availabilities;
+    private EmploymentType employmentType;
 
-    public Employee(int BID, String userName, BankAccount bankAccount, int hourlySalary, String enterPassword) {
+    public enum EmploymentType {
+        FULL_TIME,
+        PART_TIME
+    }
+
+    public Employee(int BID, String userName, BankAccount bankAccount, int hourlySalary,
+                    String enterPassword, EmploymentType employmentType, String id) {
+
         if (userName == null || userName.isBlank()) {
             throw new IllegalArgumentException("username cannot be empty");
         }
         if (enterPassword == null || enterPassword.isBlank()) {
             throw new IllegalArgumentException("password cannot be empty");
+        }
+        if (employmentType == null) {
+            throw new IllegalArgumentException("employment type cannot be null");
+        }
+        if (id == null || id.isBlank()) {
+            throw new IllegalArgumentException("ID cannot be empty");
         }
 
         this.branchID = BID;
@@ -33,6 +49,10 @@ public class Employee {
         this.endContract = this.startContract.plusYears(1);
         this.isLoggedIn = false;
         this.availabilities = new ArrayList<>();
+        this.employmentType = employmentType;
+
+        this.id = id;
+        this.vacationDays = 20;
     }
 
     public String getUserName() {
@@ -73,6 +93,40 @@ public class Employee {
         this.roles = new ArrayList<>(roles);
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public int getVacationDays() {
+        return vacationDays;
+    }
+
+    public void setVacationDays(int vacationDays) {
+        if (vacationDays < 0) {
+            throw new IllegalArgumentException("vacation days cannot be negative");
+        }
+        this.vacationDays = vacationDays;
+    }
+
+    public boolean useVacationDays(int days) {
+        if (days <= 0) {
+            throw new IllegalArgumentException("days must be positive");
+        }
+        if (days > vacationDays) {
+            return false;
+        }
+
+        vacationDays -= days;
+        return true;
+    }
+
+    public void addVacationDays(int days) {
+        if (days <= 0) {
+            throw new IllegalArgumentException("days must be positive");
+        }
+        vacationDays += days;
+    }
+
     public int getHourlySalary() {
         return hourlySalary;
     }
@@ -111,6 +165,17 @@ public class Employee {
 
     public void setBankAccount(BankAccount bankAccount) {
         this.bankAccount = bankAccount;
+    }
+
+    public EmploymentType getEmploymentType() {
+        return employmentType;
+    }
+
+    public void setEmploymentType(EmploymentType employmentType) {
+        if (employmentType == null) {
+            throw new IllegalArgumentException("employment type cannot be null");
+        }
+        this.employmentType = employmentType;
     }
 
     public boolean checkPassword(String input) {
@@ -157,7 +222,7 @@ public class Employee {
     }
 
     private String rolesToString() {
-        if (roles.isEmpty()) return "None";
+        if (roles.isEmpty()) return "None\n";
 
         StringBuilder sb = new StringBuilder();
         for (Role role : roles) {
@@ -174,12 +239,17 @@ public class Employee {
     @Override
     public String toString() {
         return "========== Employee ==========\n" +
-                "Name          : " + userName + "\n" +
-                "Branch        : " + branchID + "\n" +
+                "Name              : " + userName + "\n" +
+                "ID                : " + id + "\n" +
+                "Branch            : " + branchID + "\n" +
+                "Employment Type   : " + employmentType + "\n" +
+                bankAccount + "\n" +
                 "Roles:\n" + rolesToString() +
-                "Availabilities: " + availabilitiesToString() + "\n" +
-                "HourlySalary        : " + hourlySalary + "\n" +
-                "End Contract  : " + endContract + "\n" +
+                "Shift Availabilities: " + availabilitiesToString() + "\n" +
+                "Salary            : " + hourlySalary + "\n" +
+                "Vacation Days     : " + vacationDays + "\n" +
+                "Start Contract    : " + startContract + "\n" +
+                "End Contract      : " + endContract + "\n" +
                 "================================";
     }
 
