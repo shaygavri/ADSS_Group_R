@@ -58,6 +58,7 @@ public class UserService {
         }
 
         ArrayList<Integer> availabilities = employee.getAvailabilities();
+        availabilities.sort(Integer::compareTo);
 
         System.out.println("===== My Availabilities =====");
         if (availabilities.isEmpty()) {

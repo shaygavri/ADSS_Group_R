@@ -1,11 +1,14 @@
 package PresentationLayer;
 import ServiceLayer.Service;
 import java.util.Scanner;
+import DomainLayer.DemoData;
 
 public class Main {
     private static final Service service = new Service();
 
     public static void main(String[] args) {
+        DemoData.load(); //load a Demo Data
+
         boolean system_on = true;
         Scanner scanner = new Scanner(System.in);
         int user_input;

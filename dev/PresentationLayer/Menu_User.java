@@ -11,7 +11,7 @@ public class Menu_User {
         System.out.println();
         System.out.println("choose an option:");
         System.out.println("1. change password");
-        System.out.println("2. pick availability");
+        System.out.println("2. pick weekly availability");
         System.out.println("3. show my availabilities");
         System.out.println("4. change availability");
         System.out.println("5. logout");
@@ -59,7 +59,6 @@ public class Menu_User {
 
             case 5 -> {
                 service.logout(userName);
-                return;
             }
 
             default -> {

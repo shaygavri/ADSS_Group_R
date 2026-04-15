@@ -27,7 +27,9 @@ public class Menu_HR {
             System.out.println("14. show current week shift");
             System.out.println("15. show next week shift");
             System.out.println("16. show all employees and their roles");
-            System.out.println("17. logout");
+            System.out.println("17. show all shifts history");
+            System.out.println("18. show shifts history by branch");
+            System.out.println("19. logout");
 
             getAnswer();
         }
