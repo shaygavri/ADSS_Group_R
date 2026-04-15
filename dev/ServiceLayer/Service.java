@@ -27,6 +27,14 @@ public class Service {
         return userService.changeAvailability(userName, oldShift, newShift);
     }
 
+    public boolean updateBankAccount(String userName, String bank, String branch, String account) {
+        return userService.updateBankAccount(userName, bank, branch, account);
+    }
+
+    public void showMyPersonalDetails(String userName) {
+        userService.showMyPersonalDetails(userName);
+    }
+
     public boolean logout(String userName) {
         return userService.logout(userName);
     }

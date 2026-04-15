@@ -14,7 +14,9 @@ public class Menu_User {
         System.out.println("2. pick weekly availability");
         System.out.println("3. show my availabilities");
         System.out.println("4. change availability");
-        System.out.println("5. logout");
+        System.out.println("5. change BankAccountDetails");
+        System.out.println("6. show my personal details");
+        System.out.println("7. logout");
         getAnswer();
     }
 
@@ -58,6 +60,27 @@ public class Menu_User {
             }
 
             case 5 -> {
+                System.out.println("Enter bank number:");
+                String bankNumber = scanner.nextLine();
+
+                System.out.println("Enter branch number:");
+                String branchNumber = scanner.nextLine();
+
+                System.out.println("Enter account number:");
+                String accountNumber = scanner.nextLine();
+
+                service.updateBankAccount(userName, bankNumber, branchNumber, accountNumber);
+                printMenu();
+            }
+
+
+            case 6 -> {
+                service.showMyPersonalDetails(userName);
+                printMenu();
+            }
+
+
+            case 7 -> {
                 service.logout(userName);
             }
 

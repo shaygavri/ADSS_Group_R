@@ -115,6 +115,50 @@ public class UserService {
         }
     }
 
+    public boolean updateBankAccount(String userName, String bankStr, String branchStr, String accountStr) {
+        Employee employee = employeeController.getEmployee(userName);
+
+        if (employee == null) {
+            System.out.println("employee not found");
+            return false;
+        }
+
+        int bank, branch, account;
+
+        try {
+            bank = Integer.parseInt(bankStr.trim());
+            branch = Integer.parseInt(branchStr.trim());
+            account = Integer.parseInt(accountStr.trim());
+        } catch (NumberFormatException e) {
+            System.out.println("invalid input, must be numbers");
+            return false;
+        }
+
+        if (bank <= 0 || branch <= 0 || account <= 0) {
+            System.out.println("bank details must be positive numbers");
+            return false;
+        }
+
+        Employee.BankAccount newAccount =
+                new Employee.BankAccount(bank, branch, account);
+
+        employee.setBankAccount(newAccount);
+
+        System.out.println("bank account updated successfully");
+        return true;
+    }
+
+    public void showMyPersonalDetails(String userName) {
+        Employee employee = employeeController.getEmployee(userName);
+
+        if (employee == null) {
+            System.out.println("employee not found");
+            return;
+        }
+
+        System.out.println(employee);
+    }
+
     public boolean logout(String userName) {
         Employee employee = employeeController.getEmployee(userName);
 
