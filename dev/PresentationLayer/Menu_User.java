@@ -11,7 +11,7 @@ public class Menu_User {
         System.out.println();
         System.out.println("choose an option:");
         System.out.println("1. change password");
-        System.out.println("2. pick availability");
+        System.out.println("2. pick weekly availability");
         System.out.println("3. show my availabilities");
         System.out.println("4. change availability");
         System.out.println("5. logout");
@@ -47,15 +47,18 @@ public class Menu_User {
             }
 
             case 4 -> {
-                System.out.println("please enter the shift you want to change (0-13)");
-                in = scanner.nextLine();
-                service.changeAvailability(userName, in);
+                System.out.println("please enter the current shift you want to replace (0-13)");
+                String oldShift = scanner.nextLine();
+
+                System.out.println("please enter the new shift (0-13)");
+                String newShift = scanner.nextLine();
+
+                service.changeAvailability(userName, oldShift, newShift);
                 printMenu();
             }
 
             case 5 -> {
                 service.logout(userName);
-                return;
             }
 
             default -> {

@@ -13,8 +13,16 @@ public class Employee {
     private int hourlySalary;
     private LocalDate startContract;
     private LocalDate endContract;
+    private ArrayList<Integer> availabilities;
 
     public Employee(int BID, String userName, BankAccount bankAccount, int hourlySalary, String enterPassword) {
+        if (userName == null || userName.isBlank()) {
+            throw new IllegalArgumentException("username cannot be empty");
+        }
+        if (enterPassword == null || enterPassword.isBlank()) {
+            throw new IllegalArgumentException("password cannot be empty");
+        }
+
         this.branchID = BID;
         this.userName = userName;
         this.password = enterPassword;
@@ -24,6 +32,7 @@ public class Employee {
         this.startContract = LocalDate.now();
         this.endContract = this.startContract.plusYears(1);
         this.isLoggedIn = false;
+        this.availabilities = new ArrayList<>();
     }
 
     public String getUserName() {
@@ -31,6 +40,9 @@ public class Employee {
     }
 
     public void setUserName(String userName) {
+        if (userName == null || userName.isBlank()) {
+            throw new IllegalArgumentException("username cannot be empty");
+        }
         this.userName = userName;
     }
 
@@ -39,6 +51,9 @@ public class Employee {
     }
 
     public void setPassword(String password) {
+        if (password == null || password.isBlank()) {
+            throw new IllegalArgumentException("password cannot be empty");
+        }
         this.password = password;
     }
 
@@ -112,13 +127,60 @@ public class Employee {
         roles.remove(role);
     }
 
+    public ArrayList<Integer> getAvailabilities() {
+        return new ArrayList<>(availabilities);
+    }
+
+    public void setAvailabilities(ArrayList<Integer> availabilities) {
+        this.availabilities = new ArrayList<>(availabilities);
+    }
+
+    public void addAvailability(int shift) {
+        if (!availabilities.contains(shift)) {
+            availabilities.add(shift);
+        }
+    }
+
+    public boolean hasAvailability(int shift) {
+        return availabilities.contains(shift);
+    }
+
+    public void replaceAvailability(int oldShift, int newShift) {
+        int index = availabilities.indexOf(oldShift);
+        if (index == -1) {
+            throw new IllegalArgumentException("old shift does not exist");
+        }
+        if (availabilities.contains(newShift)) {
+            throw new IllegalArgumentException("new shift already exists");
+        }
+        availabilities.set(index, newShift);
+    }
+
+    private String rolesToString() {
+        if (roles.isEmpty()) return "None";
+
+        StringBuilder sb = new StringBuilder();
+        for (Role role : roles) {
+            sb.append(role).append("\n");
+        }
+        return sb.toString();
+    }
+
+    private String availabilitiesToString() {
+        if (availabilities.isEmpty()) return "None";
+        return availabilities.toString();
+    }
+
     @Override
     public String toString() {
-        return "Employee: " + userName +
-                ", Branch: " + branchID +
-                ", Roles: " + roles +
-                ", Salary: " + hourlySalary +
-                ", End Contract: " + endContract;
+        return "========== Employee ==========\n" +
+                "Name          : " + userName + "\n" +
+                "Branch        : " + branchID + "\n" +
+                "Roles:\n" + rolesToString() +
+                "Availabilities: " + availabilitiesToString() + "\n" +
+                "HourlySalary        : " + hourlySalary + "\n" +
+                "End Contract  : " + endContract + "\n" +
+                "================================";
     }
 
     public static class BankAccount {
@@ -158,7 +220,11 @@ public class Employee {
 
         @Override
         public String toString() {
-            return "Bank: " + bankNumber + ", Branch: " + bankBranchNumber + ", Account: " + bankAccountNumber;
+            return "====== Bank Account ======\n" +
+                    "Bank Number   : " + bankNumber + "\n" +
+                    "Branch Number : " + bankBranchNumber + "\n" +
+                    "Account Number: " + bankAccountNumber + "\n" +
+                    "==========================";
         }
     }
 }
