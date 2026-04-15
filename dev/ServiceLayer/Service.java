@@ -7,6 +7,8 @@ public class Service {
         this.userService = new UserService();
     }
 
+    // ======================== REGULAR USER ========================
+
     public boolean login(String userName, String password) {
         return userService.login(userName, password);
     }
@@ -37,5 +39,37 @@ public class Service {
 
     public boolean logout(String userName) {
         return userService.logout(userName);
+    }
+
+
+    // ======================== HR ========================
+
+
+    public boolean createRole(String roleId, String roleName, String description) {
+        return userService.createRole(roleId, roleName, description);
+    }
+
+    public boolean addRoleToEmployee(String employeeUserName, String roleId) {
+        return userService.addRoleToEmployee(employeeUserName, roleId);
+    }
+
+    public boolean hireEmployee(String employeeUserName, String employeeId, String password,
+                                String branchId, String hourlySalary, String employmentType,
+                                String bankNumber, String bankBranchNumber, String bankAccountNumber) {
+        return userService.hireEmployee(
+                employeeUserName,
+                employeeId,
+                password,
+                branchId,
+                hourlySalary,
+                employmentType,
+                bankNumber,
+                bankBranchNumber,
+                bankAccountNumber
+        );
+    }
+
+    public boolean fireEmployee(String employeeUserName) {
+        return userService.fireEmployee(employeeUserName);
     }
 }

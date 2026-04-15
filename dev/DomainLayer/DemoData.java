@@ -14,6 +14,10 @@ public class DemoData {
         Role cashier = new Role(Role.CASHIER_ID, "Cashier", "Responsible for checkout and customers");
         Role storekeeper = new Role(Role.STOREKEEPER_ID, "Storekeeper", "Responsible for warehouse and inventory");
         Role shiftManager = new Role(Role.SHIFT_MANAGER_ID, "Shift Manager", "Responsible for managing the shift");
+        controller.addRole(hrManager);
+        controller.addRole(cashier);
+        controller.addRole(storekeeper);
+        controller.addRole(shiftManager);
 
         // HR manager
         Employee hr = new Employee(

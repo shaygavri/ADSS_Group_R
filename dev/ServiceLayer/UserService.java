@@ -2,6 +2,7 @@ package ServiceLayer;
 
 import DomainLayer.Employee;
 import DomainLayer.EmployeeController;
+import DomainLayer.Role;
 
 import java.util.ArrayList;
 
@@ -190,6 +191,32 @@ public class UserService {
         return true;
     }
 
+    public boolean createRole(String roleIdStr, String roleName, String description) {
+        int roleId;
+
+        try {
+            roleId = Integer.parseInt(roleIdStr.trim());
+        } catch (NumberFormatException e) {
+            System.out.println("role id must be a number");
+            return false;
+        }
+
+        try {
+            Role role = new Role(roleId, roleName, description);
+
+            if (!employeeController.addRole(role)) {
+                System.out.println("role already exists");
+                return false;
+            }
+
+            System.out.println("role created successfully");
+            return true;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
     private ArrayList<Integer> parseShifts(String input) {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("availability input cannot be empty");
@@ -241,5 +268,114 @@ public class UserService {
         };
 
         return shifts[shift];
+    }
+
+    public boolean addRoleToEmployee(String employeeUserName, String roleId) {
+        int roleID;
+
+        try {
+            roleID = Integer.parseInt(roleId.trim());
+        } catch (NumberFormatException e) {
+            System.out.println("role id must be a number");
+            return false;
+        }
+
+        if (!employeeController.employeeExists(employeeUserName)) {
+            System.out.println("employee not found");
+            return false;
+        }
+
+        if (!employeeController.roleExists(roleID)) {
+            System.out.println("role not found");
+            return false;
+        }
+
+        if (!employeeController.addRoleToEmployee(employeeUserName, roleID)) {
+            System.out.println("employee already has this role");
+            return false;
+        }
+
+        System.out.println("role added to employee successfully");
+        return true;
+    }
+
+    public boolean hireEmployee(String employeeUserName, String employeeId, String password,
+                                String branchIdStr, String hourlySalaryStr, String employmentTypeStr,
+                                String bankNumberStr, String bankBranchNumberStr, String bankAccountNumberStr) {
+        int branchId;
+        int hourlySalary;
+        int bankNumber;
+        int bankBranchNumber;
+        int bankAccountNumber;
+        Employee.EmploymentType employmentType;
+
+        try {
+            branchId = Integer.parseInt(branchIdStr.trim());
+            hourlySalary = Integer.parseInt(hourlySalaryStr.trim());
+            bankNumber = Integer.parseInt(bankNumberStr.trim());
+            bankBranchNumber = Integer.parseInt(bankBranchNumberStr.trim());
+            bankAccountNumber = Integer.parseInt(bankAccountNumberStr.trim());
+        } catch (NumberFormatException e) {
+            System.out.println("branch, salary and bank details must be numbers");
+            return false;
+        }
+
+        try {
+            employmentType = Employee.EmploymentType.valueOf(employmentTypeStr.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.out.println("employment type must be FULL_TIME or PART_TIME");
+            return false;
+        }
+
+        if (!employeeController.branchExists(branchId)) {
+            System.out.println("branch not found");
+            return false;
+        }
+
+        if (hourlySalary <= 0) {
+            System.out.println("hourly salary must be positive");
+            return false;
+        }
+
+        if (bankNumber <= 0 || bankBranchNumber <= 0 || bankAccountNumber <= 0) {
+            System.out.println("bank details must be positive numbers");
+            return false;
+        }
+
+        try {
+            Employee.BankAccount bankAccount =
+                    new Employee.BankAccount(bankNumber, bankBranchNumber, bankAccountNumber);
+
+            Employee employee = new Employee(
+                    branchId,
+                    employeeUserName,
+                    bankAccount,
+                    hourlySalary,
+                    password,
+                    employmentType,
+                    employeeId
+            );
+
+            if (!employeeController.addEmployee(employee)) {
+                System.out.println("employee already exists");
+                return false;
+            }
+
+            System.out.println("employee hired successfully");
+            return true;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean fireEmployee(String employeeUserName) {
+        if (!employeeController.removeEmployee(employeeUserName)) {
+            System.out.println("employee not found");
+            return false;
+        }
+
+        System.out.println("employee fired successfully");
+        return true;
     }
 }

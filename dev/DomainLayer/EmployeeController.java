@@ -6,11 +6,13 @@ public class EmployeeController {
     private ArrayList<Employee> employees;
     private ArrayList<Employee> firedEmployees;
     private ArrayList<Integer> branches;
+    private ArrayList<Role> roles;
 
     private EmployeeController() {
         branches = new ArrayList<>();
         employees = new ArrayList<>();
         firedEmployees = new ArrayList<>();
+        roles = new ArrayList<>();
     }
 
     public static EmployeeController getInstance() {
@@ -48,6 +50,46 @@ public class EmployeeController {
         return getEmployee(userName) != null;
     }
 
+    public boolean addRole(Role role) {
+        if (role == null) {
+            throw new IllegalArgumentException("role cannot be null");
+        }
+        if (getRole(role.getRoleID()) != null) {
+            return false;
+        }
+        roles.add(role);
+        return true;
+    }
+
+    public Role getRole(int roleID) {
+        for (Role role : roles) {
+            if (role.getRoleID() == roleID) {
+                return role;
+            }
+        }
+        return null;
+    }
+
+    public boolean roleExists(int roleID) {
+        return getRole(roleID) != null;
+    }
+
+    public boolean addRoleToEmployee(String userName, int roleID) {
+        Employee employee = getEmployee(userName);
+        Role role = getRole(roleID);
+
+        if (employee == null || role == null) {
+            return false;
+        }
+
+        if (employee.getRoles().contains(role)) {
+            return false;
+        }
+
+        employee.addRole(role);
+        return true;
+    }
+
     public boolean removeEmployee(String userName) {
         Employee employee = getEmployee(userName);
         if (employee == null) {
@@ -81,5 +123,9 @@ public class EmployeeController {
 
     public ArrayList<Employee> getFiredEmployees() {
         return new ArrayList<>(firedEmployees);
+    }
+
+    public ArrayList<Role> getRoles() {
+        return new ArrayList<>(roles);
     }
 }
