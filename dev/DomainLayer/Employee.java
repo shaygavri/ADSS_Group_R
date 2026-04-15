@@ -178,7 +178,7 @@ public class Employee {
                 "Branch        : " + branchID + "\n" +
                 "Roles:\n" + rolesToString() +
                 "Availabilities: " + availabilitiesToString() + "\n" +
-                "Salary        : " + hourlySalary + "\n" +
+                "HourlySalary        : " + hourlySalary + "\n" +
                 "End Contract  : " + endContract + "\n" +
                 "================================";
     }

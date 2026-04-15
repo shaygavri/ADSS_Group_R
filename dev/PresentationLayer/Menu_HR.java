@@ -9,30 +9,37 @@ public class Menu_HR {
         public String userName;
         public Service service;
 
-        public void printMenu(){
-            System.out.println("choose an option:");
-            System.out.println("1. show branches IDs");
-            System.out.println("2. add branch");
-            System.out.println("3. remove branch");
-            System.out.println("4. create new role");
-            System.out.println("5. publish next week");
-            System.out.println("6. set as current week");
-            System.out.println("7. change shift requirement");
-            System.out.println("8. show available employees for shift by role");
-            System.out.println("9. assign employee");
-            System.out.println("10. add role to employee");
-            System.out.println("11. hire employee");
-            System.out.println("12. fire employee");
-            System.out.println("13. change employee's hourly salary");
-            System.out.println("14. show current week shift");
-            System.out.println("15. show next week shift");
-            System.out.println("16. show all employees and their roles");
-            System.out.println("17. show all shifts history");
-            System.out.println("18. show shifts history by branch");
-            System.out.println("19. logout");
+    public void printMenu() {
+        System.out.println("\n========== HR MENU ==========");
 
-            getAnswer();
-        }
+        System.out.println("\n--- Branch Management ---");
+        System.out.println("1. show branches IDs");
+        System.out.println("2. add branch");
+        System.out.println("3. remove branch");
+
+        System.out.println("\n--- Employee and Role Management ---");
+        System.out.println("4. create new role");
+        System.out.println("5. add role to employee");
+        System.out.println("6. hire employee");
+        System.out.println("7. fire employee");
+        System.out.println("8. change employee's hourly salary");
+        System.out.println("9. show all employees and their roles");
+
+        System.out.println("\n--- Shift and Scheduling Management ---");
+        System.out.println("10. publish next week");
+        System.out.println("11. set as current week");
+        System.out.println("12. change shift requirement");
+        System.out.println("13. show available employees for shift by role");
+        System.out.println("14. assign employee");
+        System.out.println("15. show current week shift");
+        System.out.println("16. show next week shift");
+        System.out.println("17. show all shifts history");
+        System.out.println("18. show shifts history by branch");
+
+        System.out.println("19. logout");
+
+        getAnswer();
+    }
 
         public void getAnswer(){
             Scanner scanner = new Scanner(System.in);
