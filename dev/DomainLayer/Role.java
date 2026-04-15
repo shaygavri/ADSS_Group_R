@@ -6,7 +6,11 @@ public class Role {
     private int roleID;
 
     // Permanent known ID's
-    public static int SHIFT_MANAGER_ID = 1;
+    public static int HR_MANAGER_ID = 100;
+    public static int CASHIER_ID = 101;
+    public static int STOREKEEPER_ID = 102;
+    public static int SHIFT_MANAGER_ID = 103;
+
 
     public Role(int roleID, String roleName, String description) {
         if (roleID == 0) {

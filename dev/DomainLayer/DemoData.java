@@ -10,9 +10,9 @@ public class DemoData {
         controller.addBranch(2);
 
         // roles
-        Role hrManager = new Role(100, "HR Manager", "Responsible for HR management");
-        Role cashier = new Role(101, "Cashier", "Responsible for checkout and customers");
-        Role storekeeper = new Role(102, "Storekeeper", "Responsible for warehouse and inventory");
+        Role hrManager = new Role(Role.HR_MANAGER_ID, "HR Manager", "Responsible for HR management");
+        Role cashier = new Role(Role.CASHIER_ID, "Cashier", "Responsible for checkout and customers");
+        Role storekeeper = new Role(Role.STOREKEEPER_ID, "Storekeeper", "Responsible for warehouse and inventory");
         Role shiftManager = new Role(Role.SHIFT_MANAGER_ID, "Shift Manager", "Responsible for managing the shift");
 
         // HR manager
