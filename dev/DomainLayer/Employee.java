@@ -179,7 +179,7 @@ public class Employee {
     }
 
     public boolean checkPassword(String input) {
-        return this.password.equals(input);
+        return input != null && this.password.equalsIgnoreCase(input);
     }
 
     public void addRole(Role role) {

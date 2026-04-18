@@ -1,13 +1,14 @@
 package PresentationLayer;
+
 import ServiceLayer.Service;
 import java.util.Scanner;
 
 // User menu - for HR manager
 public class Menu_HR {
 
-        public String in;
-        public String userName;
-        public Service service;
+    public String in;
+    public String userName;
+    public Service service;
 
     public void printMenu() {
         System.out.println("\n========== HR MENU ==========");
@@ -24,19 +25,21 @@ public class Menu_HR {
         System.out.println("7. fire employee");
         System.out.println("8. change employee's hourly salary");
         System.out.println("9. show all employees and their roles");
+        System.out.println("10. show all existing roles");
 
         System.out.println("\n--- Shift and Scheduling Management ---");
-        System.out.println("10. publish next week");
-        System.out.println("11. set as current week");
-        System.out.println("12. change shift requirement");
-        System.out.println("13. show available employees for shift by role");
-        System.out.println("14. assign employee");
-        System.out.println("15. show current week shift");
-        System.out.println("16. show next week shift");
-        System.out.println("17. show all shifts history");
-        System.out.println("18. show shifts history by branch");
+        System.out.println("11. publish next week");
+        System.out.println("12. set as current week");
+        System.out.println("13. change shift requirement (current/next week)");
+        System.out.println("14. show available employees for shift by role");
+        System.out.println("15. assign employee");
+        System.out.println("16. show current week shift");
+        System.out.println("17. show next week shift");
+        System.out.println("18. show all shifts history");
+        System.out.println("19. show shifts history by branch");
+        System.out.println("20. show requirements for shift (current/next week)");
 
-        System.out.println("19. logout");
+        System.out.println("21. logout");
 
         getAnswer();
     }
@@ -48,21 +51,21 @@ public class Menu_HR {
 
         switch (input) {
             case 1 -> {
-//                service.showBranches();
+                // service.showBranches();
                 printMenu();
             }
 
             case 2 -> {
                 System.out.println("Enter new branch ID:");
                 String branchId = scanner.nextLine();
-//                service.addBranch(branchId);
+                // service.addBranch(branchId);
                 printMenu();
             }
 
             case 3 -> {
                 System.out.println("Enter branch ID to remove:");
                 String branchId = scanner.nextLine();
-//                service.removeBranch(branchId);
+                // service.removeBranch(branchId);
                 printMenu();
             }
 
@@ -84,10 +87,10 @@ public class Menu_HR {
                 System.out.println("Enter employee username:");
                 String employeeUserName = scanner.nextLine();
 
-                System.out.println("Enter role ID to add:");
-                String roleId = scanner.nextLine();
+                System.out.println("Enter role ID or role name to add:");
+                String roleInput = scanner.nextLine();
 
-                service.addRoleToEmployee(employeeUserName, roleId);
+                service.addRoleToEmployee(employeeUserName, roleInput);
                 printMenu();
             }
 
@@ -128,8 +131,7 @@ public class Menu_HR {
                         employmentType,
                         bankNumber,
                         bankBranchNumber,
-                        bankAccountNumber
-                );
+                        bankAccountNumber);
                 printMenu();
             }
 
@@ -157,32 +159,17 @@ public class Menu_HR {
             }
 
             case 10 -> {
-                service.publishNextWeek();
+                service.showAllRoles();
                 printMenu();
             }
 
             case 11 -> {
-                service.setAsCurrentWeek();
+                service.publishNextWeek();
                 printMenu();
             }
 
             case 12 -> {
-                System.out.println("Enter branch ID:");
-                String branchId = scanner.nextLine();
-
-                System.out.println("Enter shift date (yyyy-mm-dd):");
-                String date = scanner.nextLine();
-
-                System.out.println("Enter shift type (MORNING / EVENING):");
-                String shiftType = scanner.nextLine();
-
-                System.out.println("Enter role ID:");
-                String roleId = scanner.nextLine();
-
-                System.out.println("Enter new required amount:");
-                String amount = scanner.nextLine();
-
-                service.changeShiftRequirement(branchId, date, shiftType, roleId, amount);
+                service.setAsCurrentWeek();
                 printMenu();
             }
 
@@ -196,14 +183,37 @@ public class Menu_HR {
                 System.out.println("Enter shift type (MORNING / EVENING):");
                 String shiftType = scanner.nextLine();
 
-                System.out.println("Enter role ID:");
-                String roleId = scanner.nextLine();
+                System.out.println("Enter week (CURRENT / NEXT):");
+                String week = scanner.nextLine();
 
-                service.showAvailableEmployeesForShiftByRole(branchId, date, shiftType, roleId);
+                System.out.println("Enter role ID or role name:");
+                String roleInput = scanner.nextLine();
+
+                System.out.println("Enter new required amount:");
+                String amount = scanner.nextLine();
+
+                service.changeShiftRequirement(branchId, date, shiftType, roleInput, amount, week);
                 printMenu();
             }
 
             case 14 -> {
+                System.out.println("Enter branch ID:");
+                String branchId = scanner.nextLine();
+
+                System.out.println("Enter shift date (yyyy-mm-dd):");
+                String date = scanner.nextLine();
+
+                System.out.println("Enter shift type (MORNING / EVENING):");
+                String shiftType = scanner.nextLine();
+
+                System.out.println("Enter role ID or role name:");
+                String roleInput = scanner.nextLine();
+
+                service.showAvailableEmployeesForShiftByRole(branchId, date, shiftType, roleInput);
+                printMenu();
+            }
+
+            case 15 -> {
                 System.out.println("Enter employee username:");
                 String employeeUserName = scanner.nextLine();
 
@@ -216,36 +226,54 @@ public class Menu_HR {
                 System.out.println("Enter shift type (MORNING / EVENING):");
                 String shiftType = scanner.nextLine();
 
-                System.out.println("Enter role ID:");
-                String roleId = scanner.nextLine();
+                System.out.println("Enter role ID or role name:");
+                String roleInput = scanner.nextLine();
 
-                service.assignEmployee(employeeUserName, branchId, date, shiftType, roleId);
-                printMenu();
-            }
-
-            case 15 -> {
-                service.showCurrentWeekShift();
+                service.assignEmployee(employeeUserName, branchId, date, shiftType, roleInput);
                 printMenu();
             }
 
             case 16 -> {
-                service.showNextWeekShift();
+                service.showCurrentWeekShift();
                 printMenu();
             }
 
             case 17 -> {
-                service.showAllShiftsHistory();
+                service.showNextWeekShift();
                 printMenu();
             }
 
             case 18 -> {
+                service.showAllShiftsHistory();
+                printMenu();
+            }
+
+            case 19 -> {
                 System.out.println("Enter branch ID:");
                 String branchId = scanner.nextLine();
                 service.showShiftsHistoryByBranch(branchId);
                 printMenu();
             }
 
-            case 19 -> {
+            // ADDED: show requirements for a specific shift in current or next week (Task #1)
+            case 20 -> {
+                System.out.println("Enter branch ID:");
+                String branchId20 = scanner.nextLine();
+
+                System.out.println("Enter shift date (yyyy-mm-dd):");
+                String date20 = scanner.nextLine();
+
+                System.out.println("Enter shift type (MORNING / EVENING):");
+                String shiftType20 = scanner.nextLine();
+
+                System.out.println("Enter week (CURRENT / NEXT):");
+                String week20 = scanner.nextLine();
+
+                service.showShiftRequirements(branchId20, date20, shiftType20, week20);
+                printMenu();
+            }
+
+            case 21 -> {
                 service.logout(userName);
                 return;
             }

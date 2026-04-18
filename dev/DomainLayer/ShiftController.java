@@ -11,6 +11,11 @@ public class ShiftController {
     private final EmployeeController employeeController;
     private final Map<Integer, ShiftOrganizer> shiftOrganizers;
 
+    public enum ShiftWeek {
+        CURRENT,
+        NEXT
+    }
+
     private ShiftController() {
         this.employeeController = EmployeeController.getInstance();
         this.shiftOrganizers = new HashMap<>();
@@ -60,22 +65,27 @@ public class ShiftController {
 
     public boolean changeShiftRequirement(int branchId, LocalDate date, Shift.ShiftType shiftType,
                                           int roleId, int amount) {
+        return changeShiftRequirement(branchId, date, shiftType, roleId, amount, ShiftWeek.NEXT);
+    }
+
+    public boolean changeShiftRequirement(int branchId, LocalDate date, Shift.ShiftType shiftType,
+                                          int roleId, int amount, ShiftWeek week) {
         if (!employeeController.branchExists(branchId)) {
             return false;
         }
 
         Role role = employeeController.getRole(roleId);
-        if (role == null || date == null || shiftType == null || amount < 0) {
+        if (role == null || date == null || shiftType == null || amount < 0 || week == null) {
             return false;
         }
 
         ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
-        int shiftIndex = findNextWeekShiftIndex(organizer, date, shiftType);
+        int shiftIndex = findShiftIndex(organizer, date, shiftType, week);
         if (shiftIndex == -1) {
             return false;
         }
 
-        return organizer.changeShiftRequirement(shiftIndex, role, amount);
+        return organizer.changeShiftRequirement(shiftIndex, role, amount, week == ShiftWeek.NEXT);
     }
 
     public boolean setDefaultRequirementForAllShifts(int branchId, Role role, int amount) {
@@ -213,6 +223,46 @@ public class ShiftController {
         return organizer.showShiftsHistoryByBranch(branchId);
     }
 
+    public String shiftRequirementsToString(int branchId, LocalDate date, Shift.ShiftType shiftType) {
+        return shiftRequirementsToString(branchId, date, shiftType, ShiftWeek.NEXT);
+    }
+
+    // ADDED: returns formatted requirements for a specific shift in current or next week
+    public String shiftRequirementsToString(int branchId, LocalDate date, Shift.ShiftType shiftType, ShiftWeek week) {
+        if (!employeeController.branchExists(branchId)) {
+            return "branch not found";
+        }
+        if (date == null || shiftType == null || week == null) {
+            return "invalid shift parameters";
+        }
+        ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+        int shiftIndex = findShiftIndex(organizer, date, shiftType, week);
+        if (shiftIndex == -1) {
+            return "shift not found in " + weekToText(week) + " week";
+        }
+        Shift shift = week == ShiftWeek.NEXT
+                ? organizer.getNextWeekShift(shiftIndex)
+                : organizer.getCurrentWeekShift(shiftIndex);
+        Map<Role, Integer> requirements = shift.getRequirements();
+        StringBuilder builder = new StringBuilder();
+        builder.append("===== Shift Requirements =====\n");
+        builder.append("Week: ").append(weekToText(week)).append("\n");
+        builder.append("Day: ").append(date.getDayOfWeek())
+                .append(", Date: ").append(date)
+                .append(", Type: ").append(shiftType).append("\n");
+        if (requirements.isEmpty()) {
+            builder.append("No requirements set\n");
+        } else {
+            for (Map.Entry<Role, Integer> entry : requirements.entrySet()) {
+                builder.append(entry.getKey().getRoleName())
+                        .append(" (ID: ").append(entry.getKey().getRoleID()).append(")")
+                        .append(": ").append(entry.getValue()).append("\n");
+            }
+        }
+        builder.append("==============================");
+        return builder.toString();
+    }
+
     private ShiftOrganizer getOrCreateOrganizer(int branchId) {
         return shiftOrganizers.computeIfAbsent(branchId, ShiftOrganizer::new);
     }
@@ -226,7 +276,13 @@ public class ShiftController {
     }
 
     private int findNextWeekShiftIndex(ShiftOrganizer organizer, LocalDate date, Shift.ShiftType shiftType) {
-        Shift[] shifts = organizer.getNextWeekShifts();
+        return findShiftIndex(organizer, date, shiftType, ShiftWeek.NEXT);
+    }
+
+    private int findShiftIndex(ShiftOrganizer organizer, LocalDate date, Shift.ShiftType shiftType, ShiftWeek week) {
+        Shift[] shifts = week == ShiftWeek.NEXT
+                ? organizer.getNextWeekShifts()
+                : organizer.getCurrentWeekShifts();
 
         for (int i = 0; i < shifts.length; i++) {
             if (shifts[i].getDate().equals(date) && shifts[i].getShiftType() == shiftType) {
@@ -235,5 +291,9 @@ public class ShiftController {
         }
 
         return -1;
+    }
+
+    private String weekToText(ShiftWeek week) {
+        return week == ShiftWeek.NEXT ? "next" : "current";
     }
 }

@@ -1,5 +1,7 @@
 package ServiceLayer;
 
+import DomainLayer.EmployeeController;
+import DomainLayer.Role;
 import DomainLayer.Shift;
 import DomainLayer.ShiftController;
 
@@ -8,9 +10,11 @@ import java.time.format.DateTimeParseException;
 
 public class ShiftService {
     private final ShiftController shiftController;
+    private final EmployeeController employeeController;
 
     public ShiftService() {
         this.shiftController = ShiftController.getInstance();
+        this.employeeController = EmployeeController.getInstance();
     }
 
     public boolean publishNextWeek() {
@@ -35,18 +39,29 @@ public class ShiftService {
 
     public boolean changeShiftRequirement(String branchIdStr, String dateStr, String shiftTypeStr,
                                           String roleIdStr, String amountStr) {
+        return changeShiftRequirement(branchIdStr, dateStr, shiftTypeStr, roleIdStr, amountStr, "NEXT");
+    }
+
+    public boolean changeShiftRequirement(String branchIdStr, String dateStr, String shiftTypeStr,
+                                          String roleInput, String amountStr, String weekStr) {
         int branchId;
-        int roleId;
         int amount;
         LocalDate date;
         Shift.ShiftType shiftType;
+        ShiftController.ShiftWeek week;
+        Role role;
 
         try {
             branchId = Integer.parseInt(branchIdStr.trim());
-            roleId = Integer.parseInt(roleIdStr.trim());
             amount = Integer.parseInt(amountStr.trim());
         } catch (NumberFormatException e) {
-            System.out.println("branch id, role id and amount must be numbers");
+            System.out.println("branch id and amount must be numbers");
+            return false;
+        }
+
+        role = employeeController.getRoleByIdOrName(roleInput);
+        if (role == null) {
+            System.out.println("role not found");
             return false;
         }
 
@@ -64,12 +79,19 @@ public class ShiftService {
             return false;
         }
 
+        try {
+            week = ShiftController.ShiftWeek.valueOf(weekStr.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.out.println("week must be CURRENT or NEXT");
+            return false;
+        }
+
         if (amount < 0) {
             System.out.println("amount cannot be negative");
             return false;
         }
 
-        if (!shiftController.changeShiftRequirement(branchId, date, shiftType, roleId, amount)) {
+        if (!shiftController.changeShiftRequirement(branchId, date, shiftType, role.getRoleID(), amount, week)) {
             System.out.println("could not change shift requirement");
             return false;
         }
@@ -79,17 +101,22 @@ public class ShiftService {
     }
 
     public void showAvailableEmployeesForShiftByRole(String branchIdStr, String dateStr,
-                                                     String shiftTypeStr, String roleIdStr) {
+                                                     String shiftTypeStr, String roleInput) {
         int branchId;
-        int roleId;
         LocalDate date;
         Shift.ShiftType shiftType;
+        Role role;
 
         try {
             branchId = Integer.parseInt(branchIdStr.trim());
-            roleId = Integer.parseInt(roleIdStr.trim());
         } catch (NumberFormatException e) {
-            System.out.println("branch id and role id must be numbers");
+            System.out.println("branch id must be a number");
+            return;
+        }
+
+        role = employeeController.getRoleByIdOrName(roleInput);
+        if (role == null) {
+            System.out.println("role not found");
             return;
         }
 
@@ -107,21 +134,26 @@ public class ShiftService {
             return;
         }
 
-        System.out.println(shiftController.availableEmployeesForShiftByRoleToString(branchId, date, shiftType, roleId));
+        System.out.println(shiftController.availableEmployeesForShiftByRoleToString(branchId, date, shiftType, role.getRoleID()));
     }
 
     public boolean assignEmployee(String employeeUserName, String branchIdStr, String dateStr,
-                                  String shiftTypeStr, String roleIdStr) {
+                                  String shiftTypeStr, String roleInput) {
         int branchId;
-        int roleId;
         LocalDate date;
         Shift.ShiftType shiftType;
+        Role role;
 
         try {
             branchId = Integer.parseInt(branchIdStr.trim());
-            roleId = Integer.parseInt(roleIdStr.trim());
         } catch (NumberFormatException e) {
-            System.out.println("branch id and role id must be numbers");
+            System.out.println("branch id must be a number");
+            return false;
+        }
+
+        role = employeeController.getRoleByIdOrName(roleInput);
+        if (role == null) {
+            System.out.println("role not found");
             return false;
         }
 
@@ -139,13 +171,56 @@ public class ShiftService {
             return false;
         }
 
-        if (!shiftController.assignEmployee(employeeUserName, branchId, date, shiftType, roleId)) {
+        if (!shiftController.assignEmployee(employeeUserName, branchId, date, shiftType, role.getRoleID())) {
             System.out.println("could not assign employee to shift");
             return false;
         }
 
         System.out.println("employee assigned successfully");
         return true;
+    }
+
+    // ADDED: shows the requirements for a specific shift in next week by default
+    public void showShiftRequirements(String branchIdStr, String dateStr, String shiftTypeStr) {
+        showShiftRequirements(branchIdStr, dateStr, shiftTypeStr, "NEXT");
+    }
+
+    // ADDED: shows the requirements for a specific shift in current or next week
+    public void showShiftRequirements(String branchIdStr, String dateStr, String shiftTypeStr, String weekStr) {
+        int branchId;
+        LocalDate date;
+        Shift.ShiftType shiftType;
+        ShiftController.ShiftWeek week;
+
+        try {
+            branchId = Integer.parseInt(branchIdStr.trim());
+        } catch (NumberFormatException e) {
+            System.out.println("branch id must be a number");
+            return;
+        }
+
+        try {
+            date = LocalDate.parse(dateStr.trim());
+        } catch (DateTimeParseException e) {
+            System.out.println("date must be in yyyy-mm-dd format");
+            return;
+        }
+
+        try {
+            shiftType = Shift.ShiftType.valueOf(shiftTypeStr.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.out.println("shift type must be MORNING or EVENING");
+            return;
+        }
+
+        try {
+            week = ShiftController.ShiftWeek.valueOf(weekStr.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.out.println("week must be CURRENT or NEXT");
+            return;
+        }
+
+        System.out.println(shiftController.shiftRequirementsToString(branchId, date, shiftType, week));
     }
 
     public void showCurrentWeekShift() {

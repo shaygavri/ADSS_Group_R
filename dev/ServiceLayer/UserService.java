@@ -140,8 +140,7 @@ public class UserService {
             return false;
         }
 
-        Employee.BankAccount newAccount =
-                new Employee.BankAccount(bank, branch, account);
+        Employee.BankAccount newAccount = new Employee.BankAccount(bank, branch, account);
 
         employee.setBankAccount(newAccount);
 
@@ -274,27 +273,19 @@ public class UserService {
         return shifts[shift];
     }
 
-    public boolean addRoleToEmployee(String employeeUserName, String roleId) {
-        int roleID;
-
-        try {
-            roleID = Integer.parseInt(roleId.trim());
-        } catch (NumberFormatException e) {
-            System.out.println("role id must be a number");
-            return false;
-        }
-
+    public boolean addRoleToEmployee(String employeeUserName, String roleInput) {
         if (!employeeController.employeeExists(employeeUserName)) {
             System.out.println("employee not found");
             return false;
         }
 
-        if (!employeeController.roleExists(roleID)) {
+        Role role = employeeController.getRoleByIdOrName(roleInput);
+        if (role == null) {
             System.out.println("role not found");
             return false;
         }
 
-        if (!employeeController.addRoleToEmployee(employeeUserName, roleID)) {
+        if (!employeeController.addRoleToEmployee(employeeUserName, role.getRoleID())) {
             System.out.println("employee already has this role");
             return false;
         }
@@ -347,8 +338,8 @@ public class UserService {
         }
 
         try {
-            Employee.BankAccount bankAccount =
-                    new Employee.BankAccount(bankNumber, bankBranchNumber, bankAccountNumber);
+            Employee.BankAccount bankAccount = new Employee.BankAccount(bankNumber, bankBranchNumber,
+                    bankAccountNumber);
 
             Employee employee = new Employee(
                     branchId,
@@ -357,8 +348,7 @@ public class UserService {
                     hourlySalary,
                     password,
                     employmentType,
-                    employeeId
-            );
+                    employeeId);
 
             if (!employeeController.addEmployee(employee)) {
                 System.out.println("employee already exists");
@@ -409,5 +399,10 @@ public class UserService {
 
     public void showAllEmployeesAndRoles() {
         System.out.println(employeeController.employeesAndRolesToString());
+    }
+
+    // ADDED: shows all roles and how many employees have each role
+    public void showAllRoles() {
+        System.out.println(employeeController.rolesAndEmployeeCountToString());
     }
 }

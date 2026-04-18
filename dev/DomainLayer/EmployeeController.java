@@ -1,4 +1,5 @@
 package DomainLayer;
+
 import java.util.ArrayList;
 
 public class EmployeeController {
@@ -39,7 +40,7 @@ public class EmployeeController {
         }
 
         for (Employee e : employees) {
-            if (e.getUserName().equals(userName)) {
+            if (e.getUserName().equalsIgnoreCase(userName.trim())) {
                 return e;
             }
         }
@@ -54,7 +55,7 @@ public class EmployeeController {
         if (role == null) {
             throw new IllegalArgumentException("role cannot be null");
         }
-        if (getRole(role.getRoleID()) != null) {
+        if (getRole(role.getRoleID()) != null || getRoleByName(role.getRoleName()) != null) {
             return false;
         }
         roles.add(role);
@@ -68,6 +69,31 @@ public class EmployeeController {
             }
         }
         return null;
+    }
+
+    public Role getRoleByName(String roleName) {
+        if (roleName == null || roleName.isBlank()) {
+            return null;
+        }
+
+        for (Role role : roles) {
+            if (role.getRoleName().trim().equalsIgnoreCase(roleName.trim())) {
+                return role;
+            }
+        }
+        return null;
+    }
+
+    public Role getRoleByIdOrName(String roleInput) {
+        if (roleInput == null || roleInput.isBlank()) {
+            return null;
+        }
+
+        try {
+            return getRole(Integer.parseInt(roleInput.trim()));
+        } catch (NumberFormatException e) {
+            return getRoleByName(roleInput);
+        }
     }
 
     public boolean roleExists(int roleID) {
@@ -150,6 +176,30 @@ public class EmployeeController {
             builder.append("-------------------------------\n");
         }
 
+        return builder.toString();
+    }
+
+    // ADDED: returns each role with the number of employees that have it
+    public String rolesAndEmployeeCountToString() {
+        if (roles.isEmpty()) {
+            return "No roles in the system";
+        }
+        StringBuilder builder = new StringBuilder();
+        builder.append("===== Existing Roles =====\n");
+        for (Role role : roles) {
+            int count = 0;
+            for (Employee employee : employees) {
+                if (employee.getRoles().contains(role)) {
+                    count++;
+                }
+            }
+            builder.append("Role: ").append(role.getRoleName())
+                    .append(" (ID: ").append(role.getRoleID()).append(")")
+                    .append("\nDescription: ").append(role.getDescription())
+                    .append("\nEmployees with this role: ").append(count).append("\n")
+                    .append("-------------------------------\n");
+        }
+        builder.append("==========================");
         return builder.toString();
     }
 

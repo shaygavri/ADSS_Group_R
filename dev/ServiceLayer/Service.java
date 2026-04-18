@@ -47,9 +47,7 @@ public class Service {
         return userService.isHRManager(userName);
     }
 
-
     // ======================== HR ========================
-
 
     public boolean createRole(String roleId, String roleName, String description) {
         return userService.createRole(roleId, roleName, description);
@@ -71,8 +69,7 @@ public class Service {
                 employmentType,
                 bankNumber,
                 bankBranchNumber,
-                bankAccountNumber
-        );
+                bankAccountNumber);
     }
 
     public boolean fireEmployee(String employeeUserName) {
@@ -100,6 +97,11 @@ public class Service {
         return shiftService.changeShiftRequirement(branchId, date, shiftType, roleId, amount);
     }
 
+    public boolean changeShiftRequirement(String branchId, String date, String shiftType,
+                                          String roleId, String amount, String week) {
+        return shiftService.changeShiftRequirement(branchId, date, shiftType, roleId, amount, week);
+    }
+
     public void showAvailableEmployeesForShiftByRole(String branchId, String date,
                                                      String shiftType, String roleId) {
         shiftService.showAvailableEmployeesForShiftByRole(branchId, date, shiftType, roleId);
@@ -124,5 +126,20 @@ public class Service {
 
     public void showShiftsHistoryByBranch(String branchId) {
         shiftService.showShiftsHistoryByBranch(branchId);
+    }
+
+    // ADDED: shows requirements for a specific shift in next week by default
+    public void showShiftRequirements(String branchId, String date, String shiftType) {
+        shiftService.showShiftRequirements(branchId, date, shiftType);
+    }
+
+    // ADDED: shows requirements for a specific shift in current or next week
+    public void showShiftRequirements(String branchId, String date, String shiftType, String week) {
+        shiftService.showShiftRequirements(branchId, date, shiftType, week);
+    }
+
+    // ADDED: shows all roles and number of employees per role
+    public void showAllRoles() {
+        userService.showAllRoles();
     }
 }
