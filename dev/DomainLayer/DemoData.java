@@ -68,22 +68,6 @@ public class DemoData {
         storekeeper1.addAvailability(5);
         controller.addEmployee(storekeeper1);
 
-        // Storekeeper 2
-        Employee storekeeper2 = new Employee(
-                1,
-                "store2",
-                new Employee.BankAccount(10, 101, 444444),
-                47,
-                "1234",
-                Employee.EmploymentType.PART_TIME,
-                "456789123"
-        );
-        storekeeper2.addRole(storekeeper);
-        storekeeper2.addAvailability(6);
-        storekeeper2.addAvailability(8);
-        storekeeper2.addAvailability(10);
-        controller.addEmployee(storekeeper2);
-
         // Employee with 3 roles: cashier + storekeeper + shift manager
         Employee multiRoleEmployee = new Employee(
                 1,
