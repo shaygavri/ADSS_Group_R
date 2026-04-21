@@ -1,6 +1,7 @@
 package DomainLayer;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +47,62 @@ public class ShiftController {
         return true;
     }
 
+    public boolean publishNextWeekRequirements(LocalDateTime deadline) {
+        ArrayList<Integer> branches = employeeController.getBranches();
+        if (branches.isEmpty()) {
+            return false;
+        }
+
+        for (Integer branchId : branches) {
+            ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+            if (!organizer.publishNextWeekRequirements(deadline)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public String nextWeekMissingRequirementsToString() {
+        ArrayList<Integer> branches = employeeController.getBranches();
+        if (branches.isEmpty()) {
+            return "No branches in the system";
+        }
+
+        StringBuilder builder = new StringBuilder();
+        for (Integer branchId : branches) {
+            ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+            String branchReport = organizer.nextWeekMissingRequirementsToString();
+            if ("All next week shifts are fully assigned".equals(branchReport)) {
+                continue;
+            }
+
+            if (builder.length() > 0) {
+                builder.append("\n");
+            }
+            builder.append("Branch ").append(branchId).append(":\n");
+            builder.append(branchReport).append("\n");
+        }
+
+        if (builder.length() == 0) {
+            return "All next week shifts are fully assigned";
+        }
+
+        return builder.toString().trim();
+    }
+
+    public void syncCurrentWeekIfNeeded() {
+        ArrayList<Integer> branches = employeeController.getBranches();
+        for (Integer branchId : branches) {
+            ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+            while (organizer.shouldAutoAdvanceToNextWeek()) {
+                if (!organizer.setNextWeekAsCurrentWeek()) {
+                    break;
+                }
+            }
+        }
+    }
+
     public boolean setAsCurrentWeek() {
         ArrayList<Integer> branches = employeeController.getBranches();
         if (branches.isEmpty()) {
@@ -63,9 +120,107 @@ public class ShiftController {
         return true;
     }
 
+    public boolean isNextWeekLocked(int branchId) {
+        if (!employeeController.branchExists(branchId)) {
+            return false;
+        }
+
+        ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+        return !organizer.isAvailabilityChangesAllowed();
+    }
+
+    public boolean hasPublishedNextWeekRequirements(int branchId) {
+        if (!employeeController.branchExists(branchId)) {
+            return false;
+        }
+
+        ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+        return organizer.hasPublishedNextWeekRequirements();
+    }
+
+    public boolean canEmployeesUpdateAvailability(int branchId) {
+        if (!employeeController.branchExists(branchId)) {
+            return false;
+        }
+
+        ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+        return organizer.canEmployeesUpdateAvailability();
+    }
+
+    public LocalDateTime getAvailabilityDeadline(int branchId) {
+        if (!employeeController.branchExists(branchId)) {
+            return null;
+        }
+
+        ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+        return organizer.getAvailabilityDeadline();
+    }
+
+    public String nextWeekStatusToString() {
+        ArrayList<Integer> branches = employeeController.getBranches();
+        if (branches.isEmpty()) {
+            return "No branches in the system";
+        }
+
+        StringBuilder builder = new StringBuilder();
+        for (Integer branchId : branches) {
+            ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+            builder.append("===== Branch ").append(branchId).append(" =====\n");
+            builder.append(organizer.nextWeekStatusToString()).append("\n");
+        }
+        return builder.toString().trim();
+    }
+
+    public String nextWeekPublishSummaryToString() {
+        ArrayList<Integer> branches = employeeController.getBranches();
+        if (branches.isEmpty()) {
+            return "No branches in the system";
+        }
+
+        StringBuilder builder = new StringBuilder();
+        for (Integer branchId : branches) {
+            ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+            builder.append("===== Branch ").append(branchId).append(" =====\n");
+            builder.append(organizer.nextWeekPublishSummaryToString()).append("\n");
+        }
+        return builder.toString().trim();
+    }
+
     public boolean changeShiftRequirement(int branchId, LocalDate date, Shift.ShiftType shiftType,
                                           int roleId, int amount) {
         return changeShiftRequirement(branchId, date, shiftType, roleId, amount, ShiftWeek.NEXT);
+    }
+
+    public boolean markHolidayDay(int branchId, int shiftIndex, ShiftWeek week) {
+        if (!employeeController.branchExists(branchId) || week == null) {
+            return false;
+        }
+
+        ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+        try {
+            return organizer.markHolidayDay(shiftIndex, week == ShiftWeek.NEXT);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    public boolean changeShiftRequirement(int branchId, int shiftIndex, int roleId, int amount, ShiftWeek week) {
+        if (!employeeController.branchExists(branchId)) {
+            return false;
+        }
+
+        Role role = employeeController.getRole(roleId);
+        if (role == null || amount < 0 || week == null) {
+            return false;
+        }
+
+        ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+
+        try {
+            return organizer.changeShiftRequirement(shiftIndex, role, amount, week == ShiftWeek.NEXT);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
     public boolean changeShiftRequirement(int branchId, LocalDate date, Shift.ShiftType shiftType,
@@ -144,6 +299,44 @@ public class ShiftController {
         return builder.toString();
     }
 
+    public String availableEmployeesForShiftByRoleToString(int branchId, int shiftIndex, int roleId) {
+        if (!employeeController.branchExists(branchId)) {
+            return "branch not found";
+        }
+
+        Role role = employeeController.getRole(roleId);
+        if (role == null) {
+            return "shift or role not found";
+        }
+
+        ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+        List<Employee> availableEmployees;
+
+        try {
+            organizer.updateAvailableEmployees(employeeController.getEmployees());
+            availableEmployees = organizer.getAvailableEmployeesForShiftByRole(shiftIndex, role);
+        } catch (IllegalArgumentException e) {
+            return "shift not found in next week";
+        }
+
+        if (availableEmployees.isEmpty()) {
+            return "No available employees found";
+        }
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("===== Available Employees =====\n");
+        for (Employee employee : availableEmployees) {
+            builder.append("Username: ")
+                    .append(employee.getUserName())
+                    .append(", ID: ")
+                    .append(employee.getId())
+                    .append("\n");
+        }
+        builder.append("===============================");
+
+        return builder.toString();
+    }
+
     public boolean assignEmployee(String userName, int branchId, LocalDate date,
                                   Shift.ShiftType shiftType, int roleId) {
         if (!employeeController.branchExists(branchId)) {
@@ -164,6 +357,45 @@ public class ShiftController {
 
         organizer.updateAvailableEmployees(employeeController.getEmployees());
         return organizer.assignEmployee(shiftIndex, employee, role);
+    }
+
+    public boolean assignEmployee(String userName, int branchId, int shiftIndex, int roleId) {
+        if (!employeeController.branchExists(branchId)) {
+            return false;
+        }
+
+        Employee employee = employeeController.getEmployee(userName);
+        Role role = employeeController.getRole(roleId);
+        if (employee == null || role == null) {
+            return false;
+        }
+
+        ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+
+        try {
+            organizer.updateAvailableEmployees(employeeController.getEmployees());
+            return organizer.assignEmployee(shiftIndex, employee, role);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    public boolean removeEmployeeFromShift(String userName, int branchId, int shiftIndex) {
+        if (!employeeController.branchExists(branchId)) {
+            return false;
+        }
+
+        Employee employee = employeeController.getEmployee(userName);
+        if (employee == null) {
+            return false;
+        }
+
+        ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+        try {
+            return organizer.removeEmployeeFromShift(shiftIndex, employee);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
     public String currentWeekShiftsToString() {
@@ -225,6 +457,45 @@ public class ShiftController {
 
     public String shiftRequirementsToString(int branchId, LocalDate date, Shift.ShiftType shiftType) {
         return shiftRequirementsToString(branchId, date, shiftType, ShiftWeek.NEXT);
+    }
+
+    public String shiftRequirementsToString(int branchId, int shiftIndex, ShiftWeek week) {
+        if (!employeeController.branchExists(branchId)) {
+            return "branch not found";
+        }
+        if (week == null) {
+            return "invalid shift parameters";
+        }
+
+        ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+        Shift shift;
+
+        try {
+            shift = week == ShiftWeek.NEXT
+                    ? organizer.getNextWeekShift(shiftIndex)
+                    : organizer.getCurrentWeekShift(shiftIndex);
+        } catch (IllegalArgumentException e) {
+            return "shift not found in " + weekToText(week) + " week";
+        }
+
+        Map<Role, Integer> requirements = shift.getRequirements();
+        StringBuilder builder = new StringBuilder();
+        builder.append("===== Shift Requirements =====\n");
+        builder.append("Week: ").append(weekToText(week)).append("\n");
+        builder.append("Day: ").append(shift.getDate().getDayOfWeek())
+                .append(", Date: ").append(shift.getDate())
+                .append(", Type: ").append(shift.getShiftType()).append("\n");
+        if (requirements.isEmpty()) {
+            builder.append("No requirements set\n");
+        } else {
+            for (Map.Entry<Role, Integer> entry : requirements.entrySet()) {
+                builder.append(entry.getKey().getRoleName())
+                        .append(" (ID: ").append(entry.getKey().getRoleID()).append(")")
+                        .append(": ").append(entry.getValue()).append("\n");
+            }
+        }
+        builder.append("==============================");
+        return builder.toString();
     }
 
     // ADDED: returns formatted requirements for a specific shift in current or next week

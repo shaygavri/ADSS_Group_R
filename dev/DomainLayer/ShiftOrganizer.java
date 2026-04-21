@@ -2,6 +2,7 @@ package DomainLayer;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,8 @@ public class ShiftOrganizer {
     private LocalDate weekStartDate;
     private boolean availabilityChangesAllowed;
     private boolean isPublished;
+    private LocalDateTime requirementsPublishedAt;
+    private LocalDateTime availabilityDeadline;
     private List<Shift[]> shiftsHistory;
 
     public ShiftOrganizer(int branchId, Shift[] currentWeek, Shift[] nextWeek) {
@@ -31,6 +34,8 @@ public class ShiftOrganizer {
         this.availableEmployeesPerShiftByRole = new HashMap<>();
         this.availabilityChangesAllowed = true;
         this.isPublished = false;
+        this.requirementsPublishedAt = null;
+        this.availabilityDeadline = null;
         this.shiftsHistory = new ArrayList<>();
     }
 
@@ -54,6 +59,21 @@ public class ShiftOrganizer {
         return isPublished;
     }
 
+    public boolean hasPublishedNextWeekRequirements() {
+        return requirementsPublishedAt != null;
+    }
+
+    public boolean canEmployeesUpdateAvailability() {
+        return requirementsPublishedAt != null
+                && availabilityChangesAllowed
+                && availabilityDeadline != null
+                && LocalDateTime.now().isBefore(availabilityDeadline);
+    }
+
+    public LocalDateTime getAvailabilityDeadline() {
+        return availabilityDeadline;
+    }
+
     public Shift[] getCurrentWeekShifts() {
         return currentWeekShifts.clone();
     }
@@ -73,12 +93,28 @@ public class ShiftOrganizer {
     }
 
     public boolean publishNextWeek() {
-        if (!hasShiftManagerForEveryNextWeekShift()) {
+        if (requirementsPublishedAt == null) {
+            return false;
+        }
+        if (!areAllNextWeekRequirementsSatisfied()) {
             return false;
         }
 
         isPublished = true;
         availabilityChangesAllowed = false;
+        return true;
+    }
+
+    public boolean publishNextWeekRequirements(LocalDateTime deadline) {
+        if (requirementsPublishedAt != null || isPublished) {
+            return false;
+        }
+        if (deadline == null || !deadline.isAfter(LocalDateTime.now())) {
+            return false;
+        }
+
+        requirementsPublishedAt = LocalDateTime.now();
+        availabilityDeadline = deadline;
         return true;
     }
 
@@ -95,7 +131,13 @@ public class ShiftOrganizer {
         availableEmployeesPerShiftByRole.clear();
         availabilityChangesAllowed = true;
         isPublished = false;
+        requirementsPublishedAt = null;
+        availabilityDeadline = null;
         return true;
+    }
+
+    public boolean shouldAutoAdvanceToNextWeek() {
+        return isPublished && !LocalDate.now().isBefore(weekStartDate.plusWeeks(1));
     }
 
     public boolean changeShiftRequirement(int shiftIndex, Role role, int minimumCount) {
@@ -107,13 +149,32 @@ public class ShiftOrganizer {
         if (role == null || minimumCount < 0) {
             return false;
         }
+        if (forNextWeek && !availabilityChangesAllowed) {
+            return false;
+        }
 
         Shift shift = forNextWeek ? nextWeekShifts[shiftIndex] : currentWeekShifts[shiftIndex];
+        if (shift.isClosedDay()) {
+            return false;
+        }
         if (minimumCount == 0) { // If 0 removes the role, if greater sets the role to be {...role : minimumCount,...} (NOT ADD!)
             shift.removeRequirement(role);
         } else {
             shift.addRequirement(role, minimumCount);
         }
+        return true;
+    }
+
+    public boolean markHolidayDay(int shiftIndex, boolean forNextWeek) {
+        validateShiftIndex(shiftIndex);
+        if (forNextWeek && !availabilityChangesAllowed) {
+            return false;
+        }
+
+        Shift[] shifts = forNextWeek ? nextWeekShifts : currentWeekShifts;
+        int dayStartIndex = (shiftIndex / 2) * 2;
+        shifts[dayStartIndex].setClosedDay(true);
+        shifts[dayStartIndex + 1].setClosedDay(true);
         return true;
     }
 
@@ -170,12 +231,32 @@ public class ShiftOrganizer {
         if (employee == null || role == null) {
             return false;
         }
+        if (!availabilityChangesAllowed) {
+            return false;
+        }
         if (employee.getBranchID() != branchId || !employee.hasAvailability(shiftIndex) || !employeeHasRole(employee, role)) {
             return false;
         }
 
         Shift shift = nextWeekShifts[shiftIndex];
+        if (shift.isClosedDay()) {
+            return false;
+        }
+        if (!shift.requiresRole(role)) {
+            return false;
+        }
+        if (shift.isAssigned(employee)) {
+            return false;
+        }
+        if (isEmployeeAssignedOnSameDate(employee, shift.getDate())) {
+            return false;
+        }
+        if (shift.getRequiredCountForRole(role) <= 0) {
+            return false;
+        }
+
         shift.assignEmployee(employee, role);
+        shift.fulfillRequirement(role);
         return true;
     }
 
@@ -185,7 +266,24 @@ public class ShiftOrganizer {
         if (employee == null) {
             return false;
         }
-        return nextWeekShifts[shiftIndex].removeEmployee(employee);
+        if (!availabilityChangesAllowed) {
+            return false;
+        }
+
+        Shift shift = nextWeekShifts[shiftIndex];
+        Role assignedRole = shift.getRoleOf(employee);
+        if (assignedRole == null) {
+            return false;
+        }
+
+        if (!shift.removeEmployee(employee)) {
+            return false;
+        }
+
+        if (!shift.isClosedDay()) {
+            shift.addBackRequirement(assignedRole);
+        }
+        return true;
     }
 
     public String showCurrentWeekShifts() {
@@ -224,6 +322,106 @@ public class ShiftOrganizer {
         return copy;
     }
 
+    public boolean areAllNextWeekRequirementsSatisfied() {
+        for (Shift shift : nextWeekShifts) {
+            if (!shift.getRequirements().isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public String nextWeekMissingRequirementsToString() {
+        if (areAllNextWeekRequirementsSatisfied()) {
+            return "All next week shifts are fully assigned";
+        }
+
+        StringBuilder builder = new StringBuilder();
+        for (Shift shift : nextWeekShifts) {
+            Map<Role, Integer> requirements = shift.getRequirements();
+            if (requirements.isEmpty()) {
+                continue;
+            }
+
+            builder.append(formatShiftName(shift)).append(": missing {");
+            boolean first = true;
+            for (Map.Entry<Role, Integer> entry : requirements.entrySet()) {
+                if (!first) {
+                    builder.append(", ");
+                }
+                builder.append(entry.getKey().getRoleName().toLowerCase())
+                        .append(": ")
+                        .append(entry.getValue());
+                first = false;
+            }
+            builder.append("}\n");
+        }
+        return builder.toString().trim();
+    }
+
+    public String nextWeekStatusToString() {
+        int missingShifts = 0;
+        int missingWorkers = 0;
+        int closedShifts = 0;
+
+        for (Shift shift : nextWeekShifts) {
+            if (shift.isClosedDay()) {
+                closedShifts++;
+            }
+            if (!shift.getRequirements().isEmpty()) {
+                missingShifts++;
+                for (Integer amount : shift.getRequirements().values()) {
+                    missingWorkers += amount;
+                }
+            }
+        }
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("===== Next Week Status =====\n");
+        builder.append("Requirements Published: ").append(requirementsPublishedAt != null ? "Yes" : "No").append("\n");
+        if (requirementsPublishedAt != null && availabilityDeadline != null) {
+            builder.append("Availability Deadline: ").append(availabilityDeadline).append("\n");
+            builder.append("Availability Window: ").append(canEmployeesUpdateAvailability() ? "Open" : "Closed").append("\n");
+        }
+        builder.append("Week Published: ").append(isPublished ? "Yes" : "No").append("\n");
+        builder.append("Closed Shifts: ").append(closedShifts).append("\n");
+        builder.append("Shifts Missing Workers: ").append(missingShifts).append("\n");
+        builder.append("Total Missing Workers: ").append(missingWorkers).append("\n");
+        builder.append("============================");
+        return builder.toString();
+    }
+
+    public String nextWeekPublishSummaryToString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("===== Next Week Publish Summary =====\n");
+
+        for (Shift shift : nextWeekShifts) {
+            builder.append(formatShiftName(shift)).append(": ");
+            if (shift.isClosedDay()) {
+                builder.append("closed day");
+            } else if (shift.getRequirements().isEmpty()) {
+                builder.append("complete");
+            } else {
+                builder.append("missing {");
+                boolean first = true;
+                for (Map.Entry<Role, Integer> entry : shift.getRequirements().entrySet()) {
+                    if (!first) {
+                        builder.append(", ");
+                    }
+                    builder.append(entry.getKey().getRoleName().toLowerCase())
+                            .append(": ")
+                            .append(entry.getValue());
+                    first = false;
+                }
+                builder.append("}");
+            }
+            builder.append("\n");
+        }
+
+        builder.append("====================================");
+        return builder.toString();
+    }
+
     private void addAvailableEmployee(Shift shift, Role role, Employee employee) {
         availableEmployeesPerShiftByRole
                 .computeIfAbsent(shift, s -> new HashMap<>())
@@ -235,18 +433,18 @@ public class ShiftOrganizer {
         }
     }
 
-    private boolean hasShiftManagerForEveryNextWeekShift() {
-        for (Shift shift : nextWeekShifts) {
-            if (!shift.hasShiftManager()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     private boolean employeeHasRole(Employee employee, Role role) {
         for (Role employeeRole : employee.getRoles()) {
             if (employeeRole.equals(role)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isEmployeeAssignedOnSameDate(Employee employee, LocalDate date) {
+        for (Shift shift : nextWeekShifts) {
+            if (shift.getDate().equals(date) && shift.isAssigned(employee)) {
                 return true;
             }
         }
@@ -296,5 +494,11 @@ public class ShiftOrganizer {
             builder.append(shift).append("\n");
         }
         return builder.toString();
+    }
+
+    private String formatShiftName(Shift shift) {
+        String dayName = shift.getDate().getDayOfWeek().name().toLowerCase();
+        String shiftName = shift.getShiftType().name().toLowerCase();
+        return Character.toUpperCase(dayName.charAt(0)) + dayName.substring(1) + " " + shiftName;
     }
 }

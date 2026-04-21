@@ -88,6 +88,10 @@ public class Service {
         return shiftService.publishNextWeek();
     }
 
+    public boolean publishNextWeekRequirements(String deadlineOption, String customDate) {
+        return shiftService.publishNextWeekRequirements(deadlineOption, customDate);
+    }
+
     public boolean setAsCurrentWeek() {
         return shiftService.setAsCurrentWeek();
     }
@@ -97,9 +101,18 @@ public class Service {
         return shiftService.changeShiftRequirement(branchId, date, shiftType, roleId, amount);
     }
 
+    public boolean markHolidayDay(String branchId, String shiftNumber, String week) {
+        return shiftService.markHolidayDay(branchId, shiftNumber, week);
+    }
+
     public boolean changeShiftRequirement(String branchId, String date, String shiftType,
                                           String roleId, String amount, String week) {
         return shiftService.changeShiftRequirement(branchId, date, shiftType, roleId, amount, week);
+    }
+
+    public boolean changeShiftRequirementByShiftNumber(String branchId, String shiftNumber,
+                                                       String roleId, String amount, String week) {
+        return shiftService.changeShiftRequirementByShiftNumber(branchId, shiftNumber, roleId, amount, week);
     }
 
     public void showAvailableEmployeesForShiftByRole(String branchId, String date,
@@ -107,9 +120,27 @@ public class Service {
         shiftService.showAvailableEmployeesForShiftByRole(branchId, date, shiftType, roleId);
     }
 
+    public void showAvailableEmployeesForShiftByRole(String branchId, String shiftNumber, String roleId) {
+        shiftService.showAvailableEmployeesForShiftByRole(branchId, shiftNumber, roleId);
+    }
+
     public boolean assignEmployee(String employeeUserName, String branchId, String date,
                                   String shiftType, String roleId) {
         return shiftService.assignEmployee(employeeUserName, branchId, date, shiftType, roleId);
+    }
+
+    public boolean assignEmployeeByShiftNumber(String employeeUserName, String branchId,
+                                               String shiftNumber, String roleId) {
+        return shiftService.assignEmployeeByShiftNumber(employeeUserName, branchId, shiftNumber, roleId);
+    }
+
+    public boolean removeEmployeeFromShiftByShiftNumber(String employeeUserName, String branchId,
+                                                        String shiftNumber) {
+        return shiftService.removeEmployeeFromShiftByShiftNumber(employeeUserName, branchId, shiftNumber);
+    }
+
+    public void showNextWeekStatus() {
+        shiftService.showNextWeekStatus();
     }
 
     public void showCurrentWeekShift() {
@@ -138,8 +169,16 @@ public class Service {
         shiftService.showShiftRequirements(branchId, date, shiftType, week);
     }
 
+    public void showShiftRequirementsByShiftNumber(String branchId, String shiftNumber, String week) {
+        shiftService.showShiftRequirementsByShiftNumber(branchId, shiftNumber, week);
+    }
+
     // ADDED: shows all roles and number of employees per role
     public void showAllRoles() {
         userService.showAllRoles();
+    }
+
+    public void showRoleOptions() {
+        userService.showRoleOptions();
     }
 }

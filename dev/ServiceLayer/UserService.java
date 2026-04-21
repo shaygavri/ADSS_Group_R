@@ -3,14 +3,17 @@ package ServiceLayer;
 import DomainLayer.Employee;
 import DomainLayer.EmployeeController;
 import DomainLayer.Role;
+import DomainLayer.ShiftController;
 
 import java.util.ArrayList;
 
 public class UserService {
     private final EmployeeController employeeController;
+    private final ShiftController shiftController;
 
     public UserService() {
         this.employeeController = EmployeeController.getInstance();
+        this.shiftController = ShiftController.getInstance();
     }
 
     public boolean changePassword(String userName, String newPassword) {
@@ -36,6 +39,20 @@ public class UserService {
 
         if (employee == null) {
             System.out.println("employee not found");
+            return false;
+        }
+
+        shiftController.syncCurrentWeekIfNeeded();
+        if (shiftController.isNextWeekLocked(employee.getBranchID())) {
+            System.out.println("cannot change availability after next week was published");
+            return false;
+        }
+        if (!shiftController.hasPublishedNextWeekRequirements(employee.getBranchID())) {
+            System.out.println("cannot change availability before next week requirements were published");
+            return false;
+        }
+        if (!shiftController.canEmployeesUpdateAvailability(employee.getBranchID())) {
+            System.out.println("cannot change availability because the one-day deadline already passed");
             return false;
         }
 
@@ -77,6 +94,20 @@ public class UserService {
 
         if (employee == null) {
             System.out.println("employee not found");
+            return false;
+        }
+
+        shiftController.syncCurrentWeekIfNeeded();
+        if (shiftController.isNextWeekLocked(employee.getBranchID())) {
+            System.out.println("cannot change availability after next week was published");
+            return false;
+        }
+        if (!shiftController.hasPublishedNextWeekRequirements(employee.getBranchID())) {
+            System.out.println("cannot change availability before next week requirements were published");
+            return false;
+        }
+        if (!shiftController.canEmployeesUpdateAvailability(employee.getBranchID())) {
+            System.out.println("cannot change availability because the one-day deadline already passed");
             return false;
         }
 
@@ -187,6 +218,7 @@ public class UserService {
 
         employee.setIsLoggedIn(true);
         System.out.println("logged in successfully");
+        printAvailabilityStatus(employee);
         return true;
     }
 
@@ -404,5 +436,30 @@ public class UserService {
     // ADDED: shows all roles and how many employees have each role
     public void showAllRoles() {
         System.out.println(employeeController.rolesAndEmployeeCountToString());
+    }
+
+    public void showRoleOptions() {
+        System.out.println(employeeController.rolesListToString());
+    }
+
+    private void printAvailabilityStatus(Employee employee) {
+        shiftController.syncCurrentWeekIfNeeded();
+        int branchId = employee.getBranchID();
+
+        if (shiftController.isNextWeekLocked(branchId)) {
+            System.out.println("Next week was already published. availability is closed.");
+            return;
+        }
+
+        if (!shiftController.hasPublishedNextWeekRequirements(branchId)) {
+            System.out.println("Next week requirements were not published yet.");
+            return;
+        }
+
+        if (shiftController.canEmployeesUpdateAvailability(branchId)) {
+            System.out.println("Next week availability deadline is open until " + shiftController.getAvailabilityDeadline(branchId));
+        } else {
+            System.out.println("Next week availability deadline is closed.");
+        }
     }
 }

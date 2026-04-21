@@ -14,6 +14,7 @@ public class Shift {
     // private LocalTime startTime;
     // private LocalTime endTime;
     private ShiftType shiftType;
+    private boolean closedDay;
     private Map<Role, Integer> requirements;
     private Map<Employee, Role> employeeRoleAssignments;
 
@@ -27,16 +28,31 @@ public class Shift {
         this.branchId = branchId;
         this.date = date;
         this.shiftType = shiftType;
+        this.closedDay = false;
         this.requirements = new HashMap<>();
         this.employeeRoleAssignments = new HashMap<>();
     }
 
     public void addRequirement(Role role, int minimumCount) {
+        if (closedDay) {
+            return;
+        }
         requirements.put(role, minimumCount);
     }
 
     public void removeRequirement(Role role) {
         requirements.remove(role);
+    }
+
+    public void clearRequirements() {
+        requirements.clear();
+    }
+
+    public void addBackRequirement(Role role) {
+        if (role == null || closedDay) {
+            return;
+        }
+        requirements.put(role, getRequiredCountForRole(role) + 1);
     }
 
     public Map<Role, Integer> getRequirements() {
@@ -45,6 +61,20 @@ public class Shift {
 
     public void assignEmployee(Employee employee, Role role) {
         employeeRoleAssignments.put(employee, role);
+    }
+
+    public boolean fulfillRequirement(Role role) {
+        Integer requiredCount = requirements.get(role);
+        if (requiredCount == null || requiredCount <= 0) {
+            return false;
+        }
+
+        if (requiredCount == 1) {
+            requirements.remove(role);
+        } else {
+            requirements.put(role, requiredCount - 1);
+        }
+        return true;
     }
 
     public boolean removeEmployee(Employee employee) {
@@ -57,6 +87,26 @@ public class Shift {
 
     public boolean isAssigned(Employee employee) {
         return employeeRoleAssignments.containsKey(employee);
+    }
+
+    public boolean requiresRole(Role role) {
+        return requirements.containsKey(role);
+    }
+
+    public int getRequiredCountForRole(Role role) {
+        Integer requiredCount = requirements.get(role);
+        return requiredCount == null ? 0 : requiredCount;
+    }
+
+    public boolean isClosedDay() {
+        return closedDay;
+    }
+
+    public void setClosedDay(boolean closedDay) {
+        this.closedDay = closedDay;
+        if (closedDay) {
+            clearRequirements();
+        }
     }
 
     public List<Employee> getAssignedEmployees() {
@@ -117,6 +167,7 @@ public class Shift {
                 .append(", day=").append(date.getDayOfWeek())
                 .append(", date=").append(date)
                 .append(", type=").append(shiftType)
+                .append(", closed=").append(closedDay)
                 .append(", assigned=").append(employeeRoleAssignments.size())
                 .append(", requirements=[");
         if (requirements.isEmpty()) {

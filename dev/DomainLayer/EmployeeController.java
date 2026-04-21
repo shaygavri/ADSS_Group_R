@@ -203,6 +203,23 @@ public class EmployeeController {
         return builder.toString();
     }
 
+    public String rolesListToString() {
+        if (roles.isEmpty()) {
+            return "No roles in the system";
+        }
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("Current roles:\n");
+        for (Role role : roles) {
+            builder.append("ID: ")
+                    .append(role.getRoleID())
+                    .append(" - ")
+                    .append(role.getRoleName())
+                    .append("\n");
+        }
+        return builder.toString();
+    }
+
     public boolean addBranch(int branchID) {
         if (branches.contains(branchID)) {
             return false;
