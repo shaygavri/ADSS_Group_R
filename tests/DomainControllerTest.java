@@ -1,7 +1,9 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.time.LocalDate;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class DomainControllerTest {
@@ -14,23 +16,9 @@ class DomainControllerTest {
     }
 
     @Test
-    void testAddNewSup() {
-        boolean added = domain.addNewSup("Osem", "S123", 10.0);
-        assertTrue(added);
-        assertEquals(1, domain.displayAllSup().size());
-        assertEquals("Osem", domain.findSupplierById("S123").getSupplierName());
-    }
-
-    @Test
-    void testAddDuplicateSupplier() {
-        domain.addNewSup("Osem", "S123", 10.0);
-        boolean addedAgain = domain.addNewSup("Tnuva", "S123", 5.0);
-        assertFalse(addedAgain, "Should not allow duplicate supplier IDs");
-    }
-
-    @Test
     void testAddCategory() {
         boolean added = domain.addCategory("Dairy", "Milk", "1L");
+
         assertTrue(added);
 
         Category category = domain.findCategory("Dairy", "Milk", "1L");
@@ -44,23 +32,42 @@ class DomainControllerTest {
     @Test
     void testAddDuplicateCategory() {
         domain.addCategory("Dairy", "Milk", "1L");
+
         boolean addedAgain = domain.addCategory("Dairy", "Milk", "1L");
+
         assertFalse(addedAgain, "Should not allow an identical category classification");
     }
 
     @Test
     void testFindCategoryCaseInsensitive() {
         domain.addCategory("Dairy", "Milk", "1L");
+
         Category category = domain.findCategory("dairy", "milk", "1l");
+
         assertNotNull(category);
     }
 
     @Test
     void testAddProductBatchAndIdGeneration() {
-        domain.addNewSup("Tnuva", "S1", 10.0);
         domain.addCategory("Dairy", "Milk", "1L");
 
-        boolean added = domain.addProductBatch("Milk", "Tnuva", "Dairy", "Milk", "1L", 10, 10, 5, 1, 5.0, LocalDate.now().plusDays(10), 0, "S1", "A1", "S1");
+        boolean added = domain.addProductBatch(
+                "Milk",
+                "Tnuva",
+                "Dairy",
+                "Milk",
+                "1L",
+                10,
+                10,
+                5,
+                1,
+                5.0,
+                LocalDate.now().plusDays(10),
+                0,
+                "S1",
+                "A1",
+                "S1"
+        );
 
         assertTrue(added);
 
@@ -78,29 +85,74 @@ class DomainControllerTest {
     }
 
     @Test
-    void testAddProductWithMissingSupplier() {
+    void testAddProductDoesNotDependOnSupplier() {
         domain.addCategory("Dairy", "Milk", "1L");
 
-        boolean added = domain.addProductBatch("Milk", "Tnuva", "Dairy", "Milk", "1L", 10, 10, 5, 1, 5.0, LocalDate.now(), 0, "NON_EXISTENT", "A1", "S1");
+        boolean added = domain.addProductBatch(
+                "Milk",
+                "Tnuva",
+                "Dairy",
+                "Milk",
+                "1L",
+                10,
+                10,
+                5,
+                1,
+                5.0,
+                LocalDate.now().plusDays(10),
+                0,
+                "NON_EXISTENT_SUPPLIER",
+                "A1",
+                "S1"
+        );
 
-        assertFalse(added, "Should return false if supplier is not found");
+        assertTrue(added, "Product should not depend on supplier anymore");
     }
 
     @Test
     void testAddProductWithMissingCategory() {
-        domain.addNewSup("Tnuva", "S1", 10.0);
-
-        boolean added = domain.addProductBatch("Milk", "Tnuva", "Dairy", "Milk", "1L", 10, 10, 5, 1, 5.0, LocalDate.now(), 0, "S1", "A1", "S1");
+        boolean added = domain.addProductBatch(
+                "Milk",
+                "Tnuva",
+                "Dairy",
+                "Milk",
+                "1L",
+                10,
+                10,
+                5,
+                1,
+                5.0,
+                LocalDate.now().plusDays(10),
+                0,
+                "S1",
+                "A1",
+                "S1"
+        );
 
         assertFalse(added, "Should return false if category is not found");
     }
 
     @Test
     void testUpdateQuantities() {
-        domain.addNewSup("S", "S1", 0);
         domain.addCategory("D", "M", "1L");
 
-        boolean added = domain.addProductBatch("Milk", "T", "D", "M", "1L", 10, 10, 5, 1, 5.0, LocalDate.now(), 0, "S1", "A1", "S1");
+        boolean added = domain.addProductBatch(
+                "Milk",
+                "T",
+                "D",
+                "M",
+                "1L",
+                10,
+                10,
+                5,
+                1,
+                5.0,
+                LocalDate.now().plusDays(10),
+                0,
+                "S1",
+                "A1",
+                "S1"
+        );
 
         assertTrue(added);
 
@@ -112,31 +164,63 @@ class DomainControllerTest {
         assertTrue(updated);
         assertEquals(20, domain.getProductByID(realId).getShopQuantity());
         assertEquals(30, domain.getProductByID(realId).getWarehouseQuantity());
+        assertEquals(50, domain.getProductByID(realId).getTotalQuantity());
     }
 
     @Test
     void testUpdateStatus() {
-        domain.addNewSup("S", "S1", 0);
         domain.addCategory("D", "M", "1L");
 
-        boolean added = domain.addProductBatch("Milk", "T", "D", "M", "1L", 10, 10, 5, 1, 5.0, LocalDate.now(), 0, "S1", "A1", "S1");
+        boolean added = domain.addProductBatch(
+                "Milk",
+                "T",
+                "D",
+                "M",
+                "1L",
+                10,
+                10,
+                5,
+                1,
+                5.0,
+                LocalDate.now().plusDays(10),
+                0,
+                "S1",
+                "A1",
+                "S1"
+        );
 
         assertTrue(added);
 
         Product product = domain.getProductByCat("D").get(0);
         String realId = product.getProductID();
 
-        domain.updateNewStatus(realId, false);
+        boolean updated = domain.updateNewStatus(realId, false);
 
+        assertTrue(updated);
         assertFalse(domain.getProductByID(realId).getIsActive());
     }
 
     @Test
     void testGetProductByCategoryCaseInsensitive() {
-        domain.addNewSup("S", "S1", 0);
         domain.addCategory("Dairy", "M", "1L");
 
-        boolean added = domain.addProductBatch("Milk", "T", "Dairy", "M", "1L", 10, 10, 5, 1, 5.0, LocalDate.now(), 0, "S1", "A1", "S1");
+        boolean added = domain.addProductBatch(
+                "Milk",
+                "T",
+                "Dairy",
+                "M",
+                "1L",
+                10,
+                10,
+                5,
+                1,
+                5.0,
+                LocalDate.now().plusDays(10),
+                0,
+                "S1",
+                "A1",
+                "S1"
+        );
 
         assertTrue(added);
 
@@ -147,10 +231,25 @@ class DomainControllerTest {
 
     @Test
     void testSystemAlerts() {
-        domain.addNewSup("S", "S1", 0);
         domain.addCategory("D", "M", "1");
 
-        boolean added = domain.addProductBatch("LowStock", "T", "D", "M", "1", 2, 2, 5, 1, 5.0, LocalDate.now(), 0, "S1", "A1", "S1");
+        boolean added = domain.addProductBatch(
+                "LowStock",
+                "T",
+                "D",
+                "M",
+                "1",
+                2,
+                2,
+                5,
+                1,
+                5.0,
+                LocalDate.now().plusDays(10),
+                0,
+                "S1",
+                "A1",
+                "S1"
+        );
 
         assertTrue(added);
 
@@ -162,22 +261,87 @@ class DomainControllerTest {
 
     @Test
     void testAddSaleAppliesToProducts() {
-        domain.addNewSup("S", "S1", 0);
         domain.addCategory("Dairy", "Milk", "1L");
 
-        boolean productAdded = domain.addProductBatch("Milk", "T", "Dairy", "Milk", "1L", 10, 10, 5, 1, 100.0, LocalDate.now(), 0, "S1", "A1", "S1");
+        boolean productAdded = domain.addProductBatch(
+                "Milk",
+                "T",
+                "Dairy",
+                "Milk",
+                "1L",
+                10,
+                10,
+                5,
+                1,
+                100.0,
+                LocalDate.now().plusDays(10),
+                0,
+                "S1",
+                "A1",
+                "S1"
+        );
+
         assertTrue(productAdded);
-        domain.addSale("S100", "Dairy", "Milk", 20.0, LocalDate.now().minusDays(1), LocalDate.now().plusDays(1));
+
+        boolean saleAdded = domain.addSale(
+                "SALE100",
+                "Dairy",
+                "Milk",
+                20.0,
+                LocalDate.now().minusDays(1),
+                LocalDate.now().plusDays(1)
+        );
+
+        assertTrue(saleAdded);
         assertEquals(1, domain.displayAllStoreSales().size());
     }
 
     @Test
-    void testUpdateSupplierDiscount() {
-        domain.addNewSup("Osem", "S123", 10.0);
+    void testMockSupplierSystemInitializesSuppliers() {
+        MockSupplierSystem mockSupplierSystem = new MockSupplierSystem();
 
-        boolean updated = domain.updateSupDicountRate("S123", 15.5);
+        List<Supplier> suppliers = mockSupplierSystem.getSuppliers();
 
-        assertTrue(updated);
-        assertEquals(15.5, domain.findSupplierById("S123").getDiscountRate());
+        assertNotNull(suppliers);
+        assertFalse(suppliers.isEmpty());
+    }
+
+    @Test
+    void testMockSupplierSystemAddSupplier() {
+        MockSupplierSystem mockSupplierSystem = new MockSupplierSystem();
+
+        Supplier supplier = new Supplier("Osem", "S999");
+
+        boolean added = mockSupplierSystem.addSupplier(supplier);
+
+        assertTrue(added);
+        assertNotNull(mockSupplierSystem.findSupplierById("S999"));
+        assertEquals("Osem", mockSupplierSystem.findSupplierById("S999").getSupplierName());
+    }
+
+    @Test
+    void testMockSupplierSystemDoesNotAllowDuplicateSupplierId() {
+        MockSupplierSystem mockSupplierSystem = new MockSupplierSystem();
+
+        Supplier supplier1 = new Supplier("Osem", "S999");
+        Supplier supplier2 = new Supplier("Tnuva", "S999");
+
+        boolean firstAdded = mockSupplierSystem.addSupplier(supplier1);
+        boolean secondAdded = mockSupplierSystem.addSupplier(supplier2);
+
+        assertTrue(firstAdded);
+        assertFalse(secondAdded);
+    }
+
+    @Test
+    void testMockSupplierSystemReturnsDummyBestOffer() {
+        MockSupplierSystem mockSupplierSystem = new MockSupplierSystem();
+
+        SupplierOffer offer = mockSupplierSystem.getBestOffer("P1", 50);
+
+        assertNotNull(offer);
+        assertEquals("P1", offer.getProductId());
+        assertEquals(50, offer.getQuantity());
+        assertTrue(offer.getTotalPrice() > 0);
     }
 }

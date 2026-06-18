@@ -44,7 +44,8 @@ public class Sale {
         return target_subcat;
     }
     public String getSaleID() {return saleID;}
-
+    public LocalDate getStartDate() {return startDate;}
+    public LocalDate getEndDate() {return endDate;}
     public void setEndDate(LocalDate endDate) {
         if (endDate.isAfter(this.startDate))  {
             this.endDate = endDate;

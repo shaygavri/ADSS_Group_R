@@ -30,7 +30,6 @@ public class ProductService {
         if (sub_cat_name == null || sub_cat_name.isEmpty()) return errorType("Sub-Category");
         if (aisle == null || aisle.isEmpty()) return errorType("Aisle");
         if (shelf == null || shelf.isEmpty()) return errorType("Shelf");
-        if (supplierID == null || supplierID.isEmpty()) return errorType("Supplier ID");
         if (size == null || size.trim().isEmpty()) {return errorType("Size");}
         if (cost <= 0) return errorType("Cost Price (must be positive)");
         if (shopQuantity < 0) return errorType("Shop Quantity (cannot be negative)");

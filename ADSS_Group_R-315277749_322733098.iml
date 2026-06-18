@@ -9,8 +9,21 @@
       <sourceFolder url="file://$MODULE_DIR$/dev/ServiceLayer" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/dev/DAO" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/dev/DTO" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/dev/Repository" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/dev/SupplierIntegrationMock" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/sqlite-jdbc-3.53.2.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library" scope="TEST">
       <library name="JUnit4">

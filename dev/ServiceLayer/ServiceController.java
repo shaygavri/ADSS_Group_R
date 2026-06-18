@@ -1,16 +1,15 @@
+import java.util.List;
 /**
  * Central controller for the Service Layer.
- * This class integrates the core business logic by grouping different services like Product, Supplier, Sale, and Report
- * management into one controller.
- * into a single entry point. It simplifies the interaction between the Presentation Layer
- * and the various business logic components.
+ *
+ * This class integrates the core business logic by grouping different services
+ * like Product, Supplier, Sale, Category and Report management into one controller.
  */
-
 public class ServiceController {
     /** Service handling core product management and stock updates. */
     public ProductService productService;
 
-    /** Service managing supplier credentials and discount rates. */
+    /** Service managing suppliers through the mocked supplier system. */
     public SupplierService supplierService;
 
     /** Service overseeing store-wide sales and promotional logic. */
@@ -18,19 +17,40 @@ public class ServiceController {
 
     /** Service responsible for generating inventory and damage reports. */
     public ReportService reportService;
-    public CategoryService categoryService;
 
+    /** Service responsible for category operations. */
+    public CategoryService categoryService;
+    private OrderService orderService;
     /**
-     * Constructs a new ServiceController and initializes all sub-services.
-     * Each sub-service is provided with a shared instance of the DomainController
-     * to ensure data consistency across the system.
-     * * @param domainController The domain layer instance to be shared among all services.
+     * Mock supplier system.
      */
-    public  ServiceController(DomainController domainController) {
-        this.productService = new ProductService(domainController);
-        this.supplierService = new SupplierService(domainController);
-        this.saleService = new SaleService(domainController);
-        this.reportService = new ReportService(domainController);
+    public MockSupplierSystem supplierSystem;
+
+    public ServiceController(DomainController domainController) {
+        this.supplierSystem = new MockSupplierSystem();
         this.categoryService = new CategoryService(domainController);
+        this.productService = new ProductService(domainController);
+        this.reportService = new ReportService(domainController);
+        this.saleService = new SaleService(domainController);
+        this.supplierService = new SupplierService(supplierSystem);
+        this.orderService = new OrderService(domainController, supplierSystem);
     }
+    public List<Product> requestShortageOrder() {
+        return orderService.requestShortageOrder();}
+    public Order prepareShortageOrder(String productId) {
+        return orderService.prepareShortageOrder(productId);}
+    public boolean confirmShortageOrder(String orderId) {
+        return orderService.confirmShortageOrder(orderId);}
+    public boolean markOrderAsReceived(String orderId) {
+        return orderService.markOrderAsReceived(orderId);}
+    public PeriodicOrderRuleDTO createPeriodicOrderRule(String productId, int quantity, int dayOfMonth) {
+        return orderService.createPeriodicOrderRule(productId, quantity, dayOfMonth);}
+    public List<Order> runAutomaticPeriodicOrders() {
+        return orderService.runAutomaticPeriodicOrders();}
+    public List<PeriodicOrderRuleDTO> getAllPeriodicOrderRules() {
+        return orderService.getAllPeriodicOrderRules();}
+    public boolean deactivatePeriodicOrderRule(String ruleId) {
+        return orderService.deactivatePeriodicOrderRule(ruleId);}
+    public List<Order> getAllOrders() {
+        return orderService.getAllOrders();}
 }

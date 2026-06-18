@@ -154,8 +154,7 @@ public class InventoryUI {
         int damagedAmount = scanner.nextInt();
         System.out.print("Cost Price from Supplier: ");
         double cost = scanner.nextDouble();
-        System.out.print("Enter Supplier ID: ");
-        String sId = scanner.next().toUpperCase();
+        String sId = "MOCK_SUPPLIER";
         scanner.nextLine();
         System.out.print("Enter Expiration Date (YYYY-MM-DD): ");
         String dateStr = scanner.nextLine();
@@ -423,21 +422,44 @@ public class InventoryUI {
 
     public void suppliersSubMenu() {
         int subChoice = -1;
-        while (subChoice != 4) {
+
+        while (subChoice != 7) {
             System.out.println("Please choose from the following options");
-            System.out.println("1. Add Supplier");
-            System.out.println("2. Update Supplier Discount");
-            System.out.println("3. Show Suppliers");
-            System.out.println("4. Back To Main Menu");
+            System.out.println("1. Add Supplier To Mock System");
+            System.out.println("2. Show Suppliers From Mock System");
+            System.out.println("3. Handle Shortage Orders");
+            System.out.println("4. Mark Order As Received");
+            System.out.println("5. Create Periodic Order Contract");
+            System.out.println("6. Run Periodic Orders");
+            System.out.println("7. Back To Main Menu");
 
             try {
                 subChoice = scanner.nextInt();
+
                 switch (subChoice) {
-                    case 1: addSupplier();  break;
-                    case 2: updateSupDiscount();  break;
-                    case 3: showSuppliers(); break; // todo
-                    case 4: System.out.println("Back To Main Menu"); break;
-                    default: System.out.println("Wrong input, please try again");
+                    case 1:
+                        addSupplier();
+                        break;
+                    case 2:
+                        showSuppliers();
+                        break;
+                    case 3:
+                        handleShortageOrdersUI();
+                        break;
+                    case 4:
+                        markOrderAsReceivedUI();
+                        break;
+                    case 5:
+                        createPeriodicOrderContractUI();
+                        break;
+                    case 6:
+                        runPeriodicOrdersUI();
+                        break;
+                    case 7:
+                        System.out.println("Back To Main Menu");
+                        break;
+                    default:
+                        System.out.println("Wrong input, please try again");
                 }
             } catch (Exception e) {
                 System.out.println("Wrong input, please try again");
@@ -445,32 +467,160 @@ public class InventoryUI {
             }
         }
     }
-    private  void addSupplier() {
+
+    private void addSupplier() {
+        scanner.nextLine();
         System.out.println("Please enter Supplier Name:");
-        String name = scanner.next();
+        String name = scanner.nextLine();
         System.out.println("Please enter Supplier ID:");
-        String id = scanner.next();
-        System.out.println("Please enter Supplier Discount Rate: (e.g. 10,5.5,17.0)");
-        double rate = scanner.nextDouble();
-        boolean success = service.supplierService.addNewSup(name, id, rate);
+        String id = scanner.nextLine();
+        boolean success = service.supplierService.addNewSup(name, id, 0);
         if (success) {
-            System.out.println("Supplier ID: " + id + " added successfully");
+            System.out.println("Supplier ID: " + id + " added successfully to the mock supplier system.");
         } else {
             System.out.println("Failed to add supplier.");
         }
     }
-    private void updateSupDiscount() {
-        System.out.println("Please enter Supplier ID:");
-        String id = scanner.next();
-        System.out.println("Please enter Supplier Discount Rate:");
-        double rate = scanner.nextDouble();
-        boolean success = service.supplierService.updateSupDiscountRate(id, rate);
-        if (success) {
-        System.out.println("Supplier discount updated successfully");}
-        else {
-            System.out.println("Failed to update supplier discount.");
+    private void handleShortageOrdersUI() {
+        scanner.nextLine();
+
+        List<Product> shortageProducts = service.requestShortageOrder();
+
+        if (shortageProducts == null || shortageProducts.isEmpty()) {
+            System.out.println("No shortage products were found.");
+            return;
+        }
+
+        System.out.println("\n--- SHORTAGE PRODUCTS ---");
+
+        for (Product product : shortageProducts) {
+            System.out.println("----------------------------------------");
+            System.out.println("Product ID: " + product.getProductID());
+            System.out.println("Name: " + product.getProductName());
+            System.out.println("Brand: " + product.getBrand());
+            System.out.println("Total Quantity: " + product.getTotalQuantity());
+            System.out.println("Minimum Limit: " + product.getMin_limit());
+        }
+
+        System.out.println("----------------------------------------");
+        System.out.print("Enter Product ID to create shortage order OR 0 to cancel: ");
+        String productId = scanner.nextLine().toUpperCase();
+
+        if (productId.equals("0")) {
+            System.out.println("Operation cancelled.");
+            return;
+        }
+
+        Order order = service.prepareShortageOrder(productId);
+
+        if (order == null) {
+            System.out.println("Failed to prepare shortage order.");
+            return;
+        }
+
+        System.out.println("\nDraft shortage order was created:");
+        printOrder(order);
+
+        System.out.print("\nApprove and send this order to supplier? (y/n): ");
+        String approve = scanner.nextLine();
+
+        if (approve.equalsIgnoreCase("y")) {
+            boolean confirmed = service.confirmShortageOrder(order.getOrderId());
+
+            if (confirmed) {
+                System.out.println("Order was approved and sent to supplier.");
+            } else {
+                System.out.println("Failed to approve and send order.");
+            }
+        } else {
+            System.out.println("Order stayed as DRAFT and was not sent.");
         }
     }
+
+    private void markOrderAsReceivedUI() {
+        scanner.nextLine();
+
+        System.out.print("Enter Order ID to mark as received: ");
+        String orderId = scanner.nextLine();
+
+        boolean success = service.markOrderAsReceived(orderId);
+
+        if (success) {
+            System.out.println("Order marked as RECEIVED and inventory was updated.");
+        } else {
+            System.out.println("Failed to mark order as received.");
+        }
+    }
+
+    private void createPeriodicOrderContractUI() {
+        try {
+            scanner.nextLine();
+
+            System.out.print("Enter Product ID: ");
+            String productId = scanner.nextLine().toUpperCase();
+
+            System.out.print("Enter quantity to order each period: ");
+            int quantity = scanner.nextInt();
+
+            System.out.print("Enter day of month for delivery (1-31): ");
+            int dayOfMonth = scanner.nextInt();
+
+            PeriodicOrderRuleDTO rule = service.createPeriodicOrderRule(productId, quantity, dayOfMonth);
+
+            if (rule == null) {
+                System.out.println("Failed to create periodic order contract.");
+                return;
+            }
+
+            System.out.println("Periodic order contract created successfully:");
+            printPeriodicOrderRule(rule);
+
+        } catch (Exception e) {
+            System.out.println("Invalid input.");
+            scanner.nextLine();
+        }
+    }
+
+    private void runPeriodicOrdersUI() {
+        List<Order> createdOrders = service.runAutomaticPeriodicOrders();
+
+        if (createdOrders == null || createdOrders.isEmpty()) {
+            System.out.println("No periodic orders were created today.");
+            return;
+        }
+
+        System.out.println("Periodic orders were created and sent successfully:");
+
+        for (Order order : createdOrders) {
+            printOrder(order);
+        }
+    }
+
+    private void printOrder(Order order) {
+        System.out.println("----------------------------------------");
+        System.out.println("Order ID: " + order.getOrderId());
+        System.out.println("Supplier: " + order.getSupplierName());
+        System.out.println("Type: " + order.getOrderType());
+        System.out.println("Status: " + order.getStatus());
+        System.out.println("Expected Delivery Date: " + order.getExpectedDeliveryDate());
+        System.out.println("Total Price: " + order.getTotalPrice());
+        System.out.println("Items:");
+
+        for (OrderItem item : order.getItems()) {
+            System.out.println("Product ID: " + item.getProductId() + ", Quantity: " + item.getQuantity() + ", Unit Price: " + item.getUnitPrice() + ", Total: " + item.calculateTotalPrice());
+        }
+    }
+
+    private void printPeriodicOrderRule(PeriodicOrderRuleDTO rule) {
+        System.out.println("----------------------------------------");
+        System.out.println("Rule ID: " + rule.getRuleId());
+        System.out.println("Product ID: " + rule.getProductId());
+        System.out.println("Quantity: " + rule.getQuantity());
+        System.out.println("Day Of Month: " + rule.getDayOfMonth());
+        System.out.println("Next Delivery Date: " + rule.getNextDeliveryDate());
+        System.out.println("Active: " + rule.isActive());
+    }
+
     private void showSuppliers(){
         List<Supplier> list = service.supplierService.getAllSuppliers();
         if (list.isEmpty()) {
@@ -483,7 +633,6 @@ public class InventoryUI {
             System.out.println("=".repeat(55));
     }
     }
-
     private void SystemAlerts() {
         List<Product> lowStock = service.reportService.getSystemAlerts();
         System.out.println("\nSYSTEM NOTIFICATIONS - LOW STOCK");
