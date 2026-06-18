@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36">
+  <diagram name="Page-1" id="a6FUNKAolXe9AR-oMMKT">
+    <mxGraphModel dx="1438" dy="1069" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1900" pageHeight="2100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="layer-frame-presentation" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;fontStyle=1;verticalAlign=top;align=center;spacingTop=4;container=0;collapsible=0;" value="Presentation Layer" vertex="1">
+          <mxGeometry height="306.06" width="1000" x="485" y="21" as="geometry" />
+        </mxCell>
+        <mxCell id="layer-frame-service" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;fontStyle=1;verticalAlign=top;align=center;spacingTop=4;container=0;collapsible=0;" value="Service Layer" vertex="1">
+          <mxGeometry height="540" width="1450" x="229" y="404" as="geometry" />
+        </mxCell>
+        <mxCell id="layer-frame-domain" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;fontStyle=1;verticalAlign=top;align=center;spacingTop=4;container=0;collapsible=0;" value="Domain Layer" vertex="1">
+          <mxGeometry height="1064" width="1795" x="45" y="966" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-1" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);fontSize=8;" value="Main" vertex="1">
+          <mxGeometry height="70" width="385" x="778" y="63" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-2" parent="xG5DedRMoFBA8klz4QRR-1" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1">
+          <mxGeometry height="6" width="385" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-3" parent="xG5DedRMoFBA8klz4QRR-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=3;spacingRight=2;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=7;" value="+ main(String[] args) : void&#xa;+ handleEmployeeLogin(Scanner scanner) : void&#xa;+ handleHRLogin(Scanner scanner) : void" vertex="1">
+          <mxGeometry height="34" width="385" y="36" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-6" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);fontSize=8;" value="Menu_User" vertex="1">
+          <mxGeometry height="88" width="206" x="1240" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-7" parent="xG5DedRMoFBA8klz4QRR-6" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=7;whiteSpace=wrap;html=1;" value="+userName: String" vertex="1">
+          <mxGeometry height="14" width="206" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-8" parent="xG5DedRMoFBA8klz4QRR-6" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=7;whiteSpace=wrap;html=1;" value="+service: Service" vertex="1">
+          <mxGeometry height="14" width="206" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-9" parent="xG5DedRMoFBA8klz4QRR-6" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1">
+          <mxGeometry height="6" width="206" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-10" parent="xG5DedRMoFBA8klz4QRR-6" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=3;spacingRight=2;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=7;" value="+ printMenu() : void&#xa;+ getAnswer() : void" vertex="1">
+          <mxGeometry height="24" width="206" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-12" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);fontSize=8;" value="Menu_HR" vertex="1">
+          <mxGeometry height="108" width="199" x="520" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-13" parent="xG5DedRMoFBA8klz4QRR-12" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=7;whiteSpace=wrap;html=1;" value="+userName: String" vertex="1">
+          <mxGeometry height="14" width="199" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-14" parent="xG5DedRMoFBA8klz4QRR-12" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=7;whiteSpace=wrap;html=1;" value="+service: Service" vertex="1">
+          <mxGeometry height="14" width="199" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-15" parent="xG5DedRMoFBA8klz4QRR-12" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1">
+          <mxGeometry height="6" width="199" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-16" parent="xG5DedRMoFBA8klz4QRR-12" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=3;spacingRight=2;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=7;" value="+ printMenu() : void&#xa;+ getAnswer() : void&#xa;- printShiftOptions() : void&#xa;- printDayOptions() : void" vertex="1">
+          <mxGeometry height="44" width="199" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-18" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=24;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);fontSize=8;" value="Service" vertex="1">
+          <mxGeometry height="280" width="237" x="824" y="441" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-19" parent="xG5DedRMoFBA8klz4QRR-18" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-userService: UserService" vertex="1">
+          <mxGeometry height="10" width="237" y="24" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-20" parent="xG5DedRMoFBA8klz4QRR-18" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-shiftService: ShiftService" vertex="1">
+          <mxGeometry height="10" width="237" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-21" parent="xG5DedRMoFBA8klz4QRR-18" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1">
+          <mxGeometry height="4" width="237" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-18-methods" parent="xG5DedRMoFBA8klz4QRR-18" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=3;spacingRight=2;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=5;" value="+ Service()&#xa;+ login(String userName, String password) : boolean&#xa;+ changePassword(String userName, String newPassword) : boolean&#xa;+ pickAvailability(String userName, String input) : boolean&#xa;+ showMyAvailability(String userName) : void&#xa;+ changeAvailability(String userName, String oldShift, String newShift) : boolean&#xa;+ updateBankAccount(String userName, String bank, String branch, String account) : boolean&#xa;+ showMyPersonalDetails(String userName) : void&#xa;+ logout(String userName) : boolean&#xa;+ isHRManager(String userName) : boolean&#xa;+ createRole(String roleId, String roleName, String description) : boolean&#xa;+ addRoleToEmployee(String employeeUserName, String roleId) : boolean&#xa;+ hireEmployee(String employeeUserName, String employeeId, String password, String branchId, String hourlySalary, String employmentType, String bankNumber, String bankBranchNumber, String bankAccountNumber) : boolean&#xa;+ fireEmployee(String employeeUserName) : boolean&#xa;+ changeEmployeeSalary(String employeeUserName, String newSalary) : boolean&#xa;+ showAllEmployeesAndRoles() : void&#xa;+ publishNextWeek() : boolean&#xa;+ publishNextWeekRequirements(String deadlineOption, String customDate) : boolean&#xa;+ setAsCurrentWeek() : boolean&#xa;+ changeShiftRequirement(String branchId, String date, String shiftType, String roleId, String amount) : boolean&#xa;+ markHolidayDay(String branchId, String shiftNumber, String week) : boolean&#xa;+ changeShiftRequirement(String branchId, String date, String shiftType, String roleId, String amount, String week) : boolean&#xa;+ changeShiftRequirementByShiftNumber(String branchId, String shiftNumber, String roleId, String amount, String week) : boolean&#xa;+ showAvailableEmployeesForShiftByRole(String branchId, String date, String shiftType, String roleId) : void&#xa;+ showAvailableEmployeesForShiftByRole(String branchId, String shiftNumber, String roleId) : void&#xa;+ assignEmployee(String employeeUserName, String branchId, String date, String shiftType, String roleId) : boolean&#xa;+ assignEmployeeByShiftNumber(String employeeUserName, String branchId, String shiftNumber, String roleId) : boolean&#xa;+ removeEmployeeFromShiftByShiftNumber(String employeeUserName, String branchId, String shiftNumber) : boolean&#xa;+ showNextWeekStatus() : void&#xa;+ showCurrentWeekShift() : void&#xa;+ showNextWeekShift() : void&#xa;+ showAllShiftsHistory() : void&#xa;+ showShiftsHistoryByBranch(String branchId) : void&#xa;+ showShiftRequirements(String branchId, String date, String shiftType) : void&#xa;+ showShiftRequirements(String branchId, String date, String shiftType, String week) : void&#xa;+ showShiftRequirementsByShiftNumber(String branchId, String shiftNumber, String week) : void&#xa;+ showAllRoles() : void&#xa;+ showRoleOptions() : void" vertex="1">
+          <mxGeometry height="232" width="237" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-3" edge="1" parent="1" source="xG5DedRMoFBA8klz4QRR-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=none;endFill=0;" target="xG5DedRMoFBA8klz4QRR-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-22" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="built from" vertex="1">
+          <mxGeometry relative="1" x="0.6788" y="2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-42" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8907" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-44" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.4552" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-22" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=24;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);fontSize=8;" value="UserService" vertex="1">
+          <mxGeometry height="174" width="369" x="409" y="733" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-23" parent="xG5DedRMoFBA8klz4QRR-22" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-employeeController: EmployeeController" vertex="1">
+          <mxGeometry height="10" width="369" y="24" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-24" parent="xG5DedRMoFBA8klz4QRR-22" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1">
+          <mxGeometry height="4" width="369" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-22-methods" parent="xG5DedRMoFBA8klz4QRR-22" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=3;spacingRight=2;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=5;" value="+ UserService()&#xa;+ changePassword(String userName, String newPassword) : boolean&#xa;+ pickAvailability(String userName, String input) : boolean&#xa;+ showMyAvailability(String userName) : void&#xa;+ changeAvailability(String userName, String oldInput, String newInput) : boolean&#xa;+ updateBankAccount(String userName, String bankStr, String branchStr, String accountStr) : boolean&#xa;+ showMyPersonalDetails(String userName) : void&#xa;+ logout(String userName) : boolean&#xa;+ login(String userName, String password) : boolean&#xa;+ isHRManager(String userName) : boolean&#xa;+ createRole(String roleIdStr, String roleName, String description) : boolean&#xa;- parseShifts(String input) : ArrayList&lt;Integer&gt;&#xa;- isValidShift(int shift) : boolean&#xa;- shiftToText(int shift) : String&#xa;+ addRoleToEmployee(String employeeUserName, String roleInput) : boolean&#xa;+ hireEmployee(String employeeUserName, String employeeId, String password, String branchIdStr, String hourlySalaryStr, String employmentTypeStr, String bankNumberStr, String bankBranchNumberStr, String bankAccountNumberStr) : boolean&#xa;+ fireEmployee(String employeeUserName) : boolean&#xa;+ changeEmployeeSalary(String employeeUserName, String newSalaryStr) : boolean&#xa;+ showAllEmployeesAndRoles() : void&#xa;+ showAllRoles() : void&#xa;+ showRoleOptions() : void&#xa;- printAvailabilityStatus(Employee employee) : void" vertex="1">
+          <mxGeometry height="136" width="369" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-4" edge="1" parent="1" source="xG5DedRMoFBA8klz4QRR-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;endArrow=none;endFill=0;" target="xG5DedRMoFBA8klz4QRR-36">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1265" y="956" />
+              <mxPoint x="1333" y="956" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-21" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-4" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="built from" vertex="1">
+          <mxGeometry relative="1" x="0.6646" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-40" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-4" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.9037" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-41" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-4" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.8935" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-25" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=24;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);fontSize=8;" value="ShiftService" vertex="1">
+          <mxGeometry height="190" width="369" x="1080" y="721" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-26" parent="xG5DedRMoFBA8klz4QRR-25" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-shiftController: ShiftController" vertex="1">
+          <mxGeometry height="10" width="369" y="24" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-27" parent="xG5DedRMoFBA8klz4QRR-25" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-employeeController: EmployeeController" vertex="1">
+          <mxGeometry height="10" width="369" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-28" parent="xG5DedRMoFBA8klz4QRR-25" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1">
+          <mxGeometry height="4" width="369" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-25-methods" parent="xG5DedRMoFBA8klz4QRR-25" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=3;spacingRight=2;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=5;" value="+ ShiftService()&#xa;- syncCurrentWeekIfNeeded() : void&#xa;+ publishNextWeek() : boolean&#xa;+ publishNextWeekRequirements(String deadlineOption, String customDate) : boolean&#xa;+ setAsCurrentWeek() : boolean&#xa;+ changeShiftRequirement(String branchIdStr, String dateStr, String shiftTypeStr, String roleIdStr, String amountStr) : boolean&#xa;+ markHolidayDay(String branchIdStr, String shiftNumberStr, String weekStr) : boolean&#xa;+ showNextWeekStatus() : void&#xa;+ changeShiftRequirementByShiftNumber(String branchIdStr, String shiftNumberStr, String roleInput, String amountStr, String weekStr) : boolean&#xa;+ changeShiftRequirement(String branchIdStr, String dateStr, String shiftTypeStr, String roleInput, String amountStr, String weekStr) : boolean&#xa;+ showAvailableEmployeesForShiftByRole(String branchIdStr, String dateStr, String shiftTypeStr, String roleInput) : void&#xa;+ showAvailableEmployeesForShiftByRole(String branchIdStr, String shiftNumberStr, String roleInput) : void&#xa;+ assignEmployee(String employeeUserName, String branchIdStr, String dateStr, String shiftTypeStr, String roleInput) : boolean&#xa;+ assignEmployeeByShiftNumber(String employeeUserName, String branchIdStr, String shiftNumberStr, String roleInput) : boolean&#xa;+ removeEmployeeFromShiftByShiftNumber(String employeeUserName, String branchIdStr, String shiftNumberStr) : boolean&#xa;+ showShiftRequirements(String branchIdStr, String dateStr, String shiftTypeStr) : void&#xa;+ showShiftRequirements(String branchIdStr, String dateStr, String shiftTypeStr, String weekStr) : void&#xa;+ showShiftRequirementsByShiftNumber(String branchIdStr, String shiftNumberStr, String weekStr) : void&#xa;+ showCurrentWeekShift() : void&#xa;+ showNextWeekShift() : void&#xa;+ showAllShiftsHistory() : void&#xa;+ showShiftsHistoryByBranch(String branchIdStr) : void&#xa;- parseAvailabilityDeadline(String deadlineOption, String customDate) : LocalDateTime" vertex="1">
+          <mxGeometry height="142" width="369" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-29" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=24;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);fontSize=8;" value="&lt;&lt;singleton&gt;&gt;&#xa;EmployeeController" vertex="1">
+          <mxGeometry height="210" width="374" x="446" y="1007" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-30" parent="xG5DedRMoFBA8klz4QRR-29" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-employees: ArrayList&lt;Employee&gt;" vertex="1">
+          <mxGeometry height="10" width="374" y="24" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-31" parent="xG5DedRMoFBA8klz4QRR-29" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-firedEmployees: ArrayList&lt;Employee&gt;" vertex="1">
+          <mxGeometry height="10" width="374" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-32" parent="xG5DedRMoFBA8klz4QRR-29" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-branches: ArrayList&lt;Integer&gt;" vertex="1">
+          <mxGeometry height="10" width="374" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-33" parent="xG5DedRMoFBA8klz4QRR-29" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-roles: ArrayList&lt;Role&gt;" vertex="1">
+          <mxGeometry height="10" width="374" y="54" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-34" parent="xG5DedRMoFBA8klz4QRR-29" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1">
+          <mxGeometry height="4" width="374" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-35" parent="xG5DedRMoFBA8klz4QRR-29" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=3;spacingRight=2;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=5;" value="- EmployeeController()&#xa;+ getInstance() : EmployeeController&#xa;+ addEmployee(Employee employee) : boolean&#xa;+ getEmployee(String userName) : Employee&#xa;+ employeeExists(String userName) : boolean&#xa;+ addRole(Role role) : boolean&#xa;+ getRole(int roleID) : Role&#xa;+ getRoleByName(String roleName) : Role&#xa;+ getRoleByIdOrName(String roleInput) : Role&#xa;+ roleExists(int roleID) : boolean&#xa;+ addRoleToEmployee(String userName, int roleID) : boolean&#xa;+ employeeHasRole(String userName, int roleID) : boolean&#xa;+ removeEmployee(String userName) : boolean&#xa;+ changeEmployeeSalary(String userName, int newSalary) : boolean&#xa;+ employeesAndRolesToString() : String&#xa;+ rolesAndEmployeeCountToString() : String&#xa;+ rolesListToString() : String&#xa;+ addBranch(int branchID) : boolean&#xa;+ branchExists(int branchID) : boolean&#xa;+ getEmployees() : ArrayList&lt;Employee&gt;&#xa;+ getBranches() : ArrayList&lt;Integer&gt;&#xa;+ getFiredEmployees() : ArrayList&lt;Employee&gt;&#xa;+ getRoles() : ArrayList&lt;Role&gt;" vertex="1">
+          <mxGeometry height="142" width="374" y="68" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-36" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=24;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);fontSize=8;" value="&lt;&lt;singleton&gt;&gt;&#xa;ShiftController" vertex="1">
+          <mxGeometry height="262" width="411" x="1127" y="1021.67" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-37" parent="xG5DedRMoFBA8klz4QRR-36" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-employeeController: EmployeeController" vertex="1">
+          <mxGeometry height="10" width="411" y="24" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-38" parent="xG5DedRMoFBA8klz4QRR-36" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-shiftOrganizers: Map&lt;Integer, ShiftOrganizer&gt;" vertex="1">
+          <mxGeometry height="10" width="411" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-39" parent="xG5DedRMoFBA8klz4QRR-36" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1">
+          <mxGeometry height="4" width="411" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-40" parent="xG5DedRMoFBA8klz4QRR-36" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=3;spacingRight=2;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=5;" value="- ShiftController()&#xa;+ getInstance() : ShiftController&#xa;+ publishNextWeek() : boolean&#xa;+ publishNextWeekRequirements(LocalDateTime deadline) : boolean&#xa;+ nextWeekMissingRequirementsToString() : String&#xa;+ syncCurrentWeekIfNeeded() : void&#xa;+ setAsCurrentWeek() : boolean&#xa;+ isNextWeekLocked(int branchId) : boolean&#xa;+ hasPublishedNextWeekRequirements(int branchId) : boolean&#xa;+ canEmployeesUpdateAvailability(int branchId) : boolean&#xa;+ getAvailabilityDeadline(int branchId) : LocalDateTime&#xa;+ nextWeekStatusToString() : String&#xa;+ nextWeekPublishSummaryToString() : String&#xa;+ changeShiftRequirement(int branchId, LocalDate date, Shift.ShiftType shiftType, int roleId, int amount) : boolean&#xa;+ markHolidayDay(int branchId, int shiftIndex, ShiftWeek week) : boolean&#xa;+ changeShiftRequirement(int branchId, int shiftIndex, int roleId, int amount, ShiftWeek week) : boolean&#xa;+ changeShiftRequirement(int branchId, LocalDate date, Shift.ShiftType shiftType, int roleId, int amount, ShiftWeek week) : boolean&#xa;+ setDefaultRequirementForAllShifts(int branchId, Role role, int amount) : boolean&#xa;+ availableEmployeesForShiftByRoleToString(int branchId, LocalDate date, Shift.ShiftType shiftType, int roleId) : String&#xa;+ availableEmployeesForShiftByRoleToString(int branchId, int shiftIndex, int roleId) : String&#xa;+ assignEmployee(String userName, int branchId, LocalDate date, Shift.ShiftType shiftType, int roleId) : boolean&#xa;+ assignEmployee(String userName, int branchId, int shiftIndex, int roleId) : boolean&#xa;+ removeEmployeeFromShift(String userName, int branchId, int shiftIndex) : boolean&#xa;+ currentWeekShiftsToString() : String&#xa;+ nextWeekShiftsToString() : String&#xa;+ allShiftsHistoryToString() : String&#xa;+ shiftsHistoryByBranchToString(int branchId) : String&#xa;+ shiftRequirementsToString(int branchId, LocalDate date, Shift.ShiftType shiftType) : String&#xa;+ shiftRequirementsToString(int branchId, int shiftIndex, ShiftWeek week) : String&#xa;+ shiftRequirementsToString(int branchId, LocalDate date, Shift.ShiftType shiftType, ShiftWeek week) : String&#xa;- getOrCreateOrganizer(int branchId) : ShiftOrganizer&#xa;- setShiftRequirement(Shift shift, Role role, int amount) : void&#xa;- findNextWeekShiftIndex(ShiftOrganizer organizer, LocalDate date, Shift.ShiftType shiftType) : int&#xa;- findShiftIndex(ShiftOrganizer organizer, LocalDate date, Shift.ShiftType shiftType, ShiftWeek week) : int&#xa;- weekToText(ShiftWeek week) : String" vertex="1">
+          <mxGeometry height="214" width="411" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-41" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=24;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);fontSize=8;" value="ShiftOrganizer" vertex="1">
+          <mxGeometry height="384" width="619" x="1100" y="1390" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-42" parent="xG5DedRMoFBA8klz4QRR-41" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-branchId: int" vertex="1">
+          <mxGeometry height="10" width="619" y="24" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-43" parent="xG5DedRMoFBA8klz4QRR-41" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-currentWeekShifts: Shift[]" vertex="1">
+          <mxGeometry height="10" width="619" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-44" parent="xG5DedRMoFBA8klz4QRR-41" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-nextWeekShifts: Shift[]" vertex="1">
+          <mxGeometry height="10" width="619" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-45" parent="xG5DedRMoFBA8klz4QRR-41" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-availableEmployeesPerShiftByRole: Map&lt;Shift, Map&lt;Role, List~Employee&gt;&gt;" vertex="1">
+          <mxGeometry height="10" width="619" y="54" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-46" parent="xG5DedRMoFBA8klz4QRR-41" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-weekStartDate: LocalDate" vertex="1">
+          <mxGeometry height="10" width="619" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-47" parent="xG5DedRMoFBA8klz4QRR-41" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-availabilityChangesAllowed: boolean" vertex="1">
+          <mxGeometry height="10" width="619" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-48" parent="xG5DedRMoFBA8klz4QRR-41" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-isPublished: boolean" vertex="1">
+          <mxGeometry height="10" width="619" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-49" parent="xG5DedRMoFBA8klz4QRR-41" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-requirementsPublishedAt: LocalDateTime" vertex="1">
+          <mxGeometry height="10" width="619" y="94" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-50" parent="xG5DedRMoFBA8klz4QRR-41" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-availabilityDeadline: LocalDateTime" vertex="1">
+          <mxGeometry height="10" width="619" y="104" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-51" parent="xG5DedRMoFBA8klz4QRR-41" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-shiftsHistory: List&lt;Shift[]&gt;" vertex="1">
+          <mxGeometry height="10" width="619" y="114" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-52" parent="xG5DedRMoFBA8klz4QRR-41" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1">
+          <mxGeometry height="4" width="619" y="124" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-41-methods" parent="xG5DedRMoFBA8klz4QRR-41" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=3;spacingRight=2;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=5;" value="+ ShiftOrganizer(int branchId, Shift[] currentWeek, Shift[] nextWeek)&#xa;+ ShiftOrganizer(int branchId)&#xa;+ getBranchId() : int&#xa;+ getWeekStartDate() : LocalDate&#xa;+ isAvailabilityChangesAllowed() : boolean&#xa;+ isPublished() : boolean&#xa;+ hasPublishedNextWeekRequirements() : boolean&#xa;+ canEmployeesUpdateAvailability() : boolean&#xa;+ getAvailabilityDeadline() : LocalDateTime&#xa;+ getCurrentWeekShifts() : Shift[]&#xa;+ getNextWeekShifts() : Shift[]&#xa;+ getCurrentWeekShift(int shiftIndex) : Shift&#xa;+ getNextWeekShift(int shiftIndex) : Shift&#xa;+ publishNextWeek() : boolean&#xa;+ publishNextWeekRequirements(LocalDateTime deadline) : boolean&#xa;+ setNextWeekAsCurrentWeek() : boolean&#xa;+ shouldAutoAdvanceToNextWeek() : boolean&#xa;+ changeShiftRequirement(int shiftIndex, Role role, int minimumCount) : boolean&#xa;+ changeShiftRequirement(int shiftIndex, Role role, int minimumCount, boolean forNextWeek) : boolean&#xa;+ markHolidayDay(int shiftIndex, boolean forNextWeek) : boolean&#xa;+ updateAvailableEmployees(List&lt;Employee&gt; employees) : void&#xa;+ getAvailableEmployeesForShiftByRole(int shiftIndex, Role role) : List&lt;Employee&gt;&#xa;+ assignEmployee(int shiftIndex, Employee employee, Role role) : boolean&#xa;+ removeEmployeeFromShift(int shiftIndex, Employee employee) : boolean&#xa;+ showCurrentWeekShifts() : String&#xa;+ showNextWeekShifts() : String&#xa;+ showAllShiftsHistory() : String&#xa;+ showShiftsHistoryByBranch(int branchId) : String&#xa;+ getShiftsHistory() : List&lt;Shift[]&gt;&#xa;+ areAllNextWeekRequirementsSatisfied() : boolean&#xa;+ nextWeekMissingRequirementsToString() : String&#xa;+ nextWeekStatusToString() : String&#xa;+ nextWeekPublishSummaryToString() : String&#xa;- addAvailableEmployee(Shift shift, Role role, Employee employee) : void&#xa;- employeeHasRole(Employee employee, Role role) : boolean&#xa;- isEmployeeAssignedOnSameDate(Employee employee, LocalDate date) : boolean&#xa;- prepareWeek(Shift[] shifts, LocalDate defaultStartDate) : Shift[]&#xa;- createWeekShifts(LocalDate startDate) : Shift[]&#xa;- getStartOfCurrentWeek() : LocalDate&#xa;- validateShiftIndex(int shiftIndex) : void&#xa;- shiftsToString(Shift[] shifts) : String&#xa;- formatShiftName(Shift shift) : String" vertex="1">
+          <mxGeometry height="256" width="619" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-53" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=24;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);fontSize=8;" value="Employee" vertex="1">
+          <mxGeometry height="384" width="321" x="300" y="1390" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-54" parent="xG5DedRMoFBA8klz4QRR-53" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-userName: String" vertex="1">
+          <mxGeometry height="10" width="321" y="24" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-55" parent="xG5DedRMoFBA8klz4QRR-53" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-password: String" vertex="1">
+          <mxGeometry height="10" width="321" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-56" parent="xG5DedRMoFBA8klz4QRR-53" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-id: String" vertex="1">
+          <mxGeometry height="10" width="321" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-57" parent="xG5DedRMoFBA8klz4QRR-53" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-isLoggedIn: boolean" vertex="1">
+          <mxGeometry height="10" width="321" y="54" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-58" parent="xG5DedRMoFBA8klz4QRR-53" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-bankAccount: BankAccount" vertex="1">
+          <mxGeometry height="10" width="321" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-59" parent="xG5DedRMoFBA8klz4QRR-53" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-branchID: int" vertex="1">
+          <mxGeometry height="10" width="321" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-60" parent="xG5DedRMoFBA8klz4QRR-53" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-vacationDays: int" vertex="1">
+          <mxGeometry height="10" width="321" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-61" parent="xG5DedRMoFBA8klz4QRR-53" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-roles: ArrayList&lt;Role&gt;" vertex="1">
+          <mxGeometry height="10" width="321" y="94" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-62" parent="xG5DedRMoFBA8klz4QRR-53" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-hourlySalary: int" vertex="1">
+          <mxGeometry height="10" width="321" y="104" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-63" parent="xG5DedRMoFBA8klz4QRR-53" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-startContract: LocalDate" vertex="1">
+          <mxGeometry height="10" width="321" y="114" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-64" parent="xG5DedRMoFBA8klz4QRR-53" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-endContract: LocalDate" vertex="1">
+          <mxGeometry height="10" width="321" y="124" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-65" parent="xG5DedRMoFBA8klz4QRR-53" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-availabilities: ArrayList&lt;Integer&gt;" vertex="1">
+          <mxGeometry height="10" width="321" y="134" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-66" parent="xG5DedRMoFBA8klz4QRR-53" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-employmentType: EmploymentType" vertex="1">
+          <mxGeometry height="10" width="321" y="144" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-67" parent="xG5DedRMoFBA8klz4QRR-53" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1">
+          <mxGeometry height="4" width="321" y="154" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-53-methods" parent="xG5DedRMoFBA8klz4QRR-53" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=3;spacingRight=2;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=5;" value="+ Employee(int BID, String userName, BankAccount bankAccount, int hourlySalary, String enterPassword, EmploymentType employmentType, String id)&#xa;+ getUserName() : String&#xa;+ setUserName(String userName) : void&#xa;+ getPassword() : String&#xa;+ setPassword(String password) : void&#xa;+ getBranchID() : int&#xa;+ setBranchID(int branchID) : void&#xa;+ getRoles() : ArrayList&lt;Role&gt;&#xa;+ setRoles(ArrayList&lt;Role&gt; roles) : void&#xa;+ getId() : String&#xa;+ getVacationDays() : int&#xa;+ setVacationDays(int vacationDays) : void&#xa;+ useVacationDays(int days) : boolean&#xa;+ addVacationDays(int days) : void&#xa;+ getHourlySalary() : int&#xa;+ setHourlySalary(int hourlySalary) : void&#xa;+ getStartContract() : LocalDate&#xa;+ setStartContract(LocalDate startContract) : void&#xa;+ getEndContract() : LocalDate&#xa;+ setEndContract(LocalDate endContract) : void&#xa;+ setIsLoggedIn(boolean isLoggedIn) : void&#xa;+ getIsLoggedIn() : boolean&#xa;+ getBankAccount() : BankAccount&#xa;+ setBankAccount(BankAccount bankAccount) : void&#xa;+ getEmploymentType() : EmploymentType&#xa;+ setEmploymentType(EmploymentType employmentType) : void&#xa;+ checkPassword(String input) : boolean&#xa;+ addRole(Role role) : void&#xa;+ removeRole(Role role) : void&#xa;+ getAvailabilities() : ArrayList&lt;Integer&gt;&#xa;+ setAvailabilities(ArrayList&lt;Integer&gt; availabilities) : void&#xa;+ addAvailability(int shift) : void&#xa;+ hasAvailability(int shift) : boolean&#xa;+ replaceAvailability(int oldShift, int newShift) : void&#xa;- rolesToString() : String&#xa;- availabilitiesToString() : String&#xa;+ toString() : String" vertex="1">
+          <mxGeometry height="226" width="321" y="158" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-68" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=24;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);fontSize=8;" value="BankAccount" vertex="1">
+          <mxGeometry height="110" width="257" x="140" y="1830" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-69" parent="xG5DedRMoFBA8klz4QRR-68" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-bankNumber: int" vertex="1">
+          <mxGeometry height="10" width="257" y="24" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-70" parent="xG5DedRMoFBA8klz4QRR-68" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-bankBranchNumber: int" vertex="1">
+          <mxGeometry height="10" width="257" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-71" parent="xG5DedRMoFBA8klz4QRR-68" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-bankAccountNumber: int" vertex="1">
+          <mxGeometry height="10" width="257" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-72" parent="xG5DedRMoFBA8klz4QRR-68" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1">
+          <mxGeometry height="4" width="257" y="54" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-68-methods" parent="xG5DedRMoFBA8klz4QRR-68" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=3;spacingRight=2;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=5;" value="+ BankAccount(int bankNumber, int bankBranchNumber, int bankAccountNumber)&#xa;+ getBankNumber() : int&#xa;+ setBankNumber(int bankNumber) : void&#xa;+ getBankBranchNumber() : int&#xa;+ setBankBranchNumber(int bankBranchNumber) : void&#xa;+ getBankAccountNumber() : int&#xa;+ setBankAccountNumber(int bankAccountNumber) : void&#xa;+ toString() : String" vertex="1">
+          <mxGeometry height="52" width="257" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-73" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=24;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);fontSize=8;" value="Role" vertex="1">
+          <mxGeometry height="110" width="179" x="80" y="1390" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-74" parent="xG5DedRMoFBA8klz4QRR-73" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-roleName: String" vertex="1">
+          <mxGeometry height="10" width="179" y="24" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-75" parent="xG5DedRMoFBA8klz4QRR-73" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-description: String" vertex="1">
+          <mxGeometry height="10" width="179" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-76" parent="xG5DedRMoFBA8klz4QRR-73" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-roleID: int" vertex="1">
+          <mxGeometry height="10" width="179" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-77" parent="xG5DedRMoFBA8klz4QRR-73" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1">
+          <mxGeometry height="4" width="179" y="54" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-73-methods" parent="xG5DedRMoFBA8klz4QRR-73" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=3;spacingRight=2;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=5;" value="+ Role(int roleID, String roleName, String description)&#xa;+ getRoleID() : int&#xa;+ getRoleName() : String&#xa;+ getDescription() : String&#xa;+ setDescription(String description) : void&#xa;+ equals(Object o) : boolean&#xa;+ hashCode() : int&#xa;+ toString() : String" vertex="1">
+          <mxGeometry height="52" width="179" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-78" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=24;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);fontSize=8;" value="Shift" vertex="1">
+          <mxGeometry height="258" width="402" x="660" y="1390" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-79" parent="xG5DedRMoFBA8klz4QRR-78" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-shiftId: int" vertex="1">
+          <mxGeometry height="10" width="402" y="24" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-80" parent="xG5DedRMoFBA8klz4QRR-78" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-branchId: int" vertex="1">
+          <mxGeometry height="10" width="402" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-81" parent="xG5DedRMoFBA8klz4QRR-78" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-date: LocalDate" vertex="1">
+          <mxGeometry height="10" width="402" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-82" parent="xG5DedRMoFBA8klz4QRR-78" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-shiftType: ShiftType" vertex="1">
+          <mxGeometry height="10" width="402" y="54" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-83" parent="xG5DedRMoFBA8klz4QRR-78" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-closedDay: boolean" vertex="1">
+          <mxGeometry height="10" width="402" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-84" parent="xG5DedRMoFBA8klz4QRR-78" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-requirements: Map&lt;Role, Integer&gt;" vertex="1">
+          <mxGeometry height="10" width="402" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-85" parent="xG5DedRMoFBA8klz4QRR-78" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=6;whiteSpace=wrap;html=1;" value="-employeeRoleAssignments: Map&lt;Employee, Role&gt;" vertex="1">
+          <mxGeometry height="10" width="402" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-86" parent="xG5DedRMoFBA8klz4QRR-78" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1">
+          <mxGeometry height="4" width="402" y="94" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-78-methods" parent="xG5DedRMoFBA8klz4QRR-78" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=3;spacingRight=2;overflow=fill;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=5;" value="+ Shift(int shiftId, int branchId, LocalDate date, ShiftType shiftType)&#xa;+ addRequirement(Role role, int minimumCount) : void&#xa;+ removeRequirement(Role role) : void&#xa;+ clearRequirements() : void&#xa;+ addBackRequirement(Role role) : void&#xa;+ getRequirements() : Map&lt;Role, Integer&gt;&#xa;+ assignEmployee(Employee employee, Role role) : void&#xa;+ fulfillRequirement(Role role) : boolean&#xa;+ removeEmployee(Employee employee) : boolean&#xa;+ getRoleOf(Employee employee) : Role&#xa;+ isAssigned(Employee employee) : boolean&#xa;+ requiresRole(Role role) : boolean&#xa;+ getRequiredCountForRole(Role role) : int&#xa;+ isClosedDay() : boolean&#xa;+ setClosedDay(boolean closedDay) : void&#xa;+ getAssignedEmployees() : List&lt;Employee&gt;&#xa;+ getEmployeeRoleAssignments() : Map&lt;Employee, Role&gt;&#xa;+ getAssignmentCount() : int&#xa;+ hasShiftManager() : boolean&#xa;+ getShiftId() : int&#xa;+ getBranchId() : int&#xa;+ getDate() : LocalDate&#xa;+ getShiftType() : ShiftType&#xa;+ equals(Object obj) : boolean&#xa;+ hashCode() : int&#xa;+ toString() : String" vertex="1">
+          <mxGeometry height="160" width="402" y="98" as="geometry" />
+        </mxCell>
+        <mxCell id="xG5DedRMoFBA8klz4QRR-119" edge="1" parent="1" source="xG5DedRMoFBA8klz4QRR-53" style="startArrow=diamondThin;startSize=14;startFill=1;endArrow=none;exitX=0;exitY=0.67;entryX=0.5;entryY=0;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="xG5DedRMoFBA8klz4QRR-68" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-1" edge="1" parent="1" source="xG5DedRMoFBA8klz4QRR-18-methods" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.431;entryY=0.002;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" target="xG5DedRMoFBA8klz4QRR-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-19" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="uses" vertex="1">
+          <mxGeometry relative="1" x="-0.4748" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-38" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.9066" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-39" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.9074" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-2" edge="1" parent="1" source="xG5DedRMoFBA8klz4QRR-18-methods" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=none;endFill=0;" target="xG5DedRMoFBA8klz4QRR-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-20" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="uses" vertex="1">
+          <mxGeometry relative="1" x="-0.2776" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-36" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.9031" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-37" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.9393" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-5" edge="1" parent="1" source="xG5DedRMoFBA8klz4QRR-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.749;entryY=0.999;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" target="xG5DedRMoFBA8klz4QRR-40">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-23" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="built from" vertex="1">
+          <mxGeometry relative="1" x="0.3267" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-34" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.841" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-35" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8369" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-6" edge="1" parent="1" source="xG5DedRMoFBA8klz4QRR-78" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;endArrow=none;endFill=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1272" y="1286" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-24" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="built from" vertex="1">
+          <mxGeometry relative="1" x="0.8529" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-32" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.9637" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-33" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.9186" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-7" edge="1" parent="1" source="xG5DedRMoFBA8klz4QRR-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.902;exitY=-0.003;exitDx=0;exitDy=0;entryX=0.498;entryY=0.996;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;exitPerimeter=0;" target="xG5DedRMoFBA8klz4QRR-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-25" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="built from" vertex="1">
+          <mxGeometry relative="1" x="0.4219" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-29" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.917" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-30" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.869" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-8" edge="1" parent="1" source="xG5DedRMoFBA8klz4QRR-73" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.221;entryY=0.996;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" target="xG5DedRMoFBA8klz4QRR-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-26" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="built from" vertex="1">
+          <mxGeometry relative="1" x="0.7989" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-28" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.9619" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-31" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.9474" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-9" edge="1" parent="1" source="xG5DedRMoFBA8klz4QRR-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.008;entryY=0.356;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" target="xG5DedRMoFBA8klz4QRR-40">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-27" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-9" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="contains" vertex="1">
+          <mxGeometry relative="1" x="-0.1019" y="-1" as="geometry">
+            <mxPoint x="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-10" edge="1" parent="1" source="xG5DedRMoFBA8klz4QRR-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.552;entryY=1.017;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" target="xG5DedRMoFBA8klz4QRR-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-17" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.9602" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-18" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.9771" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-11" edge="1" parent="1" source="xG5DedRMoFBA8klz4QRR-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.504;entryY=1.012;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" target="xG5DedRMoFBA8klz4QRR-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-15" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.9256" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-16" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.9235" y="1" as="geometry">
+            <mxPoint x="3" y="-35" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-12" edge="1" parent="1" source="xG5DedRMoFBA8klz4QRR-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.672;entryY=1.009;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" target="xG5DedRMoFBA8klz4QRR-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-13" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.954" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4hoLAFenyC2zJb7Y_QYp-14" connectable="0" parent="4hoLAFenyC2zJb7Y_QYp-12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.9454" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
