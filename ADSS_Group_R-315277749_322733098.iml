@@ -13,6 +13,7 @@
       <sourceFolder url="file://$MODULE_DIR$/dev/DTO" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/dev/Repository" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/dev/SupplierIntegrationMock" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/dev" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="module-library">
