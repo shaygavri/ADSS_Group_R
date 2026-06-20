@@ -25,11 +25,13 @@ public class ServiceController {
      * Mock supplier system.
      */
     public MockSupplierSystem supplierSystem;
+    private DomainController domainController;
 
     public ServiceController(DomainController domainController) {
         this.supplierSystem = new MockSupplierSystem();
         this.categoryService = new CategoryService(domainController);
         this.productService = new ProductService(domainController);
+        this.domainController = domainController;
         this.reportService = new ReportService(domainController);
         this.saleService = new SaleService(domainController);
         this.supplierService = new SupplierService(supplierSystem);
@@ -53,4 +55,7 @@ public class ServiceController {
         return orderService.deactivatePeriodicOrderRule(ruleId);}
     public List<Order> getAllOrders() {
         return orderService.getAllOrders();}
+    public DomainController getDomainController() {
+        return domainController;
+    }
 }

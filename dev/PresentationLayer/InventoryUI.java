@@ -32,33 +32,29 @@ public class InventoryUI {
             System.out.println("Wrong password, Please try again");
         }return false;
     }
-    public void initialData(){
-        while(true){
-        System.out.print("Enter y/n if you want to initial Data:");
-        String input=scanner.next();
-        if(input.equalsIgnoreCase("y")){
-            DomainController domainController = new DomainController();
-            DataInitializer.initialize(domainController);
-            this.service = new ServiceController(domainController);
-            isDataLoaded = true;
-            return;
-        }
-        else if(input.equalsIgnoreCase("n")){
-            return;
-        }
-        else{
-            System.out.println("Wrong input, please try again");
-        }}
+    public void initialData() {
+        while (true) {
+            System.out.print("Enter y/n if you want to initial Data:");
+            String input = scanner.next();
 
+            if (input.equalsIgnoreCase("y")) {
+                DataInitializer.initialize(service.getDomainController());
+                isDataLoaded = true;
+                return;
+            } else if (input.equalsIgnoreCase("n")) {
+                return;
+            } else {
+                System.out.println("Wrong input, please try again");
+            }
+        }
     }
-    private void LoadData(){
-        if (!isDataLoaded){
-            DomainController domainController = new DomainController();
-            DataInitializer.initialize(domainController);
-            this.service = new ServiceController(domainController);
+
+    private void LoadData() {
+        if (!isDataLoaded) {
+            DataInitializer.initialize(service.getDomainController());
             System.out.println("Data Loaded");
-            isDataLoaded = true;}
-        else if (isDataLoaded){
+            isDataLoaded = true;
+        } else {
             System.out.print("Data already Loaded");
         }
     }

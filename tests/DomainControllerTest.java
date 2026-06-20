@@ -10,9 +10,46 @@ class DomainControllerTest {
 
     private DomainController domain;
 
+    private DomainController createDomainControllerForTests() {
+        DatabaseManager databaseManager = new DatabaseManager("jdbc:sqlite::memory:");
+        databaseManager.connect();
+        databaseManager.createTables();
+
+        CategoryDAO categoryDAO = new JdbcCategoryDAO(databaseManager);
+        ProductDAO productDAO = new JdbcProductDAO(databaseManager);
+        SaleDAO saleDAO = new JdbcSaleDAO(databaseManager);
+        OrderDAO orderDAO = new JdbcOrderDAO(databaseManager);
+        OrderItemDAO orderItemDAO = new JdbcOrderItemDAO(databaseManager);
+        PeriodicOrderRuleDAO periodicOrderRuleDAO =
+                new JdbcPeriodicOrderRuleDAO(databaseManager);
+
+        CategoryRepository categoryRepository =
+                new CategoryRepository(categoryDAO);
+
+        ProductRepository productRepository =
+                new ProductRepository(productDAO, categoryRepository);
+
+        SaleRepository saleRepository =
+                new SaleRepository(saleDAO);
+
+        OrderRepository orderRepository =
+                new OrderRepository(orderDAO, orderItemDAO, productRepository);
+
+        PeriodicOrderRuleRepository periodicOrderRuleRepository =
+                new PeriodicOrderRuleRepository(periodicOrderRuleDAO);
+
+        return new DomainController(
+                categoryRepository,
+                productRepository,
+                saleRepository,
+                orderRepository,
+                periodicOrderRuleRepository
+        );
+    }
     @BeforeEach
     void setUp() {
-        domain = new DomainController();
+        new java.io.File("inventory.db").delete();
+        domain = createDomainControllerForTests();
     }
 
     @Test
@@ -128,10 +165,10 @@ class DomainControllerTest {
                 "A1",
                 "S1"
         );
-
-        assertFalse(added, "Should return false if category is not found");
+        assertTrue(added, "Product should be added because missing category is created automatically");
+        Category category = domain.findCategory("Dairy", "Milk", "1L");
+        assertNotNull(category, "Missing category should be created automatically");
     }
-
     @Test
     void testUpdateQuantities() {
         domain.addCategory("D", "M", "1L");
@@ -171,34 +208,16 @@ class DomainControllerTest {
     void testUpdateStatus() {
         domain.addCategory("D", "M", "1L");
 
-        boolean added = domain.addProductBatch(
-                "Milk",
-                "T",
-                "D",
-                "M",
-                "1L",
-                10,
-                10,
-                5,
-                1,
-                5.0,
-                LocalDate.now().plusDays(10),
-                0,
-                "S1",
-                "A1",
-                "S1"
-        );
-
+        boolean added = domain.addProductBatch("Milk", "T", "D",
+                "M", "1L", 10,
+                10, 5, 1,
+                5.0, LocalDate.now().plusDays(10), 0, "S1", "A1", "S1");
         assertTrue(added);
-
         Product product = domain.getProductByCat("D").get(0);
         String realId = product.getProductID();
-
         boolean updated = domain.updateNewStatus(realId, false);
-
         assertTrue(updated);
-        assertFalse(domain.getProductByID(realId).getIsActive());
-    }
+        assertFalse(domain.getProductByID(realId).getIsActive());}
 
     @Test
     void testGetProductByCategoryCaseInsensitive() {
@@ -309,11 +328,8 @@ class DomainControllerTest {
     @Test
     void testMockSupplierSystemAddSupplier() {
         MockSupplierSystem mockSupplierSystem = new MockSupplierSystem();
-
         Supplier supplier = new Supplier("Osem", "S999");
-
         boolean added = mockSupplierSystem.addSupplier(supplier);
-
         assertTrue(added);
         assertNotNull(mockSupplierSystem.findSupplierById("S999"));
         assertEquals("Osem", mockSupplierSystem.findSupplierById("S999").getSupplierName());
@@ -322,23 +338,17 @@ class DomainControllerTest {
     @Test
     void testMockSupplierSystemDoesNotAllowDuplicateSupplierId() {
         MockSupplierSystem mockSupplierSystem = new MockSupplierSystem();
-
         Supplier supplier1 = new Supplier("Osem", "S999");
         Supplier supplier2 = new Supplier("Tnuva", "S999");
-
         boolean firstAdded = mockSupplierSystem.addSupplier(supplier1);
         boolean secondAdded = mockSupplierSystem.addSupplier(supplier2);
-
         assertTrue(firstAdded);
         assertFalse(secondAdded);
     }
-
     @Test
     void testMockSupplierSystemReturnsDummyBestOffer() {
         MockSupplierSystem mockSupplierSystem = new MockSupplierSystem();
-
         SupplierOffer offer = mockSupplierSystem.getBestOffer("P1", 50);
-
         assertNotNull(offer);
         assertEquals("P1", offer.getProductId());
         assertEquals(50, offer.getQuantity());

@@ -3,30 +3,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DomainController {
-    private DatabaseManager databaseManager;
     private CategoryRepository categoryRepository;
     private ProductRepository productRepository;
     private SaleRepository saleRepository;
     private OrderRepository orderRepository;
     private PeriodicOrderRuleRepository periodicOrderRuleRepository;
 
-    public DomainController() {
-        this.databaseManager = new DatabaseManager();
-        databaseManager.connect();
-        databaseManager.createTables();
-        CategoryDAO categoryDAO = new JdbcCategoryDAO(databaseManager);
-        ProductDAO productDAO = new JdbcProductDAO(databaseManager);
-        SaleDAO saleDAO = new JdbcSaleDAO(databaseManager);
-        OrderDAO orderDAO = new JdbcOrderDAO(databaseManager);
-        OrderItemDAO orderItemDAO = new JdbcOrderItemDAO(databaseManager);
-        PeriodicOrderRuleDAO periodicOrderRuleDAO = new JdbcPeriodicOrderRuleDAO(databaseManager);
-        this.categoryRepository = new CategoryRepository(categoryDAO);
-        this.productRepository = new ProductRepository(productDAO, categoryRepository);
-        this.saleRepository = new SaleRepository(saleDAO);
-        this.orderRepository = new OrderRepository(orderDAO, orderItemDAO, productRepository);
-        this.periodicOrderRuleRepository = new PeriodicOrderRuleRepository(periodicOrderRuleDAO);
-    }
+    public DomainController(CategoryRepository categoryRepository,
+                            ProductRepository productRepository,
+                            SaleRepository saleRepository,
+                            OrderRepository orderRepository,
+                            PeriodicOrderRuleRepository periodicOrderRuleRepository) {
 
+        this.categoryRepository = categoryRepository;
+        this.productRepository = productRepository;
+        this.saleRepository = saleRepository;
+        this.orderRepository = orderRepository;
+        this.periodicOrderRuleRepository = periodicOrderRuleRepository;
+    }
     public ProductRepository getProductRepository() {
         return productRepository;}
 
@@ -188,7 +182,4 @@ public class DomainController {
 
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();}
-
-    public void closeDatabaseConnection() {
-        databaseManager.closeConnection();}
 }
