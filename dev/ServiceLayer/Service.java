@@ -3,10 +3,12 @@ package ServiceLayer;
 public class Service {
     private final UserService userService;
     private final ShiftService shiftService;
+    private final TransportationIntegrationService transportationIntegrationService;
 
     public Service() {
         this.userService = new UserService();
         this.shiftService = new ShiftService();
+        this.transportationIntegrationService = new TransportationIntegrationService();
     }
 
     // ======================== REGULAR USER ========================
@@ -192,5 +194,24 @@ public class Service {
 
     public void showRoleOptions() {
         userService.showRoleOptions();
+    }
+
+    public boolean registerEmployeeAsDriver(String userName, String licenseType) {
+        return transportationIntegrationService.registerEmployeeAsDriver(userName, licenseType);
+    }
+
+    public boolean addTransportDelivery(String deliveryId, String branchId, String date,
+                                        String shiftType, String licenseType, String destination) {
+        return transportationIntegrationService.addTransportDelivery(
+                deliveryId, branchId, date, shiftType, licenseType, destination
+        );
+    }
+
+    public boolean assignDriverToDelivery(String userName, String deliveryId) {
+        return transportationIntegrationService.assignDriverToDelivery(userName, deliveryId);
+    }
+
+    public void showDeliveryIntegrationStatus(String deliveryId) {
+        transportationIntegrationService.showDeliveryIntegrationStatus(deliveryId);
     }
 }

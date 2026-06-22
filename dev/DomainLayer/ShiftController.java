@@ -306,6 +306,15 @@ public class ShiftController {
         return builder.toString();
     }
 
+    public LocalDate getNextWeekStartDate(int branchId) {
+        if (!employeeController.branchExists(branchId)) {
+            return null;
+        }
+
+        ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+        return organizer.getNextWeekShift(0).getDate();
+    }
+
     public String availableEmployeesForShiftByRoleToString(int branchId, int shiftIndex, int roleId) {
         if (!employeeController.branchExists(branchId)) {
             return "branch not found";
@@ -385,6 +394,110 @@ public class ShiftController {
         } catch (IllegalArgumentException e) {
             return false;
         }
+    }
+
+    public boolean isEmployeeAssignedToShift(String userName, int branchId, LocalDate date,
+                                             Shift.ShiftType shiftType, int roleId, ShiftWeek week) {
+        if (!employeeController.branchExists(branchId)) {
+            return false;
+        }
+
+        Employee employee = employeeController.getEmployee(userName);
+        Role role = employeeController.getRole(roleId);
+        if (employee == null || role == null || date == null || shiftType == null || week == null) {
+            return false;
+        }
+
+        ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+        int shiftIndex = findShiftIndex(organizer, date, shiftType, week);
+        if (shiftIndex == -1) {
+            return false;
+        }
+
+        return organizer.isEmployeeAssignedToShift(shiftIndex, employee, role, week == ShiftWeek.NEXT);
+    }
+
+    public int getAssignedEmployeeCountForRole(int branchId, LocalDate date, Shift.ShiftType shiftType,
+                                               int roleId, ShiftWeek week) {
+        if (!employeeController.branchExists(branchId)) {
+            return 0;
+        }
+
+        Role role = employeeController.getRole(roleId);
+        if (role == null || date == null || shiftType == null || week == null) {
+            return 0;
+        }
+
+        ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+        int shiftIndex = findShiftIndex(organizer, date, shiftType, week);
+        if (shiftIndex == -1) {
+            return 0;
+        }
+
+        return organizer.getAssignedCountForRole(shiftIndex, role, week == ShiftWeek.NEXT);
+    }
+
+    public int getRequiredEmployeeCountForRole(int branchId, LocalDate date, Shift.ShiftType shiftType,
+                                               int roleId, ShiftWeek week) {
+        if (!employeeController.branchExists(branchId)) {
+            return 0;
+        }
+
+        Role role = employeeController.getRole(roleId);
+        if (role == null || date == null || shiftType == null || week == null) {
+            return 0;
+        }
+
+        ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+        int shiftIndex = findShiftIndex(organizer, date, shiftType, week);
+        if (shiftIndex == -1) {
+            return 0;
+        }
+
+        Shift shift = week == ShiftWeek.NEXT
+                ? organizer.getNextWeekShift(shiftIndex)
+                : organizer.getCurrentWeekShift(shiftIndex);
+        return shift.getRequiredCountForRole(role);
+    }
+
+    public boolean increaseShiftRequirement(int branchId, LocalDate date, Shift.ShiftType shiftType,
+                                            int roleId, int amount, ShiftWeek week) {
+        if (!employeeController.branchExists(branchId) || amount <= 0 || week == null) {
+            return false;
+        }
+
+        Role role = employeeController.getRole(roleId);
+        if (role == null || date == null || shiftType == null) {
+            return false;
+        }
+
+        ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+        int shiftIndex = findShiftIndex(organizer, date, shiftType, week);
+        if (shiftIndex == -1) {
+            return false;
+        }
+
+        Shift shift = week == ShiftWeek.NEXT
+                ? organizer.getNextWeekShift(shiftIndex)
+                : organizer.getCurrentWeekShift(shiftIndex);
+        int currentRequired = shift.getRequiredCountForRole(role);
+        return organizer.changeShiftRequirement(shiftIndex, role, currentRequired + amount, week == ShiftWeek.NEXT);
+    }
+
+    public ShiftWeek findShiftWeek(int branchId, LocalDate date, Shift.ShiftType shiftType) {
+        if (!employeeController.branchExists(branchId) || date == null || shiftType == null) {
+            return null;
+        }
+
+        ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+        if (findShiftIndex(organizer, date, shiftType, ShiftWeek.CURRENT) != -1) {
+            return ShiftWeek.CURRENT;
+        }
+        if (findShiftIndex(organizer, date, shiftType, ShiftWeek.NEXT) != -1) {
+            return ShiftWeek.NEXT;
+        }
+
+        return null;
     }
 
     public boolean removeEmployeeFromShift(String userName, int branchId, int shiftIndex) {

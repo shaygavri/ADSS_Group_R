@@ -4,6 +4,7 @@ import DomainLayer.EmployeeController;
 import DomainLayer.Role;
 import DomainLayer.Shift;
 import DomainLayer.ShiftController;
+import DomainLayer.TransportationIntegrationController;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,10 +14,12 @@ import java.time.format.DateTimeParseException;
 public class ShiftService {
     private final ShiftController shiftController;
     private final EmployeeController employeeController;
+    private final TransportationIntegrationController transportationIntegrationController;
 
     public ShiftService() {
         this.shiftController = ShiftController.getInstance();
         this.employeeController = EmployeeController.getInstance();
+        this.transportationIntegrationController = TransportationIntegrationController.getInstance();
     }
 
     private void syncCurrentWeekIfNeeded() {
@@ -25,6 +28,7 @@ public class ShiftService {
 
     public boolean publishNextWeek() {
         syncCurrentWeekIfNeeded();
+        transportationIntegrationController.syncNextWeekDeliveriesWithShifts();
         System.out.println(shiftController.nextWeekPublishSummaryToString());
         if (!shiftController.publishNextWeek()) {
             System.out.println("could not publish next week, some shifts are still missing required roles:");
@@ -38,6 +42,7 @@ public class ShiftService {
 
     public boolean publishNextWeekRequirements(String deadlineOption, String customDate) {
         syncCurrentWeekIfNeeded();
+        transportationIntegrationController.syncNextWeekDeliveriesWithShifts();
         LocalDateTime deadline = parseAvailabilityDeadline(deadlineOption, customDate);
         if (deadline == null) {
             return false;

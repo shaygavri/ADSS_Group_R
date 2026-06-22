@@ -10,6 +10,7 @@ public class Role {
     public static int CASHIER_ID = 101;
     public static int STOREKEEPER_ID = 102;
     public static int SHIFT_MANAGER_ID = 103;
+    public static int DRIVER_ID = 104;
 
 
     public Role(int roleID, String roleName, String description) {

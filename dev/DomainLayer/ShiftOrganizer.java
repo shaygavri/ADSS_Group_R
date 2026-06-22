@@ -286,6 +286,26 @@ public class ShiftOrganizer {
         return true;
     }
 
+    public boolean isEmployeeAssignedToShift(int shiftIndex, Employee employee, Role role, boolean forNextWeek) {
+        validateShiftIndex(shiftIndex);
+        if (employee == null || role == null) {
+            return false;
+        }
+
+        Shift shift = forNextWeek ? nextWeekShifts[shiftIndex] : currentWeekShifts[shiftIndex];
+        return shift.isAssignedAsRole(employee, role);
+    }
+
+    public int getAssignedCountForRole(int shiftIndex, Role role, boolean forNextWeek) {
+        validateShiftIndex(shiftIndex);
+        if (role == null) {
+            return 0;
+        }
+
+        Shift shift = forNextWeek ? nextWeekShifts[shiftIndex] : currentWeekShifts[shiftIndex];
+        return shift.getAssignmentCountForRole(role);
+    }
+
     public String showCurrentWeekShifts() {
         return shiftsToString(currentWeekShifts);
     }

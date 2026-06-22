@@ -74,6 +74,12 @@ public class Menu_HR {
 
     public void getAnswer() {
         Scanner scanner = new Scanner(System.in);
+        if (!scanner.hasNextInt()) {
+            scanner.nextLine();
+            System.out.println("invalid input, please try again");
+            printMenu();
+            return;
+        }
         int input = scanner.nextInt();
         scanner.nextLine();
 

@@ -14,10 +14,12 @@ public class DemoData {
         Role cashier = new Role(Role.CASHIER_ID, "Cashier", "Responsible for checkout and customers");
         Role storekeeper = new Role(Role.STOREKEEPER_ID, "Storekeeper", "Responsible for warehouse and inventory");
         Role shiftManager = new Role(Role.SHIFT_MANAGER_ID, "Shift Manager", "Responsible for managing the shift");
+        Role driver = new Role(Role.DRIVER_ID, "Driver", "Responsible for transporting deliveries");
         controller.addRole(hrManager);
         controller.addRole(cashier);
         controller.addRole(storekeeper);
         controller.addRole(shiftManager);
+        controller.addRole(driver);
 
         // HR manager
         Employee hr = new Employee(
@@ -87,6 +89,25 @@ public class DemoData {
         multiRoleEmployee.addAvailability(7);
         multiRoleEmployee.addAvailability(12);
         controller.addEmployee(multiRoleEmployee);
+
+        // Driver
+        Employee driverEmployee = new Employee(
+                1,
+                "driver1",
+                new Employee.BankAccount(10, 102, 666666),
+                55,
+                "1234",
+                Employee.EmploymentType.FULL_TIME,
+                "678912345"
+        );
+        driverEmployee.addRole(driver);
+        driverEmployee.setDriverLicenseType(Employee.DriverLicenseType.C);
+        driverEmployee.addAvailability(0);
+        driverEmployee.addAvailability(1);
+        driverEmployee.addAvailability(2);
+        driverEmployee.addAvailability(3);
+        driverEmployee.addAvailability(4);
+        controller.addEmployee(driverEmployee);
 
         // default requirements for all shifts in the current and next week
         shiftController.setDefaultRequirementForAllShifts(1, cashier, 1);

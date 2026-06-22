@@ -17,10 +17,32 @@ public class Employee {
     private LocalDate endContract;
     private ArrayList<Integer> availabilities;
     private EmploymentType employmentType;
+    private DriverLicenseType driverLicenseType;
 
     public enum EmploymentType {
         FULL_TIME,
         PART_TIME
+    }
+
+    public enum DriverLicenseType {
+        B(1),
+        C1(2),
+        C(3),
+        CE(4);
+
+        private final int level;
+
+        DriverLicenseType(int level) {
+            this.level = level;
+        }
+
+        public boolean canCover(DriverLicenseType requiredLicenseType) {
+            if (requiredLicenseType == null) {
+                return false;
+            }
+
+            return this.level >= requiredLicenseType.level;
+        }
     }
 
     public Employee(int BID, String userName, BankAccount bankAccount, int hourlySalary,
@@ -50,6 +72,7 @@ public class Employee {
         this.isLoggedIn = false;
         this.availabilities = new ArrayList<>();
         this.employmentType = employmentType;
+        this.driverLicenseType = null;
 
         this.id = id;
         this.vacationDays = 20;
@@ -178,8 +201,24 @@ public class Employee {
         this.employmentType = employmentType;
     }
 
+    public DriverLicenseType getDriverLicenseType() {
+        return driverLicenseType;
+    }
+
+    public void setDriverLicenseType(DriverLicenseType driverLicenseType) {
+        this.driverLicenseType = driverLicenseType;
+    }
+
+    public boolean hasDriverLicense() {
+        return driverLicenseType != null;
+    }
+
+    public boolean canDrive(DriverLicenseType requiredLicenseType) {
+        return driverLicenseType != null && driverLicenseType.canCover(requiredLicenseType);
+    }
+
     public boolean checkPassword(String input) {
-        return input != null && this.password.equalsIgnoreCase(input);
+        return input != null && this.password.equals(input);
     }
 
     public void addRole(Role role) {
@@ -190,6 +229,9 @@ public class Employee {
 
     public void removeRole(Role role) {
         roles.remove(role);
+        if (role != null && role.getRoleID() == Role.DRIVER_ID) {
+            driverLicenseType = null;
+        }
     }
 
     public ArrayList<Integer> getAvailabilities() {
@@ -243,6 +285,7 @@ public class Employee {
                 "ID                : " + id + "\n" +
                 "Branch            : " + branchID + "\n" +
                 "Employment Type   : " + employmentType + "\n" +
+                "Driver License    : " + (driverLicenseType == null ? "None" : driverLicenseType) + "\n" +
                 bankAccount + "\n" +
                 "Roles:\n" + rolesToString() +
                 "Shift Availabilities: " + availabilitiesToString() + "\n" +

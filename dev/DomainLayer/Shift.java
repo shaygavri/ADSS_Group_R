@@ -89,6 +89,15 @@ public class Shift {
         return employeeRoleAssignments.containsKey(employee);
     }
 
+    public boolean isAssignedAsRole(Employee employee, Role role) {
+        if (employee == null || role == null) {
+            return false;
+        }
+
+        Role assignedRole = employeeRoleAssignments.get(employee);
+        return role.equals(assignedRole);
+    }
+
     public boolean requiresRole(Role role) {
         return requirements.containsKey(role);
     }
@@ -119,6 +128,20 @@ public class Shift {
 
     public int getAssignmentCount() {
         return employeeRoleAssignments.size();
+    }
+
+    public int getAssignmentCountForRole(Role role) {
+        if (role == null) {
+            return 0;
+        }
+
+        int count = 0;
+        for (Role assignedRole : employeeRoleAssignments.values()) {
+            if (role.equals(assignedRole)) {
+                count++;
+            }
+        }
+        return count;
     }
 
     public boolean hasShiftManager() {

@@ -127,6 +127,40 @@ public class EmployeeController {
         return employee.getRoles().contains(role);
     }
 
+    public boolean setEmployeeDriverLicenseType(String userName, Employee.DriverLicenseType driverLicenseType) {
+        Employee employee = getEmployee(userName);
+        if (employee == null || driverLicenseType == null) {
+            return false;
+        }
+        if (!employeeHasRole(userName, Role.DRIVER_ID)) {
+            return false;
+        }
+
+        employee.setDriverLicenseType(driverLicenseType);
+        return true;
+    }
+
+    public Employee.DriverLicenseType getEmployeeDriverLicenseType(String userName) {
+        Employee employee = getEmployee(userName);
+        if (employee == null) {
+            return null;
+        }
+
+        return employee.getDriverLicenseType();
+    }
+
+    public boolean employeeCanDrive(String userName, Employee.DriverLicenseType requiredLicenseType) {
+        Employee employee = getEmployee(userName);
+        if (employee == null || requiredLicenseType == null) {
+            return false;
+        }
+        if (!employeeHasRole(userName, Role.DRIVER_ID)) {
+            return false;
+        }
+
+        return employee.canDrive(requiredLicenseType);
+    }
+
     public boolean removeEmployee(String userName) {
         Employee employee = getEmployee(userName);
         if (employee == null) {
