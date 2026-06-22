@@ -140,6 +140,10 @@ public class EmployeeController {
         return true;
     }
 
+    public boolean changeEmployeeDriverLicenseType(String userName, Employee.DriverLicenseType newDriverLicenseType) {
+        return setEmployeeDriverLicenseType(userName, newDriverLicenseType);
+    }
+
     public Employee.DriverLicenseType getEmployeeDriverLicenseType(String userName) {
         Employee employee = getEmployee(userName);
         if (employee == null) {

@@ -51,23 +51,24 @@ public class Menu_HR {
         System.out.println("8. change employee's hourly salary");
         System.out.println("9. show all employees and their roles");
         System.out.println("10. show all existing roles");
+        System.out.println("11. change employee driver's license type");
 
         System.out.println("\n--- Shift and Scheduling Management ---");
-        System.out.println("11. publish next week requirements");
-        System.out.println("12. show next week status");
-        System.out.println("13. change shift requirement (current/next week)");
-        System.out.println("14. show available employees for shift by role");
-        System.out.println("15. assign employee");
-        System.out.println("16. remove employee from shift");
-        System.out.println("17. show current week shift");
-        System.out.println("18. show next week shift");
-        System.out.println("19. show all shifts history");
-        System.out.println("20. show shifts history by branch");
-        System.out.println("21. show requirements for shift (current/next week)");
-        System.out.println("22. define holiday day");
-        System.out.println("23. publish next week");
+        System.out.println("12. publish next week requirements");
+        System.out.println("13. show next week status");
+        System.out.println("14. change shift requirement (current/next week)");
+        System.out.println("15. show available employees for shift by role");
+        System.out.println("16. assign employee");
+        System.out.println("17. remove employee from shift");
+        System.out.println("18. show current week shift");
+        System.out.println("19. show next week shift");
+        System.out.println("20. show all shifts history");
+        System.out.println("21. show shifts history by branch");
+        System.out.println("22. show requirements for shift (current/next week)");
+        System.out.println("23. define holiday day");
+        System.out.println("24. publish next week");
 
-        System.out.println("24. logout");
+        System.out.println("25. logout");
 
         getAnswer();
     }
@@ -199,6 +200,17 @@ public class Menu_HR {
             }
 
             case 11 -> {
+                System.out.println("Enter employee username:");
+                String employeeUserName = scanner.nextLine();
+
+                System.out.println("Enter new driver's license type (B / C1 / C / CE):");
+                String newLicenseType = scanner.nextLine();
+
+                service.changeEmployeeDriverLicenseType(employeeUserName, newLicenseType);
+                printMenu();
+            }
+
+            case 12 -> {
                 System.out.println("Choose availability deadline:");
                 System.out.println("1. 1 day from now");
                 System.out.println("2. 2 days from now");
@@ -215,12 +227,12 @@ public class Menu_HR {
                 printMenu();
             }
 
-            case 12 -> {
+            case 13 -> {
                 service.showNextWeekStatus();
                 printMenu();
             }
 
-            case 13 -> {
+            case 14 -> {
                 System.out.println("Enter branch ID:");
                 String branchId = scanner.nextLine();
 
@@ -243,7 +255,7 @@ public class Menu_HR {
                 printMenu();
             }
 
-            case 14 -> {
+            case 15 -> {
                 System.out.println("Enter branch ID:");
                 String branchId = scanner.nextLine();
 
@@ -260,7 +272,7 @@ public class Menu_HR {
                 printMenu();
             }
 
-            case 15 -> {
+            case 16 -> {
                 System.out.println("Enter branch ID:");
                 String branchId = scanner.nextLine();
 
@@ -283,7 +295,7 @@ public class Menu_HR {
                 printMenu();
             }
 
-            case 16 -> {
+            case 17 -> {
                 System.out.println("Enter employee username:");
                 String employeeUserName = scanner.nextLine();
 
@@ -299,22 +311,22 @@ public class Menu_HR {
                 printMenu();
             }
 
-            case 17 -> {
+            case 18 -> {
                 service.showCurrentWeekShift();
                 printMenu();
             }
 
-            case 18 -> {
+            case 19 -> {
                 service.showNextWeekShift();
                 printMenu();
             }
 
-            case 19 -> {
+            case 20 -> {
                 service.showAllShiftsHistory();
                 printMenu();
             }
 
-            case 20 -> {
+            case 21 -> {
                 System.out.println("Enter branch ID:");
                 String branchId = scanner.nextLine();
                 service.showShiftsHistoryByBranch(branchId);
@@ -322,7 +334,7 @@ public class Menu_HR {
             }
 
             // ADDED: show requirements for a specific shift in current or next week (Task #1)
-            case 21 -> {
+            case 22 -> {
                 System.out.println("Enter branch ID:");
                 String branchId20 = scanner.nextLine();
 
@@ -338,7 +350,7 @@ public class Menu_HR {
                 printMenu();
             }
 
-            case 22 -> {
+            case 23 -> {
                 System.out.println("Enter branch ID:");
                 String branchId = scanner.nextLine();
 
@@ -354,12 +366,12 @@ public class Menu_HR {
                 printMenu();
             }
 
-            case 23 -> {
+            case 24 -> {
                 service.publishNextWeek();
                 printMenu();
             }
 
-            case 24 -> {
+            case 25 -> {
                 service.logout(userName);
                 return;
             }

@@ -200,6 +200,10 @@ public class Service {
         return transportationIntegrationService.registerEmployeeAsDriver(userName, licenseType);
     }
 
+    public boolean changeEmployeeDriverLicenseType(String userName, String newLicenseType) {
+        return transportationIntegrationService.changeEmployeeDriverLicenseType(userName, newLicenseType);
+    }
+
     public boolean addTransportDelivery(String deliveryId, String branchId, String date,
                                         String shiftType, String licenseType, String destination) {
         return transportationIntegrationService.addTransportDelivery(

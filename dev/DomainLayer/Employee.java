@@ -25,10 +25,10 @@ public class Employee {
     }
 
     public enum DriverLicenseType {
-        B(1),
-        C1(2),
-        C(3),
-        CE(4);
+        B(1),   // Private car
+        C1(2),  // Light truck
+        C(3),   // Heavy truck
+        CE(4);  // Heavy truck with trailer
 
         private final int level;
 

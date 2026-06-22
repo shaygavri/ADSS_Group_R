@@ -30,6 +30,22 @@ public class TransportationIntegrationService {
         return true;
     }
 
+    public boolean changeEmployeeDriverLicenseType(String userName, String newLicenseTypeStr) {
+        Employee.DriverLicenseType newLicenseType = parseLicenseType(newLicenseTypeStr);
+        if (newLicenseType == null) {
+            System.out.println("license type must be B, C1, C or CE");
+            return false;
+        }
+
+        if (!integrationController.changeEmployeeDriverLicenseType(userName, newLicenseType)) {
+            System.out.println("could not change employee driver license type");
+            return false;
+        }
+
+        System.out.println("employee driver license type changed successfully");
+        return true;
+    }
+
     public boolean addTransportDelivery(String deliveryIdStr, String branchIdStr, String dateStr,
                                         String shiftTypeStr, String licenseTypeStr, String destination) {
         int deliveryId;

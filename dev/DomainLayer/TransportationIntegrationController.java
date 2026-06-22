@@ -50,6 +50,27 @@ public class TransportationIntegrationController {
         return true;
     }
 
+    public boolean changeEmployeeDriverLicenseType(String userName, Employee.DriverLicenseType newLicenseType) {
+        Employee employee = employeeController.getEmployee(userName);
+        if (employee == null || newLicenseType == null) {
+            return false;
+        }
+        if (!employeeController.employeeHasRole(userName, Role.DRIVER_ID)) {
+            return false;
+        }
+        if (!employeeController.changeEmployeeDriverLicenseType(userName, newLicenseType)) {
+            return false;
+        }
+
+        transportController.registerOrUpdateDriver(
+                employee.getId(),
+                employee.getUserName(),
+                employee.getBranchID(),
+                toMockLicenseType(newLicenseType)
+        );
+        return true;
+    }
+
     public boolean addTransportDelivery(int deliveryId, int branchId, LocalDate date,
                                         Shift.ShiftType shiftType, Employee.DriverLicenseType requiredLicenseType,
                                         String destination) {
