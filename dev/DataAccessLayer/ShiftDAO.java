@@ -132,12 +132,14 @@ public class ShiftDAO {
     }
 
     private ShiftDTO mapRow(ResultSet rs) throws SQLException {
-        return new ShiftDTO(
+        ShiftDTO dto = new ShiftDTO(
                 rs.getInt("shift_index"),
                 rs.getInt("branch_id"),
                 LocalDate.parse(rs.getString("shift_date")),
                 rs.getString("shift_type"),
                 rs.getInt("closed_day") == 1);
+        dto.setShiftPk(rs.getInt("shift_pk"));
+        return dto;
     }
 
     private void setNullableInt(PreparedStatement ps, int index, Integer value) throws SQLException {

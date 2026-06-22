@@ -8,6 +8,7 @@ public class ShiftDTO {
     private LocalDate date;
     private String shiftType;
     private boolean closedDay;
+    private int shiftPk;
 
     public ShiftDTO(int shiftId, int branchId, LocalDate date, String shiftType, boolean closedDay) {
         this.shiftId = shiftId;
@@ -55,5 +56,13 @@ public class ShiftDTO {
 
     public void setClosedDay(boolean closedDay) {
         this.closedDay = closedDay;
+    }
+
+    public int getShiftPk() {
+        return shiftPk;
+    }
+
+    public void setShiftPk(int shiftPk) {
+        this.shiftPk = shiftPk;
     }
 }

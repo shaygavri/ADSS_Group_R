@@ -16,10 +16,11 @@ public class EmployeeDAO {
         Connection conn = DatabaseManager.getInstance().getConnection();
         String sql = "INSERT INTO employee (user_name, password, national_id, branch_id, hourly_salary, " +
                 "vacation_days, employment_type, driver_license_type, start_contract, end_contract, " +
-                "is_logged_in, bank_number, bank_branch_number, bank_account_number) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                "is_logged_in, bank_number, bank_branch_number, bank_account_number, status) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             bindEmployee(ps, employee);
+            ps.setString(15, employee.getStatus());
             ps.executeUpdate();
         }
     }
@@ -29,7 +30,7 @@ public class EmployeeDAO {
         String sql = "UPDATE employee SET password = ?, national_id = ?, branch_id = ?, hourly_salary = ?, " +
                 "vacation_days = ?, employment_type = ?, driver_license_type = ?, start_contract = ?, " +
                 "end_contract = ?, is_logged_in = ?, bank_number = ?, bank_branch_number = ?, " +
-                "bank_account_number = ? WHERE user_name = ?;";
+                "bank_account_number = ?, status = ? WHERE user_name = ?;";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, employee.getPassword());
             ps.setString(2, employee.getEmployeeId());
@@ -44,7 +45,18 @@ public class EmployeeDAO {
             ps.setInt(11, employee.getBankNumber());
             ps.setInt(12, employee.getBankBranchNumber());
             ps.setInt(13, employee.getBankAccountNumber());
-            ps.setString(14, employee.getUserName());
+            ps.setString(14, employee.getStatus());
+            ps.setString(15, employee.getUserName());
+            ps.executeUpdate();
+        }
+    }
+
+    public void updateStatus(String userName, String status) throws SQLException {
+        Connection conn = DatabaseManager.getInstance().getConnection();
+        String sql = "UPDATE employee SET status = ? WHERE user_name = ?;";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, status);
+            ps.setString(2, userName);
             ps.executeUpdate();
         }
     }
@@ -85,6 +97,21 @@ public class EmployeeDAO {
         return employees;
     }
 
+    public List<EmployeeDTO> selectByStatus(String status) throws SQLException {
+        Connection conn = DatabaseManager.getInstance().getConnection();
+        String sql = "SELECT * FROM employee WHERE status = ?;";
+        List<EmployeeDTO> employees = new ArrayList<>();
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, status);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    employees.add(mapRow(rs));
+                }
+            }
+        }
+        return employees;
+    }
+
     private void bindEmployee(PreparedStatement ps, EmployeeDTO employee) throws SQLException {
         ps.setString(1, employee.getUserName());
         ps.setString(2, employee.getPassword());
@@ -118,6 +145,7 @@ public class EmployeeDAO {
                 LocalDate.parse(rs.getString("start_contract")),
                 LocalDate.parse(rs.getString("end_contract")),
                 driverLicenseType,
-                rs.getInt("is_logged_in") == 1);
+                rs.getInt("is_logged_in") == 1,
+                rs.getString("status"));
     }
 }
