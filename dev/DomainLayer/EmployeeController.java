@@ -6,7 +6,7 @@ public class EmployeeController {
     private static EmployeeController instance;
     private ArrayList<Employee> employees;
     private ArrayList<Employee> firedEmployees;
-    private ArrayList<Integer> branches;
+    private ArrayList<Branch> branches;
     private ArrayList<Role> roles;
 
     private EmployeeController() {
@@ -221,22 +221,41 @@ public class EmployeeController {
     }
 
     public boolean addBranch(int branchID) {
-        if (branches.contains(branchID)) {
+        Branch branch = new Branch(branchID);
+        if (branches.contains(branch)) {
             return false;
         }
-        branches.add(branchID);
+        branches.add(branch);
         return true;
     }
 
     public boolean branchExists(int branchID) {
-        return branches.contains(branchID);
+        return branches.contains(new Branch(branchID));
+    }
+
+    public boolean branchHasActiveEmployees(int branchID) {
+        for (Employee employee : employees) {
+            if (employee.getBranchID() == branchID) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean removeBranch(int branchID) {
+        Branch branch = new Branch(branchID);
+        if (!branches.contains(branch)) {
+            return false;
+        }
+        branches.remove(branch);
+        return true;
     }
 
     public ArrayList<Employee> getEmployees() {
         return new ArrayList<>(employees);
     }
 
-    public ArrayList<Integer> getBranches() {
+    public ArrayList<Branch> getBranches() {
         return new ArrayList<>(branches);
     }
 

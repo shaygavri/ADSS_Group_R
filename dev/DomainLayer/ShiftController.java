@@ -30,12 +30,13 @@ public class ShiftController {
     }
 
     public boolean publishNextWeek() {
-        ArrayList<Integer> branches = employeeController.getBranches();
+        ArrayList<Branch> branches = employeeController.getBranches();
         if (branches.isEmpty()) {
             return false;
         }
 
-        for (Integer branchId : branches) {
+        for (Branch branch : branches) {
+            int branchId = branch.getId();
             ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
             organizer.updateAvailableEmployees(employeeController.getEmployees());
 
@@ -48,12 +49,13 @@ public class ShiftController {
     }
 
     public boolean publishNextWeekRequirements(LocalDateTime deadline) {
-        ArrayList<Integer> branches = employeeController.getBranches();
+        ArrayList<Branch> branches = employeeController.getBranches();
         if (branches.isEmpty()) {
             return false;
         }
 
-        for (Integer branchId : branches) {
+        for (Branch branch : branches) {
+            int branchId = branch.getId();
             ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
             if (!organizer.publishNextWeekRequirements(deadline)) {
                 return false;
@@ -64,13 +66,14 @@ public class ShiftController {
     }
 
     public String nextWeekMissingRequirementsToString() {
-        ArrayList<Integer> branches = employeeController.getBranches();
+        ArrayList<Branch> branches = employeeController.getBranches();
         if (branches.isEmpty()) {
             return "No branches in the system";
         }
 
         StringBuilder builder = new StringBuilder();
-        for (Integer branchId : branches) {
+        for (Branch branch : branches) {
+            int branchId = branch.getId();
             ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
             String branchReport = organizer.nextWeekMissingRequirementsToString();
             if ("All next week shifts are fully assigned".equals(branchReport)) {
@@ -92,8 +95,9 @@ public class ShiftController {
     }
 
     public void syncCurrentWeekIfNeeded() {
-        ArrayList<Integer> branches = employeeController.getBranches();
-        for (Integer branchId : branches) {
+        ArrayList<Branch> branches = employeeController.getBranches();
+        for (Branch branch : branches) {
+            int branchId = branch.getId();
             ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
             while (organizer.shouldAutoAdvanceToNextWeek()) {
                 if (!organizer.setNextWeekAsCurrentWeek()) {
@@ -104,12 +108,13 @@ public class ShiftController {
     }
 
     public boolean setAsCurrentWeek() {
-        ArrayList<Integer> branches = employeeController.getBranches();
+        ArrayList<Branch> branches = employeeController.getBranches();
         if (branches.isEmpty()) {
             return false;
         }
 
-        for (Integer branchId : branches) {
+        for (Branch branch : branches) {
+            int branchId = branch.getId();
             ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
 
             if (!organizer.setNextWeekAsCurrentWeek()) {
@@ -157,13 +162,14 @@ public class ShiftController {
     }
 
     public String nextWeekStatusToString() {
-        ArrayList<Integer> branches = employeeController.getBranches();
+        ArrayList<Branch> branches = employeeController.getBranches();
         if (branches.isEmpty()) {
             return "No branches in the system";
         }
 
         StringBuilder builder = new StringBuilder();
-        for (Integer branchId : branches) {
+        for (Branch branch : branches) {
+            int branchId = branch.getId();
             ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
             builder.append("===== Branch ").append(branchId).append(" =====\n");
             builder.append(organizer.nextWeekStatusToString()).append("\n");
@@ -172,13 +178,14 @@ public class ShiftController {
     }
 
     public String nextWeekPublishSummaryToString() {
-        ArrayList<Integer> branches = employeeController.getBranches();
+        ArrayList<Branch> branches = employeeController.getBranches();
         if (branches.isEmpty()) {
             return "No branches in the system";
         }
 
         StringBuilder builder = new StringBuilder();
-        for (Integer branchId : branches) {
+        for (Branch branch : branches) {
+            int branchId = branch.getId();
             ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
             builder.append("===== Branch ").append(branchId).append(" =====\n");
             builder.append(organizer.nextWeekPublishSummaryToString()).append("\n");
@@ -399,13 +406,14 @@ public class ShiftController {
     }
 
     public String currentWeekShiftsToString() {
-        ArrayList<Integer> branches = employeeController.getBranches();
+        ArrayList<Branch> branches = employeeController.getBranches();
         if (branches.isEmpty()) {
             return "No branches in the system";
         }
 
         StringBuilder builder = new StringBuilder();
-        for (Integer branchId : branches) {
+        for (Branch branch : branches) {
+            int branchId = branch.getId();
             ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
             builder.append("===== Branch ").append(branchId).append(" Current Week =====\n");
             builder.append(organizer.showCurrentWeekShifts());
@@ -415,13 +423,14 @@ public class ShiftController {
     }
 
     public String nextWeekShiftsToString() {
-        ArrayList<Integer> branches = employeeController.getBranches();
+        ArrayList<Branch> branches = employeeController.getBranches();
         if (branches.isEmpty()) {
             return "No branches in the system";
         }
 
         StringBuilder builder = new StringBuilder();
-        for (Integer branchId : branches) {
+        for (Branch branch : branches) {
+            int branchId = branch.getId();
             ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
             builder.append("===== Branch ").append(branchId).append(" Next Week =====\n");
             builder.append(organizer.showNextWeekShifts());
@@ -431,13 +440,14 @@ public class ShiftController {
     }
 
     public String allShiftsHistoryToString() {
-        ArrayList<Integer> branches = employeeController.getBranches();
+        ArrayList<Branch> branches = employeeController.getBranches();
         if (branches.isEmpty()) {
             return "No branches in the system";
         }
 
         StringBuilder builder = new StringBuilder();
-        for (Integer branchId : branches) {
+        for (Branch branch : branches) {
+            int branchId = branch.getId();
             ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
             builder.append("===== Branch ").append(branchId).append(" Shifts History =====\n");
             builder.append(organizer.showAllShiftsHistory()).append("\n");

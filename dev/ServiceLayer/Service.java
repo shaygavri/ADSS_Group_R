@@ -49,6 +49,18 @@ public class Service {
 
     // ======================== HR ========================
 
+    public void showBranches() {
+        userService.showBranches();
+    }
+
+    public boolean addBranch(String branchId) {
+        return userService.addBranch(branchId);
+    }
+
+    public boolean removeBranch(String branchId) {
+        return userService.removeBranch(branchId);
+    }
+
     public boolean createRole(String roleId, String roleName, String description) {
         return userService.createRole(roleId, roleName, description);
     }

@@ -39,9 +39,9 @@ public class Menu_HR {
         System.out.println("\n========== HR MENU ==========");
 
         System.out.println("\n--- Branch Management ---");
-        System.out.println("1. show branches IDs"); // maybe leave for next part
-        System.out.println("2. add branch"); // maybe leave for next part
-        System.out.println("3. remove branch"); // maybe leave for next part
+        System.out.println("1. show branches IDs");
+        System.out.println("2. add branch");
+        System.out.println("3. remove branch");
 
         System.out.println("\n--- Employee and Role Management ---");
         System.out.println("4. create new role");
@@ -79,24 +79,21 @@ public class Menu_HR {
 
         switch (input) {
             case 1 -> {
-                // service.showBranches();
-                System.out.println("At this moment we have just one branch, more is coming soon....");
+                service.showBranches();
                 printMenu();
             }
 
             case 2 -> {
                 System.out.println("Enter new branch ID:");
                 String branchId = scanner.nextLine();
-                // service.addBranch(branchId);
-                System.out.println("At this moment we have just one branch, more is coming soon....");
+                service.addBranch(branchId);
                 printMenu();
             }
 
             case 3 -> {
                 System.out.println("Enter branch ID to remove:");
                 String branchId = scanner.nextLine();
-                // service.removeBranch(branchId);
-                System.out.println("At this moment we have just one branch, more is coming soon....");
+                service.removeBranch(branchId);
                 printMenu();
             }
 

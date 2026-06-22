@@ -1,5 +1,6 @@
 package ServiceLayer;
 
+import DomainLayer.Branch;
 import DomainLayer.Employee;
 import DomainLayer.EmployeeController;
 import DomainLayer.Role;
@@ -224,6 +225,69 @@ public class UserService {
 
     public boolean isHRManager(String userName) {
         return employeeController.employeeHasRole(userName, Role.HR_MANAGER_ID);
+    }
+
+    public void showBranches() {
+        ArrayList<Branch> branches = employeeController.getBranches();
+
+        if (branches.isEmpty()) {
+            System.out.println("No branches in the system");
+            return;
+        }
+
+        System.out.println("===== Branches =====");
+        for (Branch branch : branches) {
+            System.out.println("Branch ID: " + branch.getId());
+        }
+        System.out.println("====================");
+    }
+
+    public boolean addBranch(String branchIdStr) {
+        int branchId;
+
+        try {
+            branchId = Integer.parseInt(branchIdStr.trim());
+        } catch (NumberFormatException e) {
+            System.out.println("branch id must be a number");
+            return false;
+        }
+
+        if (!employeeController.addBranch(branchId)) {
+            System.out.println("branch already exists");
+            return false;
+        }
+
+        System.out.println("branch added successfully");
+        return true;
+    }
+
+    public boolean removeBranch(String branchIdStr) {
+        int branchId;
+
+        try {
+            branchId = Integer.parseInt(branchIdStr.trim());
+        } catch (NumberFormatException e) {
+            System.out.println("branch id must be a number");
+            return false;
+        }
+
+        if (!employeeController.branchExists(branchId)) {
+            System.out.println("branch not found");
+            return false;
+        }
+
+        if (employeeController.branchHasActiveEmployees(branchId)) {
+            System.out.println("cannot remove branch with active employees");
+            return false;
+        }
+
+        if (!employeeController.removeBranch(branchId)) {
+            System.out.println("could not remove branch");
+            return false;
+        }
+
+        System.out.println("branch removed successfully");
+        return true;
     }
 
     public boolean createRole(String roleIdStr, String roleName, String description) {
