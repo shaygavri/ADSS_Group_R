@@ -1,5 +1,11 @@
 package DomainLayer;
 
+import DataAccessLayer.DatabaseManager;
+import RepositoryLayer.BranchRepository;
+import RepositoryLayer.EmployeeRepository;
+import RepositoryLayer.RoleRepository;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class EmployeeController {
@@ -9,11 +15,17 @@ public class EmployeeController {
     private ArrayList<Branch> branches;
     private ArrayList<Role> roles;
 
+    private EmployeeRepository employeeRepository;
+    private BranchRepository branchRepository;
+    private RoleRepository roleRepository;
+    private boolean persistenceEnabled;
+
     private EmployeeController() {
         branches = new ArrayList<>();
         employees = new ArrayList<>();
         firedEmployees = new ArrayList<>();
         roles = new ArrayList<>();
+        persistenceEnabled = false;
     }
 
     public static EmployeeController getInstance() {
@@ -23,15 +35,58 @@ public class EmployeeController {
         return instance;
     }
 
+    // called once at startup to load everything from the database and turn on persistence
+    public void connectToDatabase() {
+        try {
+            DatabaseManager.getInstance().initialize();
+        } catch (SQLException e) {
+            throw new RuntimeException("failed to initialize the database", e);
+        }
+
+        roleRepository = new RoleRepository();
+        branchRepository = new BranchRepository();
+        employeeRepository = new EmployeeRepository();
+
+        roles = new ArrayList<>(roleRepository.loadAll());
+        branches = new ArrayList<>(branchRepository.loadAll());
+        employees = new ArrayList<>(employeeRepository.loadActive(roles));
+        firedEmployees = new ArrayList<>(employeeRepository.loadFired(roles));
+
+        persistenceEnabled = true;
+    }
+
+    // persists an employee changed from outside the controller (e.g. availability, password)
+    public void updateEmployee(Employee employee) {
+        if (persistenceEnabled && employee != null) {
+            employeeRepository.update(employee);
+        }
+    }
+
     public boolean addEmployee(Employee employee) {
         if (employee == null) {
             throw new IllegalArgumentException("employee cannot be null");
         }
-        if (getEmployee(employee.getUserName()) != null) {
+        if (userNameTaken(employee.getUserName())) {
             return false;
         }
         employees.add(employee);
+        if (persistenceEnabled) {
+            employeeRepository.insert(employee);
+        }
         return true;
+    }
+
+    // a username belongs to an active or a fired employee - it cannot be reused
+    private boolean userNameTaken(String userName) {
+        if (getEmployee(userName) != null) {
+            return true;
+        }
+        for (Employee employee : firedEmployees) {
+            if (employee.getUserName().equalsIgnoreCase(userName.trim())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Employee getEmployee(String userName) {
@@ -59,6 +114,9 @@ public class EmployeeController {
             return false;
         }
         roles.add(role);
+        if (persistenceEnabled) {
+            roleRepository.insert(role);
+        }
         return true;
     }
 
@@ -113,6 +171,9 @@ public class EmployeeController {
         }
 
         employee.addRole(role);
+        if (persistenceEnabled) {
+            employeeRepository.update(employee);
+        }
         return true;
     }
 
@@ -137,6 +198,9 @@ public class EmployeeController {
         }
 
         employee.setDriverLicenseType(driverLicenseType);
+        if (persistenceEnabled) {
+            employeeRepository.update(employee);
+        }
         return true;
     }
 
@@ -173,6 +237,9 @@ public class EmployeeController {
 
         employees.remove(employee);
         firedEmployees.add(employee);
+        if (persistenceEnabled) {
+            employeeRepository.fire(employee.getUserName());
+        }
         return true;
     }
 
@@ -183,6 +250,9 @@ public class EmployeeController {
         }
 
         employee.setHourlySalary(newSalary);
+        if (persistenceEnabled) {
+            employeeRepository.update(employee);
+        }
         return true;
     }
 
@@ -264,6 +334,9 @@ public class EmployeeController {
             return false;
         }
         branches.add(branch);
+        if (persistenceEnabled) {
+            branchRepository.insert(branch);
+        }
         return true;
     }
 
@@ -286,6 +359,9 @@ public class EmployeeController {
             return false;
         }
         branches.remove(branch);
+        if (persistenceEnabled) {
+            branchRepository.delete(branchID);
+        }
         return true;
     }
 

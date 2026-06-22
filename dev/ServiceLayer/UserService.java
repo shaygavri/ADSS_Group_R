@@ -31,6 +31,7 @@ public class UserService {
         }
 
         employee.setPassword(newPassword);
+        employeeController.updateEmployee(employee);
         System.out.println("password changed successfully");
         return true;
     }
@@ -60,6 +61,7 @@ public class UserService {
         try {
             ArrayList<Integer> shifts = parseShifts(input);
             employee.setAvailabilities(shifts);
+            employeeController.updateEmployee(employee);
             System.out.println("availability saved successfully");
             return true;
         } catch (IllegalArgumentException e) {
@@ -140,6 +142,7 @@ public class UserService {
 
         try {
             employee.replaceAvailability(oldShift, newShift);
+            employeeController.updateEmployee(employee);
             System.out.println("availability updated successfully");
             return true;
         } catch (IllegalArgumentException e) {
@@ -175,6 +178,7 @@ public class UserService {
         Employee.BankAccount newAccount = new Employee.BankAccount(bank, branch, account);
 
         employee.setBankAccount(newAccount);
+        employeeController.updateEmployee(employee);
 
         System.out.println("bank account updated successfully");
         return true;

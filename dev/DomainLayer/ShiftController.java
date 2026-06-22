@@ -1,5 +1,9 @@
 package DomainLayer;
 
+import DataAccessLayer.DatabaseManager;
+import RepositoryLayer.ShiftRepository;
+
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,6 +16,9 @@ public class ShiftController {
     private final EmployeeController employeeController;
     private final Map<Integer, ShiftOrganizer> shiftOrganizers;
 
+    private ShiftRepository shiftRepository;
+    private boolean persistenceEnabled;
+
     public enum ShiftWeek {
         CURRENT,
         NEXT
@@ -20,6 +27,7 @@ public class ShiftController {
     private ShiftController() {
         this.employeeController = EmployeeController.getInstance();
         this.shiftOrganizers = new HashMap<>();
+        this.persistenceEnabled = false;
     }
 
     public static ShiftController getInstance() {
@@ -27,6 +35,26 @@ public class ShiftController {
             instance = new ShiftController();
         }
         return instance;
+    }
+
+    public void connectToDatabase() {
+        try {
+            DatabaseManager.getInstance().initialize();
+        } catch (SQLException e) {
+            throw new RuntimeException("failed to initialize the database", e);
+        }
+        shiftRepository = new ShiftRepository();
+        Map<Integer, ShiftOrganizer> loaded = shiftRepository.loadAll(
+                employeeController.getRoles(),
+                employeeController.getEmployees());
+        shiftOrganizers.putAll(loaded);
+        persistenceEnabled = true;
+    }
+
+    private void persistOrganizer(ShiftOrganizer organizer) {
+        if (persistenceEnabled) {
+            shiftRepository.insertOrUpdate(organizer);
+        }
     }
 
     public boolean publishNextWeek() {
@@ -43,6 +71,7 @@ public class ShiftController {
             if (!organizer.publishNextWeek()) {
                 return false;
             }
+            persistOrganizer(organizer);
         }
 
         return true;
@@ -60,6 +89,7 @@ public class ShiftController {
             if (!organizer.publishNextWeekRequirements(deadline)) {
                 return false;
             }
+            persistOrganizer(organizer);
         }
 
         return true;
@@ -103,6 +133,7 @@ public class ShiftController {
                 if (!organizer.setNextWeekAsCurrentWeek()) {
                     break;
                 }
+                persistOrganizer(organizer);
             }
         }
     }
@@ -120,6 +151,7 @@ public class ShiftController {
             if (!organizer.setNextWeekAsCurrentWeek()) {
                 return false;
             }
+            persistOrganizer(organizer);
         }
 
         return true;
@@ -204,11 +236,14 @@ public class ShiftController {
         }
 
         ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+        boolean result;
         try {
-            return organizer.markHolidayDay(shiftIndex, week == ShiftWeek.NEXT);
+            result = organizer.markHolidayDay(shiftIndex, week == ShiftWeek.NEXT);
         } catch (IllegalArgumentException e) {
             return false;
         }
+        if (result) { persistOrganizer(organizer); }
+        return result;
     }
 
     public boolean changeShiftRequirement(int branchId, int shiftIndex, int roleId, int amount, ShiftWeek week) {
@@ -222,12 +257,14 @@ public class ShiftController {
         }
 
         ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
-
+        boolean result;
         try {
-            return organizer.changeShiftRequirement(shiftIndex, role, amount, week == ShiftWeek.NEXT);
+            result = organizer.changeShiftRequirement(shiftIndex, role, amount, week == ShiftWeek.NEXT);
         } catch (IllegalArgumentException e) {
             return false;
         }
+        if (result) { persistOrganizer(organizer); }
+        return result;
     }
 
     public boolean changeShiftRequirement(int branchId, LocalDate date, Shift.ShiftType shiftType,
@@ -247,7 +284,9 @@ public class ShiftController {
             return false;
         }
 
-        return organizer.changeShiftRequirement(shiftIndex, role, amount, week == ShiftWeek.NEXT);
+        boolean result = organizer.changeShiftRequirement(shiftIndex, role, amount, week == ShiftWeek.NEXT);
+        if (result) { persistOrganizer(organizer); }
+        return result;
     }
 
     public boolean setDefaultRequirementForAllShifts(int branchId, Role role, int amount) {
@@ -265,6 +304,7 @@ public class ShiftController {
             setShiftRequirement(shift, role, amount);
         }
 
+        persistOrganizer(organizer);
         return true;
     }
 
@@ -372,7 +412,9 @@ public class ShiftController {
         }
 
         organizer.updateAvailableEmployees(employeeController.getEmployees());
-        return organizer.assignEmployee(shiftIndex, employee, role);
+        boolean result = organizer.assignEmployee(shiftIndex, employee, role);
+        if (result) { persistOrganizer(organizer); }
+        return result;
     }
 
     public boolean assignEmployee(String userName, int branchId, int shiftIndex, int roleId) {
@@ -387,13 +429,15 @@ public class ShiftController {
         }
 
         ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
-
+        boolean result;
         try {
             organizer.updateAvailableEmployees(employeeController.getEmployees());
-            return organizer.assignEmployee(shiftIndex, employee, role);
+            result = organizer.assignEmployee(shiftIndex, employee, role);
         } catch (IllegalArgumentException e) {
             return false;
         }
+        if (result) { persistOrganizer(organizer); }
+        return result;
     }
 
     public boolean isEmployeeAssignedToShift(String userName, int branchId, LocalDate date,
@@ -481,7 +525,9 @@ public class ShiftController {
                 ? organizer.getNextWeekShift(shiftIndex)
                 : organizer.getCurrentWeekShift(shiftIndex);
         int currentRequired = shift.getRequiredCountForRole(role);
-        return organizer.changeShiftRequirement(shiftIndex, role, currentRequired + amount, week == ShiftWeek.NEXT);
+        boolean result = organizer.changeShiftRequirement(shiftIndex, role, currentRequired + amount, week == ShiftWeek.NEXT);
+        if (result) { persistOrganizer(organizer); }
+        return result;
     }
 
     public ShiftWeek findShiftWeek(int branchId, LocalDate date, Shift.ShiftType shiftType) {
@@ -511,11 +557,14 @@ public class ShiftController {
         }
 
         ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
+        boolean result;
         try {
-            return organizer.removeEmployeeFromShift(shiftIndex, employee);
+            result = organizer.removeEmployeeFromShift(shiftIndex, employee);
         } catch (IllegalArgumentException e) {
             return false;
         }
+        if (result) { persistOrganizer(organizer); }
+        return result;
     }
 
     public String currentWeekShiftsToString() {

@@ -2,12 +2,16 @@ package PresentationLayer;
 import ServiceLayer.Service;
 import java.util.Scanner;
 import DomainLayer.DemoData;
+import DomainLayer.EmployeeController;
+import DomainLayer.ShiftController;
 
 public class Main {
     private static final Service service = new Service();
 
     public static void main(String[] args) {
-        DemoData.load(); //load a Demo Data
+        EmployeeController.getInstance().connectToDatabase(); //load saved data and turn on persistence
+        ShiftController.getInstance().connectToDatabase();   //load shift state and turn on persistence
+        DemoData.load(); //seed demo data on first run (skipped if already in the database)
 
         boolean system_on = true;
         Scanner scanner = new Scanner(System.in);

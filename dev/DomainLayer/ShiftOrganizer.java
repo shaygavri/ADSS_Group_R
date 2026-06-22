@@ -74,6 +74,30 @@ public class ShiftOrganizer {
         return availabilityDeadline;
     }
 
+    public LocalDateTime getRequirementsPublishedAt() {
+        return requirementsPublishedAt;
+    }
+
+    public void setAvailabilityChangesAllowed(boolean value) {
+        this.availabilityChangesAllowed = value;
+    }
+
+    public void setPublished(boolean value) {
+        this.isPublished = value;
+    }
+
+    public void setRequirementsPublishedAt(LocalDateTime value) {
+        this.requirementsPublishedAt = value;
+    }
+
+    public void setAvailabilityDeadline(LocalDateTime value) {
+        this.availabilityDeadline = value;
+    }
+
+    public void addHistoryWeek(Shift[] week) {
+        this.shiftsHistory.add(week.clone());
+    }
+
     public Shift[] getCurrentWeekShifts() {
         return currentWeekShifts.clone();
     }

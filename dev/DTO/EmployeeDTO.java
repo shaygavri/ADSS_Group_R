@@ -17,12 +17,13 @@ public class EmployeeDTO {
     private LocalDate endContract;
     private String driverLicenseType;
     private boolean loggedIn;
+    private String status;
 
     public EmployeeDTO(int branchId, String userName, String password, String employeeId,
                        int bankNumber, int bankBranchNumber, int bankAccountNumber,
                        int hourlySalary, String employmentType, int vacationDays,
                        LocalDate startContract, LocalDate endContract,
-                       String driverLicenseType, boolean loggedIn) {
+                       String driverLicenseType, boolean loggedIn, String status) {
         this.branchId = branchId;
         this.userName = userName;
         this.password = password;
@@ -37,6 +38,7 @@ public class EmployeeDTO {
         this.endContract = endContract;
         this.driverLicenseType = driverLicenseType;
         this.loggedIn = loggedIn;
+        this.status = status;
     }
 
     public int getBranchId() {
@@ -149,5 +151,13 @@ public class EmployeeDTO {
 
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
