@@ -26,7 +26,7 @@ public class ServiceController {
      */
     public MockSupplierSystem supplierSystem;
     private DomainController domainController;
-
+    private final Object automationLock = new Object();
     public ServiceController(DomainController domainController) {
         this.supplierSystem = new MockSupplierSystem();
         this.categoryService = new CategoryService(domainController);
@@ -47,10 +47,12 @@ public class ServiceController {
         return orderService.markOrderAsReceived(orderId);}
     public PeriodicOrderRuleDTO createPeriodicOrderRule(String productId, int quantity, int dayOfMonth) {
         return orderService.createPeriodicOrderRule(productId, quantity, dayOfMonth);}
-    public List<Order> runAutomaticPeriodicOrders() {
-        return orderService.runAutomaticPeriodicOrders();}
+    public List<Order> runAutomaticPeriodicOrders() {synchronized (automationLock) {return orderService.runAutomaticPeriodicOrders();}}
     public List<PeriodicOrderRuleDTO> getAllPeriodicOrderRules() {
         return orderService.getAllPeriodicOrderRules();}
+    public List<Order> runAutomaticShortageOrders() {
+        synchronized (automationLock) {
+            return orderService.runAutomaticShortageOrders();}}
     public boolean deactivatePeriodicOrderRule(String ruleId) {
         return orderService.deactivatePeriodicOrderRule(ruleId);}
     public List<Order> getAllOrders() {

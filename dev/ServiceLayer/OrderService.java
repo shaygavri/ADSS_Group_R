@@ -91,17 +91,33 @@ public class OrderService {
             boolean saved = domainController.getOrderRepository().save(order);
             if (!saved) {
                 continue;}
-            boolean sent = supplierSystem.sendOrder(order);
-            if (sent) {
-                domainController.getOrderRepository().updateStatus(order.getOrderId(), OrderStatus.SENT);
-                order.changeStatus(OrderStatus.SENT);
-                domainController.getPeriodicOrderRuleRepository().advanceNextDeliveryDate(rule);
-                createdOrders.add(order);
-            }
+            domainController.getOrderRepository().updateStatus(order.getOrderId(), OrderStatus.SENT);
+            order.changeStatus(OrderStatus.SENT);
+            domainController.getPeriodicOrderRuleRepository().advanceNextDeliveryDate(rule);
+            createdOrders.add(order);
         }
         return createdOrders;
     }
+    public List<Order> runAutomaticShortageOrders() {
+        List<Order> createdOrders = new ArrayList<>();
 
+        List<Product> shortageProducts = requestShortageOrder();
+
+        for (Product product : shortageProducts) {
+            if (product == null) {
+                continue;}
+            String productId = product.getProductID();
+            if (activeShortageOrderAlreadyExists(productId)) {
+                continue;}
+            Order order = prepareShortageOrder(productId);
+            if (order == null) {
+                continue;}
+            domainController.getOrderRepository().updateStatus(order.getOrderId(), OrderStatus.SENT);
+            order.changeStatus(OrderStatus.SENT);
+            createdOrders.add(order);
+        }
+        return createdOrders;
+    }
     public List<PeriodicOrderRuleDTO> getAllPeriodicOrderRules() {
         return domainController.getPeriodicOrderRuleRepository().findAll();}
 
@@ -133,6 +149,24 @@ public class OrderService {
                         return true;
                     }
                 }
+            }
+        }
+        return false;
+    }
+
+    private boolean activeShortageOrderAlreadyExists(String productId) {
+        if (productId == null) {
+            return false;}
+        for (Order order : domainController.getOrderRepository().findAll()) {
+            if (order == null) {
+                continue;}
+            if (order.getOrderType() != OrderType.SHORTAGE) {
+                continue;}
+            if (order.getStatus() == OrderStatus.CANCELLED || order.getStatus() == OrderStatus.RECEIVED) {
+                continue;}
+            for (OrderItem item : order.getItems()) {
+                if (item != null && productId.equals(item.getProductId())) {
+                    return true;}
             }
         }
         return false;

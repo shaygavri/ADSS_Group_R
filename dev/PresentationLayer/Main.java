@@ -14,26 +14,19 @@ public class Main {
         SaleDAO saleDAO = new JdbcSaleDAO(databaseManager);
         OrderDAO orderDAO = new JdbcOrderDAO(databaseManager);
         OrderItemDAO orderItemDAO = new JdbcOrderItemDAO(databaseManager);
-        PeriodicOrderRuleDAO periodicOrderRuleDAO =
-                new JdbcPeriodicOrderRuleDAO(databaseManager);
-        CategoryRepository categoryRepository =
-                new CategoryRepository(categoryDAO);
-        ProductRepository productRepository =
-                new ProductRepository(productDAO, categoryRepository);
-        SaleRepository saleRepository =
-                new SaleRepository(saleDAO);
-        OrderRepository orderRepository =
-                new OrderRepository(orderDAO, orderItemDAO, productRepository);
-        PeriodicOrderRuleRepository periodicOrderRuleRepository =
-                new PeriodicOrderRuleRepository(periodicOrderRuleDAO);
-        DomainController domainController =
-                new DomainController(categoryRepository, productRepository, saleRepository, orderRepository, periodicOrderRuleRepository
-                );
-        ServiceController serviceController =
-                new ServiceController(domainController);
-        InventoryUI inventoryUI =
-                new InventoryUI(serviceController);
+        PeriodicOrderRuleDAO periodicOrderRuleDAO = new JdbcPeriodicOrderRuleDAO(databaseManager);
+        CategoryRepository categoryRepository = new CategoryRepository(categoryDAO);
+        ProductRepository productRepository = new ProductRepository(productDAO, categoryRepository);
+        SaleRepository saleRepository = new SaleRepository(saleDAO);
+        OrderRepository orderRepository = new OrderRepository(orderDAO, orderItemDAO, productRepository);
+        PeriodicOrderRuleRepository periodicOrderRuleRepository = new PeriodicOrderRuleRepository(periodicOrderRuleDAO);
+        DomainController domainController = new DomainController(categoryRepository, productRepository, saleRepository, orderRepository, periodicOrderRuleRepository);
+        ServiceController serviceController = new ServiceController(domainController);
+        InventoryUI inventoryUI = new InventoryUI(serviceController);
+        AutomaticOrderThread automaticOrderThread = new AutomaticOrderThread(serviceController, 10000);
+        automaticOrderThread.start();
         inventoryUI.start();
+        automaticOrderThread.stopRunning();
         databaseManager.closeConnection();
     }
 }

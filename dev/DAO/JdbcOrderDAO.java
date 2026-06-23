@@ -35,8 +35,7 @@ public class JdbcOrderDAO implements OrderDAO {
             ps.setString(1, orderId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return mapResultSetToOrderDTO(rs);
-            }
+                return mapResultSetToOrderDTO(rs);}
             return null;
         } catch (SQLException e) {
             throw new RuntimeException("Failed to find order by id: " + e.getMessage(), e);
@@ -50,8 +49,7 @@ public class JdbcOrderDAO implements OrderDAO {
         try (PreparedStatement ps = databaseManager.getConnection().prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                orders.add(mapResultSetToOrderDTO(rs));
-            }
+                orders.add(mapResultSetToOrderDTO(rs));}
             return orders;
         } catch (SQLException e) {
             throw new RuntimeException("Failed to find all orders: " + e.getMessage(), e);
