@@ -2,7 +2,7 @@
  * Entry point for the Inventory Management System.
  * Initializes the Domain, Service, and Presentation layers to launch the application.
  */
-public class Main {
+public class MainInventory {
 
     public static void main(String[] args) {
 
