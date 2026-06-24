@@ -1,0 +1,1 @@
+public enum OrderStatus {DRAFT, SENT, RECEIVED, CANCELLED}

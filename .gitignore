@@ -1,0 +1,8 @@
+.DS_Store
+.idea/
+out/
+*.iml
+*.class
+*.db
+super_lee.db
+superli_inventory.db
