@@ -8,6 +8,15 @@
       <sourceFolder url="file://$MODULE_DIR$/tests/tests" isTestSource="true" />
     </content>
     <orderEntry type="jdk" jdkName="homebrew-17" jdkType="JavaSDK" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/sqlite-jdbc-3.53.2.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library" exported="">
       <library>
