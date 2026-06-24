@@ -1,7 +1,7 @@
 package RepositoryLayer;
 
 import DTO.RoleDTO;
-import DataAccessLayer.RoleDAO;
+import DAO.RoleDAO;
 import DomainLayer.Role;
 
 import java.sql.SQLException;

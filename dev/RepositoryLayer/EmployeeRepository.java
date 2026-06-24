@@ -3,9 +3,9 @@ package RepositoryLayer;
 import DTO.AvailabilityDTO;
 import DTO.EmployeeDTO;
 import DTO.EmployeeRoleDTO;
-import DataAccessLayer.AvailabilityDAO;
-import DataAccessLayer.EmployeeDAO;
-import DataAccessLayer.EmployeeRoleDAO;
+import DAO.AvailabilityDAO;
+import DAO.EmployeeDAO;
+import DAO.EmployeeRoleDAO;
 import DomainLayer.Employee;
 import DomainLayer.Role;
 

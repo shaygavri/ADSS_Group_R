@@ -1,6 +1,7 @@
-package DataAccessLayer;
+package DAO;
 
 import DTO.ShiftDTO;
+import DataAccessLayer.DatabaseManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

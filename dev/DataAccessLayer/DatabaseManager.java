@@ -37,6 +37,7 @@ public class DatabaseManager {
 
     public synchronized Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
+            try { Class.forName("org.sqlite.JDBC"); } catch (ClassNotFoundException e) { throw new SQLException("SQLite driver not found", e); }
             connection = DriverManager.getConnection(url);
             try (Statement statement = connection.createStatement()) {
                 statement.execute("PRAGMA foreign_keys = ON;");

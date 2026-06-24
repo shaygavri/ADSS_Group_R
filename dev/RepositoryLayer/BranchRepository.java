@@ -1,7 +1,7 @@
 package RepositoryLayer;
 
 import DTO.BranchDTO;
-import DataAccessLayer.BranchDAO;
+import DAO.BranchDAO;
 import DomainLayer.Branch;
 
 import java.sql.SQLException;
