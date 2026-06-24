@@ -5,6 +5,9 @@ import TransportationIntegrationMock.MockTransportController;
 import TransportationIntegrationMock.MockTransportDelivery;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class TransportationIntegrationController {
     private static TransportationIntegrationController instance;
@@ -116,8 +119,8 @@ public class TransportationIntegrationController {
         return true;
     }
 
-    public boolean syncNextWeekDeliveriesWithShifts() {
-        boolean changed = false;
+    public String syncNextWeekDeliveriesWithShifts() {
+        StringBuilder summary = new StringBuilder();
 
         for (Branch branch : employeeController.getBranches()) {
             int branchId = branch.getId();
@@ -126,14 +129,30 @@ public class TransportationIntegrationController {
                 continue;
             }
 
+            Set<String> processed = new HashSet<>();
             for (MockTransportDelivery delivery : transportController.getNextDeliveries(branchId, nextWeekStartDate)) {
+                String shiftKey = delivery.getDate() + "_" + delivery.getShiftType();
+                if (!processed.add(shiftKey)) {
+                    continue;
+                }
                 if (syncSingleDeliveryRequirements(delivery)) {
-                    changed = true;
+                    List<MockTransportDelivery> shiftDeliveries = transportController.getDeliveriesForShift(
+                            branchId, delivery.getDate(), delivery.getShiftType());
+                    StringBuilder licenses = new StringBuilder();
+                    for (MockTransportDelivery d : shiftDeliveries) {
+                        if (licenses.length() > 0) licenses.append(", ");
+                        licenses.append(d.getRequiredLicenseType());
+                    }
+                    if (summary.length() > 0) summary.append("\n");
+                    summary.append("driver requirement added to Branch ").append(branchId)
+                            .append(", ").append(delivery.getShiftType())
+                            .append(" ").append(delivery.getDate())
+                            .append(" (license: ").append(licenses).append(")");
                 }
             }
         }
 
-        return changed;
+        return summary.toString();
     }
 
     public boolean assignDriverToDelivery(String userName, int deliveryId) {

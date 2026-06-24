@@ -28,7 +28,10 @@ public class ShiftService {
 
     public boolean publishNextWeek() {
         syncCurrentWeekIfNeeded();
-        transportationIntegrationController.syncNextWeekDeliveriesWithShifts();
+        String driverSyncSummary = transportationIntegrationController.syncNextWeekDeliveriesWithShifts();
+        if (!driverSyncSummary.isEmpty()) {
+            System.out.println(driverSyncSummary);
+        }
         System.out.println(shiftController.nextWeekPublishSummaryToString());
         if (!shiftController.publishNextWeek()) {
             System.out.println("could not publish next week, some shifts are still missing required roles:");
@@ -42,7 +45,10 @@ public class ShiftService {
 
     public boolean publishNextWeekRequirements(String deadlineOption, String customDate) {
         syncCurrentWeekIfNeeded();
-        transportationIntegrationController.syncNextWeekDeliveriesWithShifts();
+        String driverSyncSummary = transportationIntegrationController.syncNextWeekDeliveriesWithShifts();
+        if (!driverSyncSummary.isEmpty()) {
+            System.out.println(driverSyncSummary);
+        }
         LocalDateTime deadline = parseAvailabilityDeadline(deadlineOption, customDate);
         if (deadline == null) {
             return false;
