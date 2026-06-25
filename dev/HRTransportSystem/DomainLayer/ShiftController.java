@@ -2,12 +2,16 @@ package DomainLayer;
 
 import DataAccessLayer.DatabaseManager;
 import RepositoryLayer.ShiftRepository;
+import TransportationIntegrationMock.MockDriverLicenseType;
+import TransportationIntegrationMock.MockTransportController;
+import TransportationIntegrationMock.MockTransportDelivery;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -578,7 +582,7 @@ public class ShiftController {
             int branchId = branch.getId();
             ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
             builder.append("===== Branch ").append(branchId).append(" Current Week =====\n");
-            builder.append(organizer.showCurrentWeekShifts());
+            builder.append(shiftsWithDeliveriesToString(branchId, organizer.getCurrentWeekShifts()));
         }
 
         return builder.toString();
@@ -595,7 +599,7 @@ public class ShiftController {
             int branchId = branch.getId();
             ShiftOrganizer organizer = getOrCreateOrganizer(branchId);
             builder.append("===== Branch ").append(branchId).append(" Next Week =====\n");
-            builder.append(organizer.showNextWeekShifts());
+            builder.append(shiftsWithDeliveriesToString(branchId, organizer.getNextWeekShifts()));
         }
 
         return builder.toString();
@@ -666,6 +670,9 @@ public class ShiftController {
                         .append(": ").append(entry.getValue()).append("\n");
             }
         }
+        if (week == ShiftWeek.NEXT) {
+            builder.append(deliveryRequirementsSection(branchId, shift.getDate(), shift.getShiftType()));
+        }
         builder.append("==============================");
         return builder.toString();
     }
@@ -701,6 +708,9 @@ public class ShiftController {
                         .append(" (ID: ").append(entry.getKey().getRoleID()).append(")")
                         .append(": ").append(entry.getValue()).append("\n");
             }
+        }
+        if (week == ShiftWeek.NEXT) {
+            builder.append(deliveryRequirementsSection(branchId, date, shiftType));
         }
         builder.append("==============================");
         return builder.toString();
@@ -738,5 +748,44 @@ public class ShiftController {
 
     private String weekToText(ShiftWeek week) {
         return week == ShiftWeek.NEXT ? "next" : "current";
+    }
+
+    private String shiftsWithDeliveriesToString(int branchId, Shift[] shifts) {
+        StringBuilder builder = new StringBuilder();
+        for (Shift shift : shifts) {
+            builder.append(shift).append("\n");
+            String deliverySection = deliveryRequirementsSection(branchId, shift.getDate(), shift.getShiftType());
+            if (!deliverySection.isEmpty()) {
+                builder.append(deliverySection);
+            }
+        }
+        return builder.toString();
+    }
+
+    private String deliveryRequirementsSection(int branchId, LocalDate date, Shift.ShiftType shiftType) {
+        List<MockTransportDelivery> deliveries = MockTransportController.getInstance()
+                .getDeliveriesForShift(branchId, date, shiftType);
+        if (deliveries.isEmpty()) {
+            return "";
+        }
+
+        Map<MockDriverLicenseType, Integer> driversByLicense = new LinkedHashMap<>();
+        for (MockTransportDelivery delivery : deliveries) {
+            driversByLicense.merge(delivery.getRequiredLicenseType(), 1, Integer::sum);
+        }
+
+        Role storekeeper = employeeController.getRoleByName("Storekeeper");
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("--- Delivery Requirements (").append(deliveries.size())
+                .append(deliveries.size() == 1 ? " delivery" : " deliveries").append(" scheduled) ---\n");
+        for (Map.Entry<MockDriverLicenseType, Integer> entry : driversByLicense.entrySet()) {
+            sb.append("Driver (requires license ").append(entry.getKey()).append("): ").append(entry.getValue()).append("\n");
+        }
+        if (storekeeper != null) {
+            sb.append(storekeeper.getRoleName())
+                    .append(" (ID: ").append(storekeeper.getRoleID()).append("): 1\n");
+        }
+        return sb.toString();
     }
 }

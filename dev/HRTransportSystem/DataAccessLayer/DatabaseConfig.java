@@ -14,7 +14,6 @@ public class DatabaseConfig {
         if (controller.getBranches().isEmpty()) {
             seedPersistentData(controller);
         }
-
         // MockTransportController is in-memory only and never persisted,
         // so deliveries must be re-seeded on every startup.
         seedMockDeliveries();
